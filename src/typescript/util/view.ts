@@ -3,9 +3,7 @@ import {ComponentClass} from 'inferno'
 
 export function View(Comp: ComponentClass): any {
 
-    const BaseComp = Comp as any as ComponentClass
-
-    class InfernoHoc extends BaseComp {
+    class InfernoHoc extends Comp {
 
         constructor(props, context) {
             super(props, context)
