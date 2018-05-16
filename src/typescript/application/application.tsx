@@ -14,26 +14,13 @@ setInterval(() => model.counter++, 1000)
 @View
 export class Application extends Component<{}, ApplicationState> {
 
-    @Post('/data.json')
-    loadData: (body?: any) => Promise<any>
-
-    async componentDidMount() {
-        const data = await this.loadData({request: 1234})
-        console.log(data)
-    }
-
-    @FetchFailure(404)
-    notFound() {
-        console.log('Faaaiiiil')
-    }
-
     @MediaQuery('(max-width: 320px)')
     mobile() {
-        return <div>Mobile {model.counter}</div>
+        return <div><h1>Mobile</h1> {model.counter}</div>
     }
 
     @MediaQuery('(min-width: 321px)')
     desktop() {
-        return <div>Desktop {model.counter}</div>
+        return <div><h1>Desktop</h1> {model.counter}</div>
     }
 }

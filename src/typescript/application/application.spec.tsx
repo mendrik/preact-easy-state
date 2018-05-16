@@ -6,7 +6,7 @@ import {render} from 'inferno'
 
 describe('<Application />', () => {
     it('renders without exploding', () => {
-        const app = render(<Application/>, document.documentElement)
+        const app = render(<Application/>, document.createElement('div'))
         expect(findRenderedVNodeWithType(app, 'h1')).to.not.be.undefined
     })
 })
