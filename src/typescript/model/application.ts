@@ -1,8 +1,12 @@
 import {observable} from '@nx-js/observer-util'
+import {LocalStorage, Store} from '../decorators/local-storage'
 
-const data = {
-    counter: 0,
-    list: []
+@LocalStorage
+class Data {
+    @Store('count') counter = 0
+    list = []
 }
 
-export default observable(data)
+const observed = observable(new Data())
+
+export default observed
