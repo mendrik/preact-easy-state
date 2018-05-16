@@ -9,13 +9,13 @@ export interface ApplicationState {
     counter: number
 }
 
-// setInterval(() => model.counter++, 1000)
+setInterval(() => model.counter++, 1000)
 
 @View
 export class Application extends Component<{}, ApplicationState> {
 
     @Post('/data.json')
-    loadData: (body: any) => Promise<any>
+    loadData: (body?: any) => Promise<any>
 
     async componentDidMount() {
         const data = await this.loadData({request: 1234})

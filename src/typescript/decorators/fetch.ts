@@ -38,7 +38,7 @@ const handleErrors = (component: Component, response: Response) => {
 
 const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (proto: any, protoMethod: string) => {
     Object.defineProperty(proto, protoMethod, {
-        value: function (body: any) {
+        value: function (body?: any) {
             const headers = req.headers || {'Content-Type': 'application/json'}
             const mode = req.mode || 'cors'
             const processor = req.processor || ((res: Response) => res.json())
