@@ -1,5 +1,6 @@
 import {observe, unobserve} from '@nx-js/observer-util'
 import {ComponentClass} from 'inferno'
+import {runMountQueue, runUnmountQueue} from './construct'
 
 export function View(Comp: ComponentClass): any {
 
@@ -11,6 +12,17 @@ export function View(Comp: ComponentClass): any {
                 scheduler: () => this.setState({}),
                 lazy: true
             })
+        }
+
+        componentDidMount() {
+            runMountQueue(this, this.findDOMNode())
+        }
+
+        private findDOMNode() {
+            if (this.$LI) {
+                return this.$LI.dom
+            }
+            return null
         }
 
         shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -38,6 +50,7 @@ export function View(Comp: ComponentClass): any {
                 super.componentWillUnmount()
             }
             unobserve(this.render)
+            runUnmountQueue(this)
         }
     }
 

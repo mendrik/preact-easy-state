@@ -1,7 +1,7 @@
 import {observable} from '@nx-js/observer-util'
 
 const data = {
-    counter: 1,
+    counter: 0,
     list: []
 }
 

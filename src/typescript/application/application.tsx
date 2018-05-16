@@ -1,28 +1,25 @@
-import { Component, linkEvent } from 'inferno'
+import {Component} from 'inferno'
 import model from '../model/application'
 import {createElement} from 'inferno-create-element'
 import {View} from '../util/view'
+import {MediaQuery} from '../decorators/media-query'
 
 export interface ApplicationState {
     counter: number
 }
 
+setInterval(() => model.counter++, 1000)
+
 @View
 export class Application extends Component<{}, ApplicationState> {
 
-    handleClick() {
-        model.list.push('a')
+    @MediaQuery('(max-width: 320px)')
+    mobile() {
+        return <div>Mobile {model.counter}</div>
     }
 
-    render(props, state) {
-        return (
-            <div>
-                <h1 onClick={linkEvent(props, this.handleClick)}>Header !</h1>
-                <span><b>Counter</b> is at: {model.list.length}</span>
-                <ul>
-                    {model.list.map(i => <li>{i}</li>)}
-                </ul>
-            </div>
-        )
+    @MediaQuery('(min-width: 321px)')
+    desktop() {
+        return <div>Desktop {model.counter}</div>
     }
 }
