@@ -16,6 +16,9 @@ export function View(Comp: ComponentClass): any {
 
         componentDidMount() {
             runMountQueue(this, this.findDOMNode())
+            if (super.componentDidMount) {
+                super.componentDidMount()
+            }
         }
 
         private findDOMNode() {
