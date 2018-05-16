@@ -3,7 +3,6 @@ import model from '../model/application'
 import {createElement} from 'inferno-create-element'
 import {View} from '../util/view'
 import {MediaQuery} from '../decorators/media-query'
-import {FetchFailure, Post} from '../decorators/fetch'
 
 export interface ApplicationState {
     counter: number
