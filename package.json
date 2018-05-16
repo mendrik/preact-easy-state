@@ -1,32 +1,40 @@
 {
-  "name": "flash",
-  "version": "1.0.0",
-  "description": "A test setup of easy react state and inferno",
-  "main": "index.ts",
-  "scripts": {
-    "run": "parcel src/html/index.html",
-    "test": "test"
-  },
-  "author": "Andreas Herd",
-  "license": "MIT",
-  "dependencies": {
-    "@nx-js/observer-util": "^4.1.2",
-    "chai": "4.1.2",
-    "inferno": "5.0.5",
-    "inferno-create-element": "5.0.5",
-    "inferno-router": "5.0.5",
-    "jsdom": "11.10.0",
-    "mocha": "5.1.1",
-    "parse5": "4.0.0",
-    "postcss": "6.0.22",
-    "postcss-cssnext": "3.1.0",
-    "postcss-import": "11.1.0",
-    "postcss-nested": "3.0.0",
-    "sinon": "5.0.7",
-    "stylelint": "9.2.0",
-    "tslint": "5.10.0"
-  },
-  "devDependencies": {
-    "typescript": "^2.8.3"
-  }
+    "name": "flash",
+    "version": "1.0.0",
+    "description": "A test setup of easy react state and inferno",
+    "repository": "https://github.com/mendrik/inferno-easy-state",
+    "main": "index.ts",
+    "scripts": {
+        "run": "cross-env NODE_ENV=dev:module parcel src/html/index.html",
+        "bundle": "parcel build src/html/index.html",
+        "test": "mocha --require ts-node/register --require src/typescript/util/mocha-setup.ts src/typescript/**/*.spec.*"
+    },
+    "author": "Andreas Herd",
+    "license": "MIT",
+    "dependencies": {
+        "@nx-js/observer-util": "4.1.2",
+        "inferno": "5.0.5",
+        "inferno-create-element": "5.0.5",
+        "inferno-router": "5.0.5"
+    },
+    "devDependencies": {
+        "@types/mocha": "5.2.0",
+        "@types/node": "10.1.0",
+        "ajv": "6.5.0",
+        "chai": "4.1.2",
+        "cross-env": "5.1.5",
+        "inferno-test-utils": "5.0.5",
+        "jsdom": "11.10.0",
+        "mocha": "5.1.1",
+        "parse5": "4.0.0",
+        "postcss": "6.0.22",
+        "postcss-cssnext": "3.1.0",
+        "postcss-import": "11.1.0",
+        "postcss-nested": "3.0.0",
+        "sinon": "5.0.7",
+        "stylelint": "9.2.0",
+        "ts-node": "6.0.3",
+        "tslint": "5.10.0",
+        "typescript": "2.8.3"
+    }
 }
