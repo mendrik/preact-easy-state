@@ -4,7 +4,7 @@ import {runMountQueue, runUnmountQueue} from './construct'
 
 export function View(Comp: ComponentClass): any {
 
-    class InfernoHoc extends Comp {
+    return class InfernoHoc extends Comp {
 
         constructor(props, context) {
             super(props, context)
@@ -53,6 +53,4 @@ export function View(Comp: ComponentClass): any {
             runUnmountQueue(this)
         }
     }
-
-    return InfernoHoc
 }

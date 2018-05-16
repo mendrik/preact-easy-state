@@ -7,11 +7,11 @@ export type CleanupCall = () => void
 const mountQueue = new WeakMap<any, Array<QueueCall>>()
 const unmountQueue = new WeakMap<Component, Array<CleanupCall>>()
 
-export const runMountQueue = (c: Component, el: HTMLElement) => {
+export const runMountQueue = (comp: Component, el: HTMLElement) => {
+    let c = comp
     while (c = Object.getPrototypeOf(c)) {
         if (mountQueue.has(c.constructor)) {
-            mountQueue.get(c.constructor).forEach(func => func(c, el))
-            return
+            return mountQueue.get(c.constructor).forEach(func => func(comp, el))
         }
     }
 }
