@@ -1,25 +1,17 @@
-import {Component} from 'inferno'
+import {h} from 'preact'
 import model from '../model/application'
-import {createElement} from 'inferno-create-element'
-import {View} from '../util/view'
-import {MediaQuery} from '../decorators/media-query'
-
-export interface ApplicationState {
-    counter: number
-}
+import {View} from '../decorators/view'
+import {QuillComponent} from '../util/quill-component'
+import {Route} from '../decorators/router'
 
 setInterval(() => model.counter++, 1000)
 
 @View
-export class Application extends Component<{}, ApplicationState> {
+export class Application extends QuillComponent {
 
-    @MediaQuery('(max-width: 320px)')
-    mobile() {
-        return <div><h1>Mobile</h1> {model.counter}</div>
+    @Route('/')
+    mainPage() {
+        return import('./pages/main-page')
     }
 
-    @MediaQuery('(min-width: 321px)')
-    desktop() {
-        return <div><h1>Desktop</h1> {model.counter}</div>
-    }
 }

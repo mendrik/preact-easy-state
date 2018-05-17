@@ -7,6 +7,4 @@ class Data {
     list = []
 }
 
-const observed = observable(new Data())
-
-export default observed
+export default observable(new Data())

@@ -1,12 +1,11 @@
-import {Component} from 'inferno'
-import {createElement} from 'inferno-create-element'
 import {addToCleanupQueue, addToMountQueue} from '../util/construct'
+import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 
 const mediaQuerySymbol = Symbol('__media_query__')
 
-const init = new WeakMap<any, boolean>()
+const init = new WeakMap<QuillComponentClass, boolean>()
 
-export const MediaQuery = (query: string) => (proto: any, method: string) => {
+export const MediaQuery = (query: string) => (proto: QuillComponentClass, method: string) => {
     if (!init.has(proto)) {
         init.set(proto, true)
         Object.defineProperty(proto, 'render', {
@@ -22,14 +21,14 @@ export const MediaQuery = (query: string) => (proto: any, method: string) => {
         })
     }
 
-    const mediaQueryHandler = (instance: Component) => (mq: MediaQueryList) => {
+    const mediaQueryHandler = (instance: QuillComponent) => (mq: MediaQueryList) => {
         if (mq.matches) {
             instance[mediaQuerySymbol] = method
             instance.forceUpdate()
         }
     }
 
-    addToMountQueue(proto, (instance: Component) => {
+    addToMountQueue(proto, (instance: QuillComponent) => {
         const mediaQueryList = window.matchMedia(query)
         const handler = mediaQueryHandler(instance)
         mediaQueryList.addListener(handler)

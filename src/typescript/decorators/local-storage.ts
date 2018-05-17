@@ -1,8 +1,8 @@
-import {Component} from 'inferno/core/component'
 import {ensure} from '../util/ensure'
 import {observable, observe} from '@nx-js/observer-util'
+import {QuillComponentClass} from '../util/quill-component'
 
-const localStorageQueue = new WeakMap<Component, Array<PropertyHandler>>()
+const localStorageQueue = new WeakMap<QuillComponentClass, Array<PropertyHandler>>()
 
 export function LocalStorage(Base: { new(...args: any[])}): any {
     return class LocalStorage extends Base {
@@ -39,7 +39,7 @@ interface PropertyHandler {
     property: string
 }
 
-export const Store = (key: string, reader: Reader = defaultReader, writer: Writer = defaultWriter) => (proto: any, property: string) => {
+export const Store = (key: string, reader: Reader = defaultReader, writer: Writer = defaultWriter) => (proto: QuillComponentClass, property: string) => {
     ensure(localStorageQueue, proto, [{key, reader, writer, property}])
 }
 
