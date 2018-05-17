@@ -1,11 +1,11 @@
 .horizontal-split {
-    background-color: lightsteelblue;
     display: flex;
     align-items: stretch;
 
     > :first-child {
         flex: none;
         width: 25%;
+        overflow: hidden;
     }
 
     > :last-child {
@@ -14,6 +14,10 @@
 
     .handle {
         flex: none;
-        width: 10px;
+        width: 5px;
+        border-left: var(--hairline);
+        border-right: var(--hairline);
+        cursor: ew-resize;
+        background-color: white;
     }
 }
