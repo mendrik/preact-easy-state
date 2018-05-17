@@ -1,6 +1,7 @@
 import {JSDOM} from 'jsdom'
 import matchMediaPolyfill from 'mq-polyfill'
 import 'isomorphic-fetch'
+
 const Storage = require('node-storage-shim')
 const window = new JSDOM('<!doctype html><html><body></body></html>', {url: 'https://example.org/'}).window
 matchMediaPolyfill(window)

@@ -4,26 +4,14 @@ import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {WindowEvent} from '../../decorators/window-event'
 import {DomChanged} from '../../decorators/dom-changed'
+import {scrollBarWidth} from '../../util/utils'
 
 export interface ScrollPaneProps {
     className: string
 }
 
-const scrollBarWidth = (): number => {
-    const outside = document.createElement('div')
-    const inside = document.createElement('div')
-    outside.style.width = inside.style.width = '100%'
-    outside.style.overflow = 'scroll'
-    document.body.appendChild(outside).appendChild(inside)
-    const scrollbar = outside.offsetWidth - inside.offsetWidth
-    outside.parentNode.removeChild(outside)
-    return scrollbar
-}
-
 @View
 export class ScrollPane extends QuillComponent<ScrollPaneProps> {
-
-    wrapper: HTMLDivElement
 
     componentDidMount() {
         this.base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
@@ -48,7 +36,6 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
         return (
             <div class={`${className} scrollpane`}>
                 <div class="inner-scroll-pane"
-                     ref={(e: HTMLDivElement) => this.wrapper = e}
                      onScroll={this.calculateThumb}>{children}</div>
                 <div class="track"><div class="thumb"/></div>
             </div>
