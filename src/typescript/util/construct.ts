@@ -1,5 +1,5 @@
-import {Component} from 'inferno'
 import {ensure} from './ensure'
+import {Component} from 'preact'
 
 export type QueueCall = (c: Component, el: HTMLElement) => void
 export type CleanupCall = () => void

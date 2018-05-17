@@ -1,10 +1,9 @@
 import {observe, unobserve} from '@nx-js/observer-util'
-import {ComponentClass} from 'inferno'
-import {runMountQueue, runUnmountQueue} from './construct'
+import {runMountQueue, runUnmountQueue} from '../util/construct'
 
-export function View(Comp: ComponentClass): any {
+export function View<P = {}, S = {}>(Comp: {new (props: P, context?: any): any}): any {
 
-    return class InfernoHoc extends Comp {
+    class ViewComponent<P, S> extends Comp {
 
         constructor(props, context) {
             super(props, context)
@@ -15,17 +14,10 @@ export function View(Comp: ComponentClass): any {
         }
 
         componentDidMount() {
-            runMountQueue(this, this.findDOMNode())
+            runMountQueue(this as any, this.base)
             if (super.componentDidMount) {
                 super.componentDidMount()
             }
-        }
-
-        private findDOMNode() {
-            if (this.$LI) {
-                return this.$LI.dom
-            }
-            return null
         }
 
         shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -53,7 +45,11 @@ export function View(Comp: ComponentClass): any {
                 super.componentWillUnmount()
             }
             unobserve(this.render)
-            runUnmountQueue(this)
+            runUnmountQueue(this as any)
         }
     }
+
+    ViewComponent['displayName'] = Comp['displayName']
+
+    return ViewComponent
 }

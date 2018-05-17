@@ -1,6 +1,6 @@
-import {Component} from 'inferno/core/component'
 import {ensure} from '../util/ensure'
 import {addToMountQueue} from '../util/construct'
+import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 
 export type Processor = (res: Response) => Promise<any>
 
@@ -18,7 +18,7 @@ class ResponseError extends Error {
     }
 }
 
-const handleErrors = (component: Component, response: Response) => {
+const handleErrors = (component: QuillComponent, response: Response) => {
     if (!response.ok) {
         if (failures.has(component)) {
             failures
@@ -36,7 +36,7 @@ const handleErrors = (component: Component, response: Response) => {
     return response
 }
 
-const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (proto: any, protoMethod: string) => {
+const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (proto: QuillComponentClass, protoMethod: string) => {
     Object.defineProperty(proto, protoMethod, {
         value: function (body?: any) {
             const headers = req.headers || {'Content-Type': 'application/json'}
@@ -61,16 +61,16 @@ export const Put = Fetch('PUT')
 
 export type AcceptStatus = (status: number) => boolean
 
-const failures = new WeakMap<Component, Array<FailureHandler>>()
+const failures = new WeakMap<QuillComponent, Array<FailureHandler>>()
 
 interface FailureHandler {
     filter: AcceptStatus,
     callback: Function
 }
 
-export const FetchFailure = (filter: AcceptStatus | number) => (proto: any, method: string) => {
+export const FetchFailure = (filter: AcceptStatus | number) => (proto: QuillComponentClass, method: string) => {
     const finalFilter: AcceptStatus = Number.isInteger(filter as number) ? ((s: number) => s === filter) : filter as AcceptStatus
-    addToMountQueue(proto, (comp: Component) => {
+    addToMountQueue(proto, (comp: QuillComponent) => {
         ensure(failures, comp, [{filter: finalFilter, callback: proto[method]}])
     })
 }

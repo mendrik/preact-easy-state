@@ -14,7 +14,7 @@
             "esnext"
         ],
         "jsx": "react",
-        "jsxFactory": "createElement"
+        "jsxFactory": "h"
     },
     "exclude": [
         "dist",

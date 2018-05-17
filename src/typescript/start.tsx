@@ -1,7 +1,6 @@
 import {Application} from './application/application'
-import {render} from 'inferno'
-import {createElement} from 'inferno-create-element'
+import {h, render} from 'preact'
 
-document.addEventListener('DOMContentLoaded', () =>
+document.addEventListener('DOMContentLoaded', () => {
     render(<Application/>, document.body)
-)
+})

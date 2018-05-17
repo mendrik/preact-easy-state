@@ -1,3 +1,5 @@
+import {QuillComponent, QuillComponentClass} from './quill-component'
+
 export const isObject = (obj: any): boolean =>
     (obj !== null && typeof(obj) === 'object' && Object.prototype.toString.call(obj) === '[object Object]')
 
@@ -32,4 +34,13 @@ export const ensure = <T>(map: WeakMap<{}, T> | Map<{}, T>,
         merge(lookup, defaultValue)
     }
     return lookup
+}
+
+export const resolve = <T>(map: WeakMap<QuillComponentClass, T>, component: QuillComponent): T => {
+    let c = component
+    while (c = Object.getPrototypeOf(c)) {
+        if (map.has(c)) {
+            return map.get(c)
+        }
+    }
 }
