@@ -17,10 +17,6 @@ const model = observable(new Model())
 @View
 export class HorizontalSplit extends QuillComponent {
 
-    componentDidMount() {
-        this.applyWidth()
-    }
-
     @PanX('.handle')
     onPanX(ev: CustomEvent<PanXEventInit>) {
         const {phase, x} = {...ev.detail}
@@ -29,22 +25,17 @@ export class HorizontalSplit extends QuillComponent {
         }
         else if (model.dragging && phase === Phase.move) {
             model.width = x
-            this.applyWidth()
         }
         else {
             model.dragging = false
         }
     }
 
-    applyWidth() {
-        const sideBar = this.base.firstElementChild as HTMLElement
-        sideBar.style.width = `${model.width}px`
-    }
-
     render({children, ...props}) {
         if (children.length !== 2) {
             throw Error('Horizontal split needs two child components')
         }
+        children[0].attributes = {style: {width: `${model.width}px`}}
         return (
             <div class={`${model.dragging ? 'dragging' : ''} horizontal-split`}>
                 {children[0]}
