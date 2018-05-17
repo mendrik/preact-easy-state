@@ -1,10 +1,9 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
-import './horizontal-split.pcss'
 
 @View
-export class HorizontalSplit extends QuillComponent {
+export class InputText extends QuillComponent {
 
     render({children, ...props}) {
         if (children.length !== 2) {

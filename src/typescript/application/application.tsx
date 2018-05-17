@@ -1,10 +1,8 @@
 import {h} from 'preact'
-import model from '../model/application'
 import {View} from '../decorators/view'
 import {QuillComponent} from '../util/quill-component'
 import {Route} from '../decorators/router'
-
-setInterval(() => model.counter++, 1000)
+import './application.pcss'
 
 @View
 export class Application extends QuillComponent {

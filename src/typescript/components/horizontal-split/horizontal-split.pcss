@@ -1,3 +1,19 @@
 .horizontal-split {
-    background-color: red;
+    background-color: lightsteelblue;
+    display: flex;
+    align-items: stretch;
+
+    > :first-child {
+        flex: none;
+        width: 25%;
+    }
+
+    > :last-child {
+        flex: auto;
+    }
+
+    .handle {
+        flex: none;
+        width: 10px;
+    }
 }
