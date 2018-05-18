@@ -1,12 +1,31 @@
+@import '../../variables.pcss';
+
 .tree {
     list-style: none;
 
     li {
         display: block;
+
+        &[data-dragover='inside'] > .node {
+            background-color: #d7f2ff;
+        }
+
+        &[data-dragover='above'] > .node:before {
+            display: block;
+            top: -2px;
+            background-color: #d7f2ff;
+        }
+
+        &[data-dragover='below'] > .node:after {
+            display: block;
+            background-color: #d7f2ff;
+            bottom: -2px;
+        }
     }
 }
 
 .node {
+    position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -42,7 +61,21 @@
     .tree-input {
         width: 100%;
         margin-left: 3px;
+        font-family: var(--default-font)
     }
+
+    &:after,
+    &:before {
+        content: '';
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: #d7f2ff;
+        pointer-events: none;
+    }
+
 
     &.open + ul {
         display: block;
