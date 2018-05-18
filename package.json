@@ -15,8 +15,11 @@
     "author": "Andreas Herd",
     "license": "MIT",
     "dependencies": {
+        "@mdi/font": "^2.3.54",
         "@nx-js/observer-util": "4.1.2",
-        "navigo": "7.1.2"
+        "navigo": "7.1.2",
+        "obj-str": "^1.0.0",
+        "shim-keyboard-event-key": "^1.0.2"
     },
     "peerDependencies": {
         "preact": "^8.2.9"

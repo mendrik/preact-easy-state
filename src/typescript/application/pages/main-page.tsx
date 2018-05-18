@@ -3,189 +3,71 @@ import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
+import {InputText} from '../../components/input-text/input-text'
+import {observable} from '@nx-js/observer-util'
+import {WithLabel} from '../../components/forms/with-label'
+import {Tree, TreeNode} from '../../components/tree/tree'
+import {Get} from '../../decorators/fetch'
+import {Tabs} from '../../components/tabs/tabs'
+import {Tab} from '../../components/tabs/tab'
+
+class CustomNode extends TreeNode<string> {
+
+    constructor(text: string, value: string, children: CustomNode[], icon?: string) {
+        super(text, value, children, icon)
+    }
+}
+
+class Model {
+    text = 'My little demo text'
+    tree: CustomNode[] = []
+}
+
+const model = observable(new Model())
+
+const field = (field: keyof Model) => (val) => model[field] = val
 
 @View
 export class MainPage extends QuillComponent {
 
+    @Get('/tree.json')
+    fetchTree: () => Promise<any>
+
+    async componentDidMount() {
+        const tree = await this.fetchTree()
+        model.tree.push(...tree.houses.map(house =>
+            new CustomNode(house.name, house.wikiSuffix, house.people.map(person =>
+                new CustomNode(person.name, person.wikiSuffix, (person.people || []).map(person =>
+                    new CustomNode(person.name, person.wikiSuffix, [], 'mdi-account')
+                ), 'mdi-account')
+            ))
+        ))
+    }
+
     render() {
         return (
             <div class="application">
-                <nav class="header"/>
-                <ScrollPane className="app-content">
+                <nav class="header" data-locale="navigation.title"/>
+                <ScrollPane class="app-content">
                     <HorizontalSplit>
-                        <div>
-                            Replica of an Allosaurus skeleton.<br/>
-                            Aachenosaurus – a piece of petrified wood<br/>
-                            Aardonyx<br/>
-                            Abdallahsaurus – nomen nudum, probably Giraffatitan<br/>
-                            Abelisaurus<br/>
-                            Abrictosaurus<br/>
-                            Abrosaurus<br/>
-                            Abydosaurus<br/>
-                            Acanthopholis<br/>
-                            Achelousaurus<br/>
-                            Acheroraptor<br/>
-                            Achillesaurus<br/>
-                            Achillobator<br/>
-                            Acristavus<br/>
-                            Acrocanthosaurus<br/>
-                            Acrotholus<br/>
-                            Actiosaurus – a choristoderan<br/>
-                            Adamantisaurus<br/>
-                            Adasaurus<br/>
-                            Adelolophus<br/>
-                            Adeopapposaurus<br/>
-                            Aegyptosaurus<br/>
-                            Aeolosaurus<br/>
-                            Aepisaurus<br/>
-                            Aepyornithomimus<br/>
-                            Aerosteon<br/>
-                            Aetonyx – possible junior synonym of Massospondylus<br/>
-                            Afromimus<br/>
-                            Afrovenator<br/>
-                            Agathaumas - possible synonym of Triceratops<br/>
-                            Aggiosaurus – a metriorhynchid crocodilian<br/>
-                            Agilisaurus<br/>
-                            Agnosphitys<br/>
-                            Agrosaurus – probably a junior synonym of Thecodontosaurus<br/>
-                            Agujaceratops<br/>
-                            Agustinia<br/>
-                            Ahshislepelta<br/>
-                            Airakoraptor - nomen nudum<br/>
-                            Ajancingenia - synonym of Heyuannia<br/>
-                            Ajkaceratops<br/>
-                            Alamosaurus<br/>
-                            Alaskacephale<br/>
-                            Albalophosaurus<br/>
-                            Albertaceratops<br/>
-                            Albertadromeus<br/>
-                            Albertavenator<br/>
-                            Albertonykus<br/>
-                            Albertosaurus<br/>
-                            Albinykus[1]<br/>
-                            Albisaurus – a non-dinosaurian reptile<br/>
-                            Alcovasaurus<br/>
-                            Alectrosaurus<br/>
-                            Aletopelta<br/>
-                            Algoasaurus<br/>
-                            Alioramus<br/>
-                            Artist's reconstruction of Amargasaurus.<br/>
-                            Aliwalia – junior synonym of Eucnemesaurus<br/>
-                            Allosaurus<br/>
-                            Almas<br/>
-                            Alnashetri<br/>
-                            Alocodon<br/>
-                            Altirhinus<br/>
-                            Altispinax<br/>
-                            Alvarezsaurus<br/>
-                            Alwalkeria<br/>
-                            Alxasaurus<br/>
-                            Amargasaurus<br/>
-                            Amargastegos<br/>
-                            Amargatitanis<br/>
-                            Amazonsaurus<br/>
-                            Ammosaurus - possible junior synonym of Anchisaurus<br/>
-                            Ampelosaurus<br/>
-                            Amphicoelias<br/>
-                            Amphicoelicaudia – nomen nudum; possibly Huabeisaurus<br/>
-                            Amphisaurus – preoccupied name, now known as Anchisaurus<br/>
-                            Amtocephale<br/>
-                            Amtosaurus – possibly Talarurus<br/>
-                            Amurosaurus<br/>
-                            Amygdalodon<br/>
-                            Anabisetia<br/>
-                            Anasazisaurus<br/>
-                            Anatosaurus – junior synonym of Edmontosaurus<br/>
-                            Anatotitan – junior synonym of Edmontosaurus<br/>
-                            Anchiceratops<br/>
-                            Anchiornis<br/>
+                        <div class="panel">
+                            <Tree treeNodes={model.tree} editable={true}/>
                         </div>
-                        <div>
-                            Replica of an Allosaurus skeleton.<br/>
-                            Aachenosaurus – a piece of petrified wood<br/>
-                            Aardonyx<br/>
-                            Abdallahsaurus – nomen nudum, probably Giraffatitan<br/>
-                            Abelisaurus<br/>
-                            Abrictosaurus<br/>
-                            Abrosaurus<br/>
-                            Abydosaurus<br/>
-                            Acanthopholis<br/>
-                            Achelousaurus<br/>
-                            Acheroraptor<br/>
-                            Achillesaurus<br/>
-                            Achillobator<br/>
-                            Acristavus<br/>
-                            Acrocanthosaurus<br/>
-                            Acrotholus<br/>
-                            Actiosaurus – a choristoderan<br/>
-                            Adamantisaurus<br/>
-                            Adasaurus<br/>
-                            Adelolophus<br/>
-                            Adeopapposaurus<br/>
-                            Aegyptosaurus<br/>
-                            Aeolosaurus<br/>
-                            Aepisaurus<br/>
-                            Aepyornithomimus<br/>
-                            Aerosteon<br/>
-                            Aetonyx – possible junior synonym of Massospondylus<br/>
-                            Afromimus<br/>
-                            Afrovenator<br/>
-                            Agathaumas - possible synonym of Triceratops<br/>
-                            Aggiosaurus – a metriorhynchid crocodilian<br/>
-                            Agilisaurus<br/>
-                            Agnosphitys<br/>
-                            Agrosaurus – probably a junior synonym of Thecodontosaurus<br/>
-                            Agujaceratops<br/>
-                            Agustinia<br/>
-                            Ahshislepelta<br/>
-                            Airakoraptor - nomen nudum<br/>
-                            Ajancingenia - synonym of Heyuannia<br/>
-                            Ajkaceratops<br/>
-                            Alamosaurus<br/>
-                            Alaskacephale<br/>
-                            Albalophosaurus<br/>
-                            Albertaceratops<br/>
-                            Albertadromeus<br/>
-                            Albertavenator<br/>
-                            Albertonykus<br/>
-                            Albertosaurus<br/>
-                            Albinykus[1]<br/>
-                            Albisaurus – a non-dinosaurian reptile<br/>
-                            Alcovasaurus<br/>
-                            Alectrosaurus<br/>
-                            Aletopelta<br/>
-                            Algoasaurus<br/>
-                            Alioramus<br/>
-                            Artist's reconstruction of Amargasaurus.<br/>
-                            Aliwalia – junior synonym of Eucnemesaurus<br/>
-                            Allosaurus<br/>
-                            Almas<br/>
-                            Alnashetri<br/>
-                            Alocodon<br/>
-                            Altirhinus<br/>
-                            Altispinax<br/>
-                            Alvarezsaurus<br/>
-                            Alwalkeria<br/>
-                            Alxasaurus<br/>
-                            Amargasaurus<br/>
-                            Amargastegos<br/>
-                            Amargatitanis<br/>
-                            Amazonsaurus<br/>
-                            Ammosaurus - possible junior synonym of Anchisaurus<br/>
-                            Ampelosaurus<br/>
-                            Amphicoelias<br/>
-                            Amphicoelicaudia – nomen nudum; possibly Huabeisaurus<br/>
-                            Amphisaurus – preoccupied name, now known as Anchisaurus<br/>
-                            Amtocephale<br/>
-                            Amtosaurus – possibly Talarurus<br/>
-                            Amurosaurus<br/>
-                            Amygdalodon<br/>
-                            Anabisetia<br/>
-                            Anasazisaurus<br/>
-                            Anatosaurus – junior synonym of Edmontosaurus<br/>
-                            Anatotitan – junior synonym of Edmontosaurus<br/>
-                            Anchiceratops<br/>
-                            Anchiornis<br/>
+                        <div class="panel">
+                            <WithLabel name="Test input">
+                                <InputText changes={field('text')} iconLeft="account" value={model.text}/>
+                            </WithLabel>
+                            <Tabs class="is-boxed is-small" id="demo-tabs">
+                                <Tab text="Tab A" icon="car-side">
+                                    Content A
+                                </Tab>
+                                <Tab text="Tab B" icon="car-estate">
+                                    Content B
+                                </Tab>
+                                <Tab text="Tab C" icon="car-convertible">
+                                    Content C
+                                </Tab>
+                            </Tabs>
                         </div>
                     </HorizontalSplit>
                 </ScrollPane>

@@ -1,4 +1,4 @@
-import {ensure} from '../util/ensure'
+import {ensure, resolve} from '../util/ensure'
 import {observable, observe} from '@nx-js/observer-util'
 import {QuillComponentClass} from '../util/quill-component'
 
@@ -8,17 +8,20 @@ export function LocalStorage(Base: { new(...args: any[])}): any {
     return class LocalStorage extends Base {
         constructor(...args) {
             super(...args)
-            const key = Object.getPrototypeOf(Object.getPrototypeOf(this))
-            const observed = observable(this)
-            if (localStorageQueue.has(key)) {
-                localStorageQueue.get(key).forEach(handler => {
+            const handlers = resolve(localStorageQueue, this)
+            if (handlers) {
+                const observed = observable(this)
+                handlers.forEach(handler => {
+                    const key = typeof handler.key === 'string' ?
+                        handler.key :
+                        handler.key(observed)
                     try {
-                        observed[handler.property] = handler.reader(localStorage.getItem(handler.key))
+                        observed[handler.property] = handler.reader(localStorage.getItem(key))
                     } catch (e) {
                         // ignore
                     }
                     observe(() => {
-                        localStorage.setItem(handler.key, handler.writer(observed[handler.property]))
+                        localStorage.setItem(key, handler.writer(observed[handler.property]))
                     })
                 })
             }
@@ -35,11 +38,13 @@ export type Writer = <T>(input: T) => string
 interface PropertyHandler {
     reader: Reader,
     writer: Writer,
-    key: string,
+    key: StringFactory,
     property: string
 }
 
-export const Store = (key: string, reader: Reader = defaultReader, writer: Writer = defaultWriter) => (proto: QuillComponentClass, property: string) => {
+export type StringFactory = ((v: any) => string) | string
+
+export const Store = (key: StringFactory, reader: Reader = defaultReader, writer: Writer = defaultWriter) => (proto: QuillComponentClass, property: string) => {
     ensure(localStorageQueue, proto, [{key, reader, writer, property}])
 }
 

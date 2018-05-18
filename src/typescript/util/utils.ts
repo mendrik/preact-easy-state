@@ -8,3 +8,14 @@ export const scrollBarWidth = (): number => {
     outside.parentNode.removeChild(outside)
     return scrollbar
 }
+
+export const domReady = (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        document.addEventListener('DOMContentLoaded', () => {
+            resolve()
+        })
+    })
+}
+
+export const box = (x: number, min: number, max: number) =>
+    Math.min(Math.max(x, min), max)
