@@ -52,8 +52,6 @@ export class TreeNode<T> {
     }
 }
 
-
-
 @View
 export class Tree<T> extends QuillComponent<TreeProps<T>> {
 
@@ -65,24 +63,27 @@ export class Tree<T> extends QuillComponent<TreeProps<T>> {
         console.log(drop)
     }
 
-    render({...props}) {
+    render({treeNodes, editable, ...props}) {
         const className = props.class
         props.class = os({[className]: className, tree: 1})
         return (
             <ul {...props}>
-                {this.props.treeNodes.map(n => renderNode(n, this.onDrop))}
+                {treeNodes.map(n => renderNode(n, treeNodes, this.onDrop, editable))}
             </ul>
         )
     }
-
-    openNodes = (nodes: TreeNode<T>[]): TreeNode<T>[] => nodes.reduce((p, c) => {
-        return (c.open && c.children.length) ?
-            [...p, c, ...this.openNodes(c.children)] :
-            [...p, c]
-    }, [])
 }
 
-const renderNode = <T extends any>(node: TreeNode<T>, onDrop: (ev: NodeDrop) => void) => {
+const openNodes = <T extends any>(nodes: TreeNode<T>[]): TreeNode<T>[] => nodes.reduce((p, c) => {
+    return (c.open && c.children.length) ?
+        [...p, c, ...openNodes(c.children)] :
+        [...p, c]
+}, [])
+
+const renderNode = <T extends any>(node: TreeNode<T>,
+                                   treeNodes: TreeNode<T>[],
+                                   onDrop: (ev: NodeDrop) => void,
+                                   editable: boolean) => {
 
     const icon = () => {
         if (node.children.length) {
@@ -99,12 +100,12 @@ const renderNode = <T extends any>(node: TreeNode<T>, onDrop: (ev: NodeDrop) => 
     }
 
     const go = (direction: number) => {
-        const openNodes = this.openNodes(this.props.treeNodes)
+        const nodes = openNodes(treeNodes)
         const index = box(
-            openNodes.findIndex(n => node === n) + direction,
-            0, openNodes.length - 1
+            nodes.findIndex(n => node === n) + direction,
+            0, nodes.length - 1
         )
-        focus(openNodes[index])
+        focus(nodes[index])
     }
 
     const focus = (node: TreeNode<T>) => {
@@ -113,7 +114,7 @@ const renderNode = <T extends any>(node: TreeNode<T>, onDrop: (ev: NodeDrop) => 
     }
 
     const startEditing = () => {
-        if (!this.props.editable) {
+        if (!editable) {
             return
         }
         node.editing = true
@@ -216,7 +217,7 @@ const renderNode = <T extends any>(node: TreeNode<T>, onDrop: (ev: NodeDrop) => 
                 }
             </div>
             <ul>
-                {node.children.map(n => renderNode(n, onDrop))}
+                {node.children.map(n => renderNode(n, treeNodes, onDrop, editable))}
             </ul>
         </li>
     )
