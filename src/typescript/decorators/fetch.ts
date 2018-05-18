@@ -53,6 +53,14 @@ const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (pr
     })
 }
 
+export const fetchJson = async (url: string): Promise<{}> => {
+    const fetcher = {
+        fetch: () => 0
+    }
+    Get('/locales.json')(fetcher, 'fetch')
+    return fetcher.fetch()
+}
+
 export const Get = Fetch('GET')
 export const Post = Fetch('POST')
 export const Delete = Fetch('DELETE')

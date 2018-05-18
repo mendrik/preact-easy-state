@@ -5,6 +5,7 @@ import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
 import './horizontal-split.pcss'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import {observable} from '@nx-js/observer-util'
+import os from 'obj-str'
 
 @LocalStorage
 class Model {
@@ -12,22 +13,22 @@ class Model {
     dragging: boolean
 }
 
-const model = observable(new Model())
-
 @View
 export class HorizontalSplit extends QuillComponent {
+
+    model = observable(new Model())
 
     @PanX('.handle')
     onPanX(ev: CustomEvent<PanXEventInit>) {
         const {phase, x} = {...ev.detail}
         if (phase === Phase.start) {
-            model.dragging = true
+            this.model.dragging = true
         }
-        else if (model.dragging && phase === Phase.move) {
-            model.width = x
+        else if (this.model.dragging && phase === Phase.move) {
+            this.model.width = x
         }
         else {
-            model.dragging = false
+            this.model.dragging = false
         }
     }
 
@@ -35,9 +36,9 @@ export class HorizontalSplit extends QuillComponent {
         if (children.length !== 2) {
             throw Error('Horizontal split needs two child components')
         }
-        children[0].attributes = {style: {width: `${model.width}px`}}
+        children[0].attributes = {...children[0].attributes, style: {width: `${this.model.width}px`}}
         return (
-            <div class={`${model.dragging ? 'dragging' : ''} horizontal-split`}>
+            <div class={os({dragging: this.model.dragging, 'horizontal-split': 1})}>
                 {children[0]}
                 <div class="handle"/>
                 {children[1]}

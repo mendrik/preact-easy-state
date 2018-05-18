@@ -1,6 +1,12 @@
 .horizontal-split {
     display: flex;
     align-items: stretch;
+    min-height: 100%;
+
+    &.dragging {
+        user-select: none;
+        cursor: ew-resize;
+    }
 
     > :first-child {
         flex: none;
