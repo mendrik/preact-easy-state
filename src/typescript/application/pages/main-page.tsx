@@ -6,12 +6,13 @@ import {ScrollPane} from '../../components/scroll-pane/scrollpane'
 import {InputText} from '../../components/input-text/input-text'
 import {observable} from '@nx-js/observer-util'
 import {WithLabel} from '../../components/forms/with-label'
-import {Tree} from '../../components/tree/tree'
+import {NodeDrop, Tree} from '../../components/tree/tree'
 import {Get} from '../../decorators/fetch'
 import {Tabs} from '../../components/tabs/tabs'
 import {Tab} from '../../components/tabs/tab'
 import {Cell, Grid} from '../../components/grid/grid'
 import {TreeNodeModel} from '../../components/tree/tree-node'
+import {CustomEvent} from '../../decorators/custom-event'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -54,6 +55,9 @@ export class MainPage extends QuillComponent {
         model.tree.push(...toTreeNodes(tree))
         model.data = data.split(/\n/).map(line => line.split(/,/))
     }
+
+    @CustomEvent('nodeDrop')
+    nodeDrop = (drop: NodeDrop) => console.log(drop)
 
     render() {
         return (
