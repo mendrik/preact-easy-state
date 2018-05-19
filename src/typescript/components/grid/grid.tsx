@@ -18,6 +18,8 @@ export interface GridProps extends JSX.HTMLAttributes {
 @View
 export class Grid extends QuillComponent<GridProps> {
 
+    grid: HTMLDivElement
+
     constructor(props) {
         super(observable(props))
     }
@@ -35,10 +37,14 @@ export class Grid extends QuillComponent<GridProps> {
         props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
             <ScrollPane style={{height: '300px', border: 'var(--border)'}}>
-                <div {...props}>
-                    {cells.map((c, idx) => this.renderRow(idx === 0 ? 'header' : 'cell', c))}
+                <div {...props} ref={(g) => this.grid = g}>
+                    {cells.map((c, idx) => this.renderRow(this.getRowRole(idx), c))}
                 </div>
             </ScrollPane>
         )
+    }
+
+    getRowRole = (idx) => {
+        return idx === 0 ? 'header' : (idx % 2 !== 0 ? 'cell' : 'cell-even')
     }
 }

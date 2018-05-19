@@ -2,10 +2,19 @@
     display: grid;
     font-size: .85em;
 
-    [role='cell'] {
-        padding: 1px 2px;
-        border-right: var(--hairline);
-        border-bottom: var(--hairline);
+    [role='cell'],
+    [role='cell-even'] {
+        padding: 1px 5px;
+        border-right: 1px solid white;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    [role='cell-even'] {
+        background-color: #fafafa;
     }
 
     &.editable [role='cell'] {
@@ -14,8 +23,9 @@
 
     [role='header'] {
         position: sticky;
-        top: 0;
         background-color: whitesmoke;
+        border-bottom: var(--hairline);
+        top: 0;
         padding: 2px;
     }
 }

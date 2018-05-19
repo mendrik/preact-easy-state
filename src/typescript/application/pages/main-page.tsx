@@ -59,11 +59,11 @@ export class MainPage extends QuillComponent {
     async componentDidMount() {
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
-        model.data = data.split(/\n/).map(line =>
-            line.split(/,/).map(value =>
+        model.data = data.split(/\n\s*/g).filter(l => !!l).map(line => {
+            return line.split(/\s*,\s*/).map(value =>
                 new CustomCell(value.replace(/"?(.*?)"?/gi, '$1'))
             )
-        )
+        })
     }
 
     @CustomEvent('nodeDrop')
