@@ -13,6 +13,7 @@ import {Tab} from '../../components/tabs/tab'
 import {Cell, Grid} from '../../components/grid/grid'
 import {TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
+import {DatePicker} from '../../components/date-picker/date-picker'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -30,6 +31,7 @@ class CustomCell implements Cell {
 
 class Model {
     text = 'My little demo text'
+    date = new Date()
     tree: CustomNode[] = []
     data: Cell[][] = [[]]
 }
@@ -81,6 +83,9 @@ export class MainPage extends QuillComponent {
                         <div class="panel page">
                             <WithLabel name="Test input">
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
+                            </WithLabel>
+                            <WithLabel name="Test date input">
+                                <DatePicker changes={field('date')} format="DD.MM.YYYY" value={model.date}/>
                             </WithLabel>
                             <Tabs class="is-boxed is-small" id="demo-tabs">
                                 <Tab text="Tab A" icon="car-side">
