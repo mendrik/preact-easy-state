@@ -16,14 +16,12 @@
         -ms-overflow-style: scrollbar;
         pointer-events: auto;
         width: calc(100% + var(--scrollbar-width));
-        padding-right: var(--track-width);
         overflow-x: hidden;
         overflow-y: scroll;
     }
 
     .track {
-        transition: opacity .2s linear;
-        opacity: 0;
+        transition: opacity .3s linear;
         position: absolute;
         width: var(--track-width);
         top: 0;
@@ -32,16 +30,17 @@
         z-index: 1;
     }
 
-    &:hover .track {
+    &.hover > .track > .thumb {
         opacity: 1;
     }
 
     .thumb {
         position: absolute;
+        opacity: 0;
         width: var(--track-width);
         left: 0;
         top: var(--thumb-top);
         height: var(--thumb-height);
-        background-color: rgba(100, 100, 100, .5);
+        background-color: rgba(220, 220, 220, .5);
     }
 }

@@ -4,6 +4,7 @@ import {View} from '../../decorators/view'
 import os from 'obj-str'
 import './grid.pcss'
 import {observable} from '@nx-js/observer-util'
+import {ScrollPane} from '../scroll-pane/scrollpane'
 
 export interface Cell {
     toString(): string
@@ -20,18 +21,23 @@ export class Grid extends QuillComponent<GridProps> {
         super(observable(props))
     }
 
-    renderCell = (cell: Cell) => <div>{cell.toString()}</div>
+    renderCell = (role: string, cell: Cell) =>
+        <div role={role}>{cell.toString()}</div>
 
-    renderRow = (row: Cell[]) => row.map(this.renderCell)
+    renderRow = (role: string, row: Cell[]) => row.map(
+        cell => this.renderCell(role, cell)
+    )
 
     render({children, cells, ...props}) {
         const className = props.class
         props.class = os({[className]: className, grid: 1})
-        props.style = {gridTemplateColumns: cells[0].map(c => 'auto')}
+        props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
-            <div {...props}>
-                {cells.map(this.renderRow)}
-            </div>
+            <ScrollPane style={{height: '300px', border: 'var(--border)'}}>
+                <div {...props}>
+                    {cells.map((c, idx) => this.renderRow(idx === 0 ? 'header' : 'cell', c))}
+                </div>
+            </ScrollPane>
         )
     }
 }
