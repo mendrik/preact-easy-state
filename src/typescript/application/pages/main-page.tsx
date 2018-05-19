@@ -93,7 +93,7 @@ export class MainPage extends QuillComponent {
                                     Content C
                                 </Tab>
                             </Tabs>
-                            <Grid cells={model.data}/>
+                            <Grid cells={model.data} editable={true}/>
                         </div>
                     </HorizontalSplit>
                 </ScrollPane>

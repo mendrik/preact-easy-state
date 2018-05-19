@@ -12,6 +12,7 @@ export interface Cell {
 
 export interface GridProps extends JSX.HTMLAttributes {
     cells: Cell[][]
+    editable: boolean
 }
 
 @View
@@ -28,9 +29,9 @@ export class Grid extends QuillComponent<GridProps> {
         cell => this.renderCell(role, cell)
     )
 
-    render({children, cells, ...props}) {
+    render({children, editable, cells, ...props}) {
         const className = props.class
-        props.class = os({[className]: className, grid: 1})
+        props.class = os({[className]: className, grid: 1, editable})
         props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
             <ScrollPane style={{height: '300px', border: 'var(--border)'}}>
