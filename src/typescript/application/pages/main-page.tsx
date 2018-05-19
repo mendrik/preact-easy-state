@@ -18,14 +18,20 @@ class CustomNode extends TreeNodeModel<string> {
 
 }
 
-class CustomCell extends Cell {
+class CustomCell implements Cell {
+    text: string
 
+    constructor(text: string) {
+        this.text = text
+    }
+
+    toString = () => this.text
 }
 
 class Model {
     text = 'My little demo text'
     tree: CustomNode[] = []
-    data: Cell[][] = []
+    data: Cell[][] = [[]]
 }
 
 const model = observable(new Model())
@@ -53,7 +59,11 @@ export class MainPage extends QuillComponent {
     async componentDidMount() {
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
-        model.data = data.split(/\n/).map(line => line.split(/,/))
+        model.data = data.split(/\n/).map(line =>
+            line.split(/,/).map(value =>
+                new CustomCell(value.replace(/"?(.*?)"?/gi, '$1'))
+            )
+        )
     }
 
     @CustomEvent('nodeDrop')
