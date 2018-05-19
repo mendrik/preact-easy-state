@@ -73,12 +73,12 @@ export class MainPage extends QuillComponent {
         return (
             <div class="application">
                 <nav class="header" data-locale="navigation.title"/>
-                <ScrollPane class="app-content">
+                <ScrollPane class="app-content" trackWidth={6}>
                     <HorizontalSplit>
                         <div class="panel">
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
-                        <div class="panel">
+                        <div class="panel page">
                             <WithLabel name="Test input">
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
                             </WithLabel>

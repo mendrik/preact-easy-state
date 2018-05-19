@@ -13,8 +13,12 @@ class Model {
     hover = false
 }
 
+export interface ScrollPaneProps extends JSX.HTMLAttributes{
+    trackWidth: number
+}
+
 @View
-export class ScrollPane extends QuillComponent<JSX.HTMLAttributes> {
+export class ScrollPane extends QuillComponent<ScrollPaneProps> {
 
     model: Model
 
@@ -25,6 +29,7 @@ export class ScrollPane extends QuillComponent<JSX.HTMLAttributes> {
 
     componentDidMount() {
         this.base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
+        this.base.style.setProperty('--track-width', `${this.props.trackWidth}px`)
         requestAnimationFrame(() => this.calculateThumb())
     }
 

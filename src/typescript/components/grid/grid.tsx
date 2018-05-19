@@ -36,7 +36,7 @@ export class Grid extends QuillComponent<GridProps> {
         props.class = os({[className]: className, grid: 1, editable})
         props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
-            <ScrollPane style={{height: '300px', border: 'var(--border)'}}>
+            <ScrollPane style={{height: '300px', border: 'var(--border)'}} trackWidth={3}>
                 <div {...props} ref={(g) => this.grid = g}>
                     {cells.map((c, idx) => this.renderRow(this.getRowRole(idx), c))}
                 </div>
