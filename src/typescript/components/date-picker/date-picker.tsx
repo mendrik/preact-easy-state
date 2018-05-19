@@ -6,6 +6,7 @@ import formatDate from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import './date-picker.pcss'
 import addMonths from 'date-fns/add_months'
+import subMonths from 'date-fns/sub_months'
 import os from 'obj-str'
 import {DocumentClick} from '../../decorators/document-click'
 import {SnapScroll} from '../snap-scroll/snap-scroll'
@@ -52,7 +53,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         console.log(panel)
     }
 
-    previousMonth = () => addMonths(this.model.currentMonth, -1)
+    previousMonth = () => subMonths(this.model.currentMonth, 1)
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
     render({children, name, changes, value, format, ...props}) {

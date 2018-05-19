@@ -1,0 +1,13 @@
+.snap-scroll {
+    --slides: 1;
+    overflow: hidden;
+
+    > ul {
+        display: flex;
+        width: calc(100% * var(--slides));
+
+        > li {
+            width: 100%;
+        }
+    }
+}

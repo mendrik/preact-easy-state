@@ -1,6 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
+import './snap-scroll.pcss'
 
 interface SnapScrollProps extends JSX.HTMLAttributes {
     onPanelChanged: (panel: number) => void
@@ -9,9 +10,17 @@ interface SnapScrollProps extends JSX.HTMLAttributes {
 @View
 export class SnapScroll extends QuillComponent<SnapScrollProps> {
 
+
+    componentDidMount() {
+        this.base.style.setProperty('--slides', `${this.props.children.length}`)
+        console.log(this.props.children.length, this.base)
+    }
+
     render({children, onPanelChanged, ...props}) {
         return (
-            <ul>{children}</ul>
+            <div class="snap-scroll">
+                <ul>{children}</ul>
+            </div>
         )
     }
 }
