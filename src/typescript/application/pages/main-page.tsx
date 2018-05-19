@@ -10,6 +10,7 @@ import {Tree, TreeNode} from '../../components/tree/tree'
 import {Get} from '../../decorators/fetch'
 import {Tabs} from '../../components/tabs/tabs'
 import {Tab} from '../../components/tabs/tab'
+import {Cell, Grid} from '../../components/grid/grid'
 
 class CustomNode extends TreeNode<string> {
 
@@ -21,11 +22,22 @@ class CustomNode extends TreeNode<string> {
 class Model {
     text = 'My little demo text'
     tree: CustomNode[] = []
+    data: Cell[][] = []
 }
 
 const model = observable(new Model())
 
 const field = (field: keyof Model) => (val) => model[field] = val
+
+const toTreeNodes = (tree) => {
+    return tree.houses.map(house =>
+        new CustomNode(house.name, house.wikiSuffix, house.people.map(person =>
+            new CustomNode(person.name, person.wikiSuffix, (person.people || []).map(person =>
+                new CustomNode(person.name, person.wikiSuffix, [], 'mdi-account')
+            ), 'mdi-account')
+        ))
+    )
+}
 
 @View
 export class MainPage extends QuillComponent {
@@ -33,15 +45,13 @@ export class MainPage extends QuillComponent {
     @Get('/tree.json')
     fetchTree: () => Promise<any>
 
+    @Get('/data.csv', {processor: (res: Response) => res.text()})
+    fetchData: () => Promise<any>
+
     async componentDidMount() {
-        const tree = await this.fetchTree()
-        model.tree.push(...tree.houses.map(house =>
-            new CustomNode(house.name, house.wikiSuffix, house.people.map(person =>
-                new CustomNode(person.name, person.wikiSuffix, (person.people || []).map(person =>
-                    new CustomNode(person.name, person.wikiSuffix, [], 'mdi-account')
-                ), 'mdi-account')
-            ))
-        ))
+        const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
+        model.tree.push(...toTreeNodes(tree))
+        console.log(data)
     }
 
     render() {
@@ -68,6 +78,7 @@ export class MainPage extends QuillComponent {
                                     Content C
                                 </Tab>
                             </Tabs>
+                            <Grid cells={model.data}/>
                         </div>
                     </HorizontalSplit>
                 </ScrollPane>
