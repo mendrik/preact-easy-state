@@ -6,17 +6,19 @@ import {ScrollPane} from '../../components/scroll-pane/scrollpane'
 import {InputText} from '../../components/input-text/input-text'
 import {observable} from '@nx-js/observer-util'
 import {WithLabel} from '../../components/forms/with-label'
-import {Tree, TreeNode} from '../../components/tree/tree'
+import {Tree} from '../../components/tree/tree'
 import {Get} from '../../decorators/fetch'
 import {Tabs} from '../../components/tabs/tabs'
 import {Tab} from '../../components/tabs/tab'
 import {Cell, Grid} from '../../components/grid/grid'
+import {TreeNodeModel} from '../../components/tree/tree-node'
 
-class CustomNode extends TreeNode<string> {
+class CustomNode extends TreeNodeModel<string> {
 
-    constructor(text: string, value: string, children: CustomNode[], icon?: string) {
-        super(text, value, children, icon)
-    }
+}
+
+class CustomCell extends Cell {
+
 }
 
 class Model {
@@ -29,15 +31,14 @@ const model = observable(new Model())
 
 const field = (field: keyof Model) => (val) => model[field] = val
 
-const toTreeNodes = (tree) => {
-    return tree.houses.map(house =>
-        new CustomNode(house.name, house.wikiSuffix, house.people.map(person =>
-            new CustomNode(person.name, person.wikiSuffix, (person.people || []).map(person =>
-                new CustomNode(person.name, person.wikiSuffix, [], 'mdi-account')
-            ), 'mdi-account')
-        ))
-    )
-}
+const customTreeModel = (name: string, value: string, people: any[], icon?: string) =>
+    new TreeNodeModel<string>(name, value, (people || []).map(person =>
+        customTreeModel(person.name, person.wikiSuffix, person.people, 'mdi-account')
+    ), icon)
+
+const toTreeNodes = (tree) => tree.houses.map(house =>
+    customTreeModel(house.name, house.wikiSuffix, house.people)
+)
 
 @View
 export class MainPage extends QuillComponent {
@@ -51,7 +52,7 @@ export class MainPage extends QuillComponent {
     async componentDidMount() {
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
-        console.log(data)
+        model.data = data.split(/\n/).map(line => line.split(/,/))
     }
 
     render() {
