@@ -15,6 +15,7 @@ class Model {
 
 export interface ScrollPaneProps extends JSX.HTMLAttributes{
     trackWidth: number
+    scrollToSelector?: string // todo scroll to this on mount
 }
 
 @View

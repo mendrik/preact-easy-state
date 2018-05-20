@@ -59,8 +59,13 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
     render({children, name, changes, value, format, ...props}) {
-        const years = range(1950, 2020).map(year => <li>{year}</li>)
-        const months = range(0, 12).map(month => <li>{formatDate(new Date(2018, month, 1), 'MMM')}</li>)
+        const now = new Date()
+        const years = range(1950, 2020).map(year =>
+            <li class={os({'current-year': now.getFullYear() === year})}>{year}</li>
+        )
+        const months = range(0, 11).map(month =>
+            <li>{formatDate(new Date(2018, month, 1), 'MMM')}</li>
+        )
         return (
             <div class={os({
                 'control has-icons-right date-picker dropdown': 1,
@@ -76,7 +81,9 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="selector-elements">
-                                <ScrollPane class="picker-section" trackWidth={2}>
+                                <ScrollPane class="picker-section"
+                                            trackWidth={2}
+                                            scrollToSelector="current-year">
                                     <ul class="years">{years}</ul>
                                 </ScrollPane>
                                 <ul class="picker-section months">{months}</ul>

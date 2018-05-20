@@ -13,7 +13,7 @@ interface MonthProps {
     onDateClick: (date: Date) => void
 }
 
-const DAYS_RANGE = range(0, 42)
+const DAYS_RANGE = range(0, 41)
 
 @View
 export class Month extends QuillComponent<MonthProps> {
