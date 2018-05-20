@@ -14,6 +14,7 @@ import {Month} from './month'
 import {range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {InputText} from '../input-text/input-text'
+import {InputNumber} from '../input-number/input-number'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -99,10 +100,13 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
                                     <ul class="time-selector">
-                                        <li>Today</li>
-                                        <li class="hours"/>
-                                        <li class="minutes"/>
-                                        <li>Ok</li>
+                                        <li><button class="button is-small">Today</button></li>
+                                        <li class="time">
+                                            <InputText changes={() => 0}
+                                                         iconRight="clock"
+                                                         placeHolder="hh:mm"/>
+                                        </li>
+                                        <li><button class="button is-small is-primary">Ok</button></li>
                                     </ul>
                                 </div>
                             </div>

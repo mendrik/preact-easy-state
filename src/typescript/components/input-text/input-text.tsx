@@ -14,6 +14,8 @@ interface InputTextProps extends FormProps<string> {
 @View
 export class InputText extends QuillComponent<InputTextProps> {
 
+    getType = () => 'text'
+
     onChange = (ev: Event) => {
         this.props.changes((ev.target as HTMLInputElement).value)
     }
@@ -30,11 +32,12 @@ export class InputText extends QuillComponent<InputTextProps> {
         </span>
     )
 
-    render({children, name, changes, value, iconLeft, iconRight, ...props}) {
+    render({children, name, changes, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
             <div class={os({control: 1, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
-                <input type="text"
+                <input type={this.getType()}
                        class="input is-small"
+                       placeholder={placeHolder}
                        name={name}
                        value={value}
                        onChange={this.onChange}/>
