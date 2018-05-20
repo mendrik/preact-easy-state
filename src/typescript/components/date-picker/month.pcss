@@ -22,5 +22,16 @@
     .days {
         height: 180px;
         grid-template-rows: auto auto auto auto auto auto;
+
+        > li {
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                background-color: whitesmoke;
+            }
+        }
     }
 }

@@ -90,7 +90,15 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                 </ScrollPane>
                                 <ul class="picker-section months">{months}</ul>
                                 <div class="date-time-picker">
-                                    <div class="title">March, 1st 2018</div>
+                                    <ul class="picker-title">
+                                        <li>
+                                            <span class="icon"><i class="mdi mdi-chevron-left"/></span>
+                                        </li>
+                                        <li class="current-date">March, 1st 2018</li>
+                                        <li>
+                                            <span class="icon"><i class="mdi mdi-chevron-right"/></span>
+                                        </li>
+                                    </ul>
                                     <SnapScroll onPanelChanged={this.monthChanged}>
                                         <Month month={this.previousMonth()}
                                                onDateClick={this.dateClick}/>
