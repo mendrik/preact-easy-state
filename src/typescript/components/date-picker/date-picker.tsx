@@ -11,6 +11,8 @@ import os from 'obj-str'
 import {DocumentClick} from '../../decorators/document-click'
 import {SnapScroll} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
+import {range} from '../../util/utils'
+import {ScrollPane} from '../scroll-pane/scrollpane'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -19,7 +21,7 @@ interface DatePickerProps extends FormProps<Date> {
 
 class Model {
     currentMonth: Date
-    dropDownVisible = false
+    dropDownVisible = true
 
     constructor(currentMonth: Date) {
         this.currentMonth = currentMonth
@@ -57,6 +59,8 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
     render({children, name, changes, value, format, ...props}) {
+        const years = range(1950, 2020).map(year => <li>{year}</li>)
+        const months = range(0, 12).map(month => <li>{formatDate(new Date(2018, month, 1), 'MMM')}</li>)
         return (
             <div class={os({
                 'control has-icons-right date-picker dropdown': 1,
@@ -71,14 +75,24 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                 {this.model.dropDownVisible ? (
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
-                            <SnapScroll onPanelChanged={this.monthChanged}>
-                                <Month month={this.previousMonth()}
-                                       onDateClick={this.dateClick}/>
-                                <Month month={this.model.currentMonth}
-                                       onDateClick={this.dateClick}/>
-                                <Month month={this.nextMonth()}
-                                       onDateClick={this.dateClick}/>
-                            </SnapScroll>
+                            <div class="selector-elements">
+                                <ScrollPane class="picker-section" trackWidth={2}>
+                                    <ul class="years">{years}</ul>
+                                </ScrollPane>
+                                <ul class="picker-section months">{months}</ul>
+                                <div class="date-time-picker">
+                                    <div class="title">March, 1st 2018</div>
+                                    <SnapScroll onPanelChanged={this.monthChanged}>
+                                        <Month month={this.previousMonth()}
+                                               onDateClick={this.dateClick}/>
+                                        <Month month={this.model.currentMonth}
+                                               onDateClick={this.dateClick}/>
+                                        <Month month={this.nextMonth()}
+                                               onDateClick={this.dateClick}/>
+                                    </SnapScroll>
+                                    <div>Time picker</div>
+                                </div>
+                            </div>
                         </div>
                     </div>): null}
             </div>

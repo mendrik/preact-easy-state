@@ -31,7 +31,7 @@ export class Month extends QuillComponent<MonthProps> {
 
     render({month, onDateClick, ...props}) {
         const daysToRender = this.getDays(month)
-        const weekDays = daysToRender.slice(0, 6).map(d => <li>{format(d, 'dd')}</li>)
+        const weekDays = daysToRender.slice(0, 7).map(d => <li>{format(d, 'ddd')}</li>)
         const days = daysToRender.map(d => <li onClick={() => onDateClick(d)}>{format(d, 'D')}</li>)
         return (
             <li class="month">

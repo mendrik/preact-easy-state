@@ -10,7 +10,49 @@
         }
     }
 
-    .dropdown-content {
-        max-width: 210px;
+    .selector-elements {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+
+        .picker-section {
+            border-right: var(--hairline);
+            max-height: 300px;
+        }
+
+        .snap-scroll {
+            max-width: 270px;
+        }
+
+        .years,
+        .months {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .months {
+            line-height: 1;
+            height: 300px;
+            justify-content: space-evenly;
+            padding: 0 10px;
+        }
     }
+
+    .date-time-picker {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .title {
+            font-size: 20px;
+            background-color: whitesmoke;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+    }
+
+
 }

@@ -59,7 +59,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
         this.base.parentElement.dispatchEvent(new CustomEvent('scrollIn', {bubbles: true}))
     }
 
-    render({children, ...props}) {
+    render({children, trackWidth, ...props}) {
         const className = props.class
         props.class = os({[className]: className, scrollpane: 1, hover: this.model.hover})
         props.onMouseEnter = this.mouseEnter

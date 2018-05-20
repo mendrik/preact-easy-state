@@ -3,13 +3,20 @@
     .days,
     .weekdays {
         display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         align-items: center;
         justify-items: center;
     }
 
     .weekdays {
-        grid-template-rows: 30px
+        grid-template-rows: 30px;
+
+        > li {
+            text-transform: uppercase;
+            font-family: monospace;
+            color: darkgray;
+            font-size: 12px;
+        }
     }
 
     .days {
