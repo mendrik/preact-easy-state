@@ -14,7 +14,6 @@ import {Month} from './month'
 import {range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {InputText} from '../input-text/input-text'
-import {InputNumber} from '../input-number/input-number'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -61,13 +60,6 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
     render({children, name, changes, value, format, ...props}) {
-        const now = new Date()
-        const years = range(1950, 2025).map(year =>
-            <li class={os({'current-year': now.getFullYear() === year})}>{year}</li>
-        )
-        const months = range(0, 11).map(month =>
-            <li>{formatDate(new Date(2018, month, 1), 'MMM')}</li>
-        )
         return (
             <div class={os({
                 'control has-icons-right date-picker dropdown': 1,
@@ -83,22 +75,10 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
                             <div class="selector-elements">
-                                <ScrollPane class="picker-section"
-                                            trackWidth={2}
-                                            scrollToSelector=".current-year">
-                                    <ul class="years">{years}</ul>
-                                </ScrollPane>
-                                <ul class="picker-section months">{months}</ul>
+                                {this.years()}
+                                {this.months()}
                                 <div class="date-time-picker">
-                                    <ul class="picker-title">
-                                        <li>
-                                            <span class="icon"><i class="mdi mdi-chevron-left"/></span>
-                                        </li>
-                                        <li class="current-date">March, 1st 2018</li>
-                                        <li>
-                                            <span class="icon"><i class="mdi mdi-chevron-right"/></span>
-                                        </li>
-                                    </ul>
+                                    {this.header()}
                                     <SnapScroll onPanelChanged={this.monthChanged}>
                                         <Month month={this.previousMonth()}
                                                onDateClick={this.dateClick}/>
@@ -107,15 +87,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                         <Month month={this.nextMonth()}
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
-                                    <ul class="time-selector">
-                                        <li><button class="button is-small">Today</button></li>
-                                        <li class="time">
-                                            <InputText changes={() => 0}
-                                                         iconRight="clock"
-                                                         placeHolder="hh:mm"/>
-                                        </li>
-                                        <li><button class="button is-small is-primary">Ok</button></li>
-                                    </ul>
+                                    {this.footer()}
                                 </div>
                             </div>
                         </div>
@@ -123,4 +95,49 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
             </div>
         )
     }
+
+    months = () => {
+        const months = range(0, 11).map(month =>
+            <li>{formatDate(new Date(2018, month, 1), 'MMM')}</li>
+        )
+        return <ul class="picker-section months">{months}</ul>
+    }
+
+    years = () => {
+        const now = new Date()
+        const years = range(1950, 2025).map(year =>
+            <li class={os({'current-year': now.getFullYear() === year})}>{year}</li>
+        )
+        return (
+            <ScrollPane class="picker-section"
+                        trackWidth={2}
+                        scrollToSelector=".current-year">
+                <ul class="years">{years}</ul>
+            </ScrollPane>
+        )
+    }
+
+    footer = () => (
+        <ul class="time-selector">
+            <li><button class="button is-small">Today</button></li>
+            <li class="time">
+                <InputText changes={() => 0}
+                           iconRight="clock"
+                           placeHolder="hh:mm"/>
+            </li>
+            <li><button class="button is-small is-primary">Ok</button></li>
+        </ul>
+    )
+
+    header = () => (
+        <ul class="picker-title">
+            <li>
+                <span class="icon"><i class="mdi mdi-chevron-left"/></span>
+            </li>
+            <li class="current-date">March, 1st 2018</li>
+            <li>
+                <span class="icon"><i class="mdi mdi-chevron-right"/></span>
+            </li>
+        </ul>
+    )
 }
