@@ -13,6 +13,7 @@ import {SnapScroll} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
 import {range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
+import {InputText} from '../input-text/input-text'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -60,7 +61,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     render({children, name, changes, value, format, ...props}) {
         const now = new Date()
-        const years = range(1950, 2020).map(year =>
+        const years = range(1950, 2025).map(year =>
             <li class={os({'current-year': now.getFullYear() === year})}>{year}</li>
         )
         const months = range(0, 11).map(month =>
@@ -83,7 +84,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                             <div class="selector-elements">
                                 <ScrollPane class="picker-section"
                                             trackWidth={2}
-                                            scrollToSelector="current-year">
+                                            scrollToSelector=".current-year">
                                     <ul class="years">{years}</ul>
                                 </ScrollPane>
                                 <ul class="picker-section months">{months}</ul>
@@ -97,7 +98,12 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                         <Month month={this.nextMonth()}
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
-                                    <div>Time picker</div>
+                                    <ul class="time-selector">
+                                        <li>Today</li>
+                                        <li class="hours"/>
+                                        <li class="minutes"/>
+                                        <li>Ok</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

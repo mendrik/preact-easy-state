@@ -29,9 +29,18 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     }
 
     componentDidMount() {
-        this.base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
-        this.base.style.setProperty('--track-width', `${this.props.trackWidth}px`)
-        requestAnimationFrame(() => this.calculateThumb())
+        const base = this.base
+        const {trackWidth, scrollToSelector} = this.props
+        base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
+        base.style.setProperty('--track-width', `${trackWidth}px`)
+        requestAnimationFrame(() => {
+            this.calculateThumb()
+            if (scrollToSelector) {
+                const element = base.querySelector(scrollToSelector) as HTMLDivElement
+                const top = element.offsetTop + element.clientHeight / 2
+                base.firstElementChild.scrollTop = top - base.getBoundingClientRect().height / 2
+            }
+        })
     }
 
     @DomChanged((el) => el.firstElementChild)
