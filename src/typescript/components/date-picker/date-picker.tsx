@@ -79,7 +79,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                 {this.months()}
                                 <div class="date-time-picker">
                                     {this.header()}
-                                    <SnapScroll onPanelChanged={this.monthChanged}>
+                                    <SnapScroll onPanelChanged={this.monthChanged} panel={1}>
                                         <Month month={this.previousMonth()}
                                                onDateClick={this.dateClick}/>
                                         <Month month={this.model.currentMonth}
@@ -134,7 +134,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
             <li>
                 <span class="icon"><i class="mdi mdi-chevron-left"/></span>
             </li>
-            <li class="current-date">March, 1st 2018</li>
+            <li class="current-date">{formatDate(this.model.currentMonth, 'MMMM Do, YYYY')}</li>
             <li>
                 <span class="icon"><i class="mdi mdi-chevron-right"/></span>
             </li>

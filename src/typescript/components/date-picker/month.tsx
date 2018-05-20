@@ -7,6 +7,7 @@ import format from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import {range} from '../../util/utils'
 import './month.pcss'
+import {addDays} from 'date-fns'
 
 interface MonthProps {
     month: Date
@@ -24,9 +25,7 @@ export class Month extends QuillComponent<MonthProps> {
 
     getDays = (month: Date) => {
         const date = startOfWeek(startOfMonth(month), {weekStartsOn: 1})
-        return DAYS_RANGE.map(i =>
-            new Date(date.getFullYear(), date.getMonth(), date.getDay() + i)
-        )
+        return DAYS_RANGE.map(i => addDays(date, i))
     }
 
     render({month, onDateClick, ...props}) {
