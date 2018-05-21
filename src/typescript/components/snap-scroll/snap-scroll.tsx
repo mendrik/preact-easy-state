@@ -81,6 +81,10 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
         this.props.model.panel -= 1
     }
 
+    abort() {
+        this.setState({animate: true, diffX: 0})
+    }
+
     render({children, model, timeThreshold, pixelThreshold, onPanelChanged, ...props},
            {animate = false, diffX = 0}) {
         const style = {
