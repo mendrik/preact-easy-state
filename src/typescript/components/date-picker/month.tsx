@@ -7,10 +7,12 @@ import format from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import {range} from '../../util/utils'
 import './month.pcss'
-import {addDays} from 'date-fns'
+import {addDays, isSameDay} from 'date-fns'
+import {TapDate} from './tap-date'
 
 interface MonthProps {
     month: Date
+    selectedDate?: Date
     onDateClick: (date: Date) => void
 }
 
@@ -28,10 +30,15 @@ export class Month extends QuillComponent<MonthProps> {
         return DAYS_RANGE.map(i => addDays(date, i))
     }
 
-    render({month, onDateClick, ...props}) {
+    render({month, selectedDate, onDateClick, ...props}) {
         const daysToRender = this.getDays(month)
         const weekDays = daysToRender.slice(0, 7).map(d => <li>{format(d, 'ddd')}</li>)
-        const days = daysToRender.map(d => <li onClick={() => onDateClick(d)}>{format(d, 'D')}</li>)
+        const days = daysToRender.map(d =>
+            <TapDate onDateClick={onDateClick}
+                     date={d}
+                     currentMonth={month}
+                     selected={isSameDay(selectedDate, d)}/>
+        )
         return (
             <li class="month">
                 <ul class="weekdays">{weekDays}</ul>
