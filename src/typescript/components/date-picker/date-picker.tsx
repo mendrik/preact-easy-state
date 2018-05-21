@@ -14,11 +14,12 @@ import {Month} from './month'
 import {range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {InputText} from '../input-text/input-text'
-import {setMonth, setYear} from 'date-fns'
+import {addYears, setMonth, setYear, subYears} from 'date-fns'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
     format: string
+    withTime: boolean
 }
 
 class Model implements SnapScrollModel {
@@ -37,6 +38,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     model: Model
     snapScroll: SnapScroll
+    dropDown: HTMLDivElement
 
     constructor(props) {
         super(observable(props))
@@ -45,6 +47,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     iconClick = () => {
         this.model.dropDownVisible = !this.model.dropDownVisible
+        setTimeout(() => this.dropDown.focus(), 10)
     }
 
     @DocumentClick((dp: DatePicker) => dp.model.dropDownVisible)
@@ -69,7 +72,23 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     previousMonth = () => subMonths(this.model.currentMonth, 1)
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
-    render({children, name, changes, value, format, ...props}) {
+    keyDown = (ev: KeyboardEvent) => {
+        const newDate = (() => {
+            switch (ev.key) {
+                case 'ArrowUp': return subYears(this.model.currentMonth, 1)
+                case 'ArrowDown': return addYears(this.model.currentMonth, 1)
+                case 'ArrowLeft': return subMonths(this.model.currentMonth, 1)
+                case 'ArrowRight': return addMonths(this.model.currentMonth, 1)
+                default: return
+            }
+        })()
+        if (newDate) {
+            ev.preventDefault()
+            this.model.currentMonth = newDate
+        }
+    }
+
+    render({children, name, withTime, changes, value, format, ...props}) {
         return (
             <div class={os({
                 'control has-icons-right date-picker dropdown': 1,
@@ -82,7 +101,12 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                     <i class="mdi mdi-calendar-range"/>
                 </span>
                 {this.model.dropDownVisible ? (
-                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-menu"
+                         id="dropdown-menu"
+                         tabIndex={-1}
+                         ref={r => this.dropDown = r}
+                         onKeyDown={this.keyDown}
+                         role="menu">
                         <div class="dropdown-content">
                             <div class="selector-elements">
                                 {this.years()}
