@@ -2,7 +2,6 @@ import {addToCleanupQueue, addToMountQueue} from '../util/construct'
 import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 import {addEventListeners, hasPointers, removeEventListeners, supportsOnlyTouch} from '../util/events'
 
-
 type EventType = 'start' | 'move' | 'end'
 type EventSet = {[k in EventType]: string[]}
 type PointerEvent = MouseEvent & TouchEvent
@@ -116,8 +115,8 @@ const initPanX = (component: QuillComponent, method: string, node: HTMLElement) 
     addToCleanupQueue(component, () => removeEventListeners(eventSet.start, node, handler))
 }
 
-export const PanX = (selector: string) => (proto: QuillComponentClass, method: string) => {
+export const PanX = (selector?: string) => (proto: QuillComponentClass, method: string) => {
     addToMountQueue(proto, (instance: QuillComponent, node: HTMLElement) => {
-        initPanX(instance, method, node.querySelector(selector))
+        initPanX(instance, method, selector ? node.querySelector(selector) : node)
     })
 }

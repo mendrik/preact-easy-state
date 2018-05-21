@@ -16,7 +16,7 @@
         align-items: stretch;
 
         .picker-section {
-            border-right: var(--hairline);
+            border-right: var(--pixelline);
             max-height: 336px;
         }
 
@@ -40,6 +40,7 @@
 
                 &:hover {
                     background-color: whitesmoke;
+                    background-clip: padding-box;
                 }
             }
         }
@@ -59,6 +60,7 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
+        user-select: none;
 
         .current-date {
             font-size: 16px;

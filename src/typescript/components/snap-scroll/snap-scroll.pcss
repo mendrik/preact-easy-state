@@ -5,9 +5,14 @@
     > ul {
         display: flex;
         width: calc(100% * var(--slides));
+        will-change: transition;
 
         > li {
             width: 100%;
         }
+    }
+
+    &.animate ul {
+        transition: all .3s ease-out;
     }
 }
