@@ -36,6 +36,7 @@ class Model implements SnapScrollModel {
 export class DatePicker extends QuillComponent<DatePickerProps> {
 
     model: Model
+    snapScroll: SnapScroll
 
     constructor(props) {
         super(observable(props))
@@ -88,7 +89,9 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                 {this.months()}
                                 <div class="date-time-picker">
                                     {this.header()}
-                                    <SnapScroll onPanelChanged={this.monthChanged} model={this.model}>
+                                    <SnapScroll onPanelChanged={this.monthChanged}
+                                                ref={i => this.snapScroll = i}
+                                                model={this.model}>
                                         <Month month={this.previousMonth()}
                                                onDateClick={this.dateClick}/>
                                         <Month month={this.model.currentMonth}
@@ -160,8 +163,8 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     )
 
 
-    prev = () => this.model.currentMonth = subMonths(this.model.currentMonth, 1)
-    next = () => this.model.currentMonth = addMonths(this.model.currentMonth, 1)
+    prev = () => this.snapScroll.prev()
+    next = () => this.snapScroll.next()
 
     header = () => (
         <ul class="picker-title">
