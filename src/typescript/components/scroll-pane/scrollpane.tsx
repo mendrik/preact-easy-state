@@ -9,11 +9,11 @@ import os from 'obj-str'
 import {observable} from '@nx-js/observer-util'
 import {CustomEvent as OnCustomEvent} from '../../decorators/custom-event'
 
-class Model {
+export class Model {
     hover = false
 }
 
-export interface ScrollPaneProps extends JSX.HTMLAttributes{
+export interface ScrollPaneProps extends JSX.HTMLAttributes {
     trackWidth: number
     scrollToSelector?: string // todo scroll to this on mount
 }
