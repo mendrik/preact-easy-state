@@ -38,6 +38,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     model: Model
     snapScroll: SnapScroll
+    yearScroll: ScrollPane
     dropDown: HTMLDivElement
 
     constructor(props) {
@@ -145,22 +146,30 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     month = (month: number) => this.model.currentMonth = setMonth(this.model.currentMonth, month)
 
     months = () => {
+        const active = this.model.currentMonth
         const months = range(0, 11).map(month =>
-            <li onClick={() => this.month(month)}>{formatDate(new Date(2018, month, 1), 'MMM')}</li>
+            <li onClick={() => this.month(month)}
+                class={os({active: active.getMonth() === month})}>
+                {formatDate(new Date(2018, month, 1), 'MMM')}
+            </li>
         )
         return <ul class="picker-section months">{months}</ul>
     }
 
-    year = (year: number) => this.model.currentMonth = setYear(this.model.currentMonth, year)
+    year = (year: number) => {
+        this.model.currentMonth = setYear(this.model.currentMonth, year)
+        this.yearScroll.scrollToSelector()
+    }
 
     years = () => {
-        const now = new Date()
-        const years = range(1950, 2025).map(year =>
+        const now = this.model.currentMonth
+        const years = range(now.getFullYear() - 80, now.getFullYear() + 20).map(year =>
             <li class={os({'current-year': now.getFullYear() === year})}
                 onClick={() => this.year(year)}>{year}</li>
         )
         return (
-            <ScrollPane class="picker-section"
+            <ScrollPane ref={s => this.yearScroll = s}
+                        class="picker-section"
                         trackWidth={2}
                         scrollToSelector=".current-year">
                 <ul class="years">{years}</ul>
