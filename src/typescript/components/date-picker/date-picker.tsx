@@ -13,8 +13,8 @@ import {SnapScroll, SnapScrollModel} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
 import {range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
-import {InputText} from '../input-text/input-text'
 import {addYears, setMonth, setYear, subYears} from 'date-fns'
+import {MaskedInput} from '../masked-input/masked-input'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -25,7 +25,7 @@ interface DatePickerProps extends FormProps<Date> {
 class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = false
+    dropDownVisible = true
     panel = 1
 
     constructor(currentMonth: Date) {
@@ -89,7 +89,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                 default: return
             }
         })()
-        if (newDate) {
+        if (newDate && ev.target === this.dropDown) {
             ev.preventDefault()
             this.model.currentMonth = newDate
         }
@@ -100,7 +100,9 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
             <div class={os({
                 'control has-icons-right date-picker dropdown': 1,
                 'is-active': this.model.dropDownVisible})}>
-                <input type="text"
+                <MaskedInput
+                       mask="\d{2}\.\d{2}\.\d{4}"
+                       type="text"
                        class="input is-small date"
                        name={name}
                        value={formatDate(value, format)}/>
@@ -184,9 +186,16 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         <ul class="time-selector">
             <li><button class="button is-small" onClick={this.today}>Today</button></li>
             <li class="time">
-                <InputText changes={() => 0}
-                           iconRight="clock"
-                           placeHolder="hh:mm"/>
+                <div class="control has-icon-right">
+                    <MaskedInput
+                        onChange={() => 0}
+                        class="input is-small"
+                        placeholder="hh:mm"
+                        mask="\d{2}:\d{2}"/>
+                    <span class="icon is-small is-right">
+                        <i class="mdi mdi-clock"/>
+                    </span>
+                </div>
             </li>
             <li><button class="button is-small is-primary"
                         onClick={this.confirm}>Ok</button></li>

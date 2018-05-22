@@ -32,9 +32,9 @@ export class InputText extends QuillComponent<InputTextProps> {
         </span>
     )
 
-    render({children, name, changes, placeHolder, value, iconLeft, iconRight, ...props}) {
+    render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
-            <div class={os({control: 1, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
+            <div class={os({control: 1, mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                 <input type={this.getType()}
                        class="input is-small"
                        placeholder={placeHolder}
@@ -43,6 +43,7 @@ export class InputText extends QuillComponent<InputTextProps> {
                        onChange={this.onChange}/>
                 {iconLeft ? this.leftIcon() : null}
                 {iconRight ? this.rightIcon() : null}
+                {children}
             </div>
         )
     }
