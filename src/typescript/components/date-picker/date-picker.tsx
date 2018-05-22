@@ -48,18 +48,16 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     iconClick = () => {
         this.model.dropDownVisible = !this.model.dropDownVisible
-        setTimeout(() => this.dropDown.focus(), 10)
         if (!this.model.dropDownVisible) {
-            this.snapScroll.abort()
             this.model.panel = 1
+        } else {
+            setTimeout(() => this.dropDown.focus(), 10)
         }
-
     }
 
     @DocumentClick((dp: DatePicker) => dp.model.dropDownVisible)
     closeDropDown() {
         this.model.dropDownVisible = false
-        this.snapScroll.abort()
         this.model.panel = 1
     }
 

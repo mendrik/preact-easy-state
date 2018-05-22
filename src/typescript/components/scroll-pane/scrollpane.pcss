@@ -30,8 +30,10 @@
         pointer-events: none;
     }
 
-    &.hover > .track > .thumb {
-        opacity: 1;
+    @mixin hover-supported {
+        &.hover > .track > .thumb {
+            opacity: 1;
+        }
     }
 
     .thumb {

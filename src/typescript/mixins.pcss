@@ -1,0 +1,5 @@
+@define-mixin hover-supported {
+    @media not all and (pointer:coarse) {
+        @mixin-content;
+    }
+}
