@@ -14,6 +14,7 @@ import {Cell, Grid} from '../../components/grid/grid'
 import {TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
+import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip';
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -72,6 +73,7 @@ export class MainPage extends QuillComponent {
     nodeDrop = (drop: NodeDrop) => console.log(drop)
 
     render() {
+        const tooltip = <Tooltip>My little tooltip<br/>goes here!</Tooltip>
         return (
             <div class="application">
                 <nav class="header" data-locale="navigation.title"/>
@@ -99,6 +101,13 @@ export class MainPage extends QuillComponent {
                                 </Tab>
                             </Tabs>
                             <Grid cells={model.data} editable={true}/>
+                            <div class="buttons">
+                                <WithTooltip tooltip={tooltip}>
+                                    <a class="button is-primary">Primary</a>
+                                </WithTooltip>
+                                <a class="button is-link">Link</a>
+                                <a class="button is-info">Info</a>
+                            </div>
                         </div>
                     </HorizontalSplit>
                 </ScrollPane>

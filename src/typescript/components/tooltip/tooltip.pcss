@@ -1,0 +1,43 @@
+@import '../../mixins.pcss';
+
+.with-tooltip {
+    position: relative;
+
+    @mixin hover-supported {
+        &.open .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0px);
+        }
+    }
+
+    .tooltip {
+        opacity: 0;
+        transition: .2s all ease-out;
+        pointer-events: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, .7);
+        bottom: calc(100% + 10px);
+        left: 50%;
+        padding: 5px 10px;
+        transform: translateX(-50%) translateY(10px);
+        border-radius: 3px;
+        font-size: 80%;
+        color: white;
+        white-space: nowrap;
+
+        &:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: '';
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: transparent;
+            border-top-color: rgba(0, 0, 0, .7);;
+            border-width: 7px;
+            margin-left: -7px;
+        }
+    }
+}
