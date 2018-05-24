@@ -56,6 +56,8 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
                         model.panel += diffX < 0 ? 1 : -1
                     }
                     this.setState({animate: true, diffX: 0})
+                } else {
+                    this.setState({animate: false, diffX: 0})
                 }
         }
     }

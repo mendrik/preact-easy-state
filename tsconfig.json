@@ -6,7 +6,7 @@
         "target": "es5",
         "experimentalDecorators": true,
         "noImplicitAny": false,
-        "sourceMap": true,
+        "sourceMap": false,
         "outDir": "./dist",
         "allowSyntheticDefaultImports": true,
         "lib": [

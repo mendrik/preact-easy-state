@@ -24,7 +24,7 @@ export interface DatePickerProps extends FormProps<Date> {
 export class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = false
+    dropDownVisible = true
     panel = 1
 
     constructor(currentMonth: Date) {
@@ -37,7 +37,7 @@ const timeInput = {
     '2': '[0-9]',
     '3': '[0-5]',
     '4': '[0-9]',
-    }
+}
 
 const dateInput = {
     'd': '[0-3]',
