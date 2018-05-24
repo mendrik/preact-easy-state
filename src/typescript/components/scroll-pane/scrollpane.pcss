@@ -1,4 +1,4 @@
-@import '../../mixins.pcss';
+@parcel-import '../../mixins.pcss';
 
 .scrollpane {
     overflow: hidden;
@@ -32,8 +32,10 @@
         pointer-events: none;
     }
 
-    &.hover > .track > .thumb {
-        opacity: 1;
+    @mixin hover-supported {
+        &.hover > .track > .thumb {
+            opacity: 1;
+        }
     }
 
     .thumb {

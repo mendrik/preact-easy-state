@@ -1,4 +1,4 @@
-@import '../../mixins.pcss';
+@parcel-import '../../mixins.pcss';
 
 .date-picker {
     max-width: 115px;
@@ -8,8 +8,10 @@
         pointer-events: all;
         cursor: pointer;
 
-        &:hover i {
-            color: gray;
+        @mixin hover-supported {
+            &:hover i {
+                color: gray;
+            }
         }
     }
 
@@ -50,9 +52,11 @@
                     background-color: whitesmoke;
                 }
 
-                &:hover {
-                    background-color: whitesmoke;
-                    background-clip: padding-box;
+                @mixin hover-supported {
+                    &:hover {
+                        background-color: whitesmoke;
+                        background-clip: padding-box;
+                    }
                 }
             }
         }
