@@ -49,6 +49,9 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
                 this.setState({diffX})
                 break
             case Phase.end:
+                if (!this.base) { // component was unmounted
+                    return
+                }
                 const absDiffX = Math.abs(diffX)
                 if (absDiffX !== 0) {
                     if ((diffTime < timeThreshold && absDiffX > pixelThreshold) ||
