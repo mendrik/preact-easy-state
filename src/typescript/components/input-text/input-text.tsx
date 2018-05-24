@@ -2,6 +2,7 @@ import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
@@ -10,6 +11,7 @@ export interface InputTextProps extends FormProps<string> {
     value?: string
 }
 
+@View
 export class InputText extends QuillComponent<InputTextProps> {
 
     getType = () => 'text'

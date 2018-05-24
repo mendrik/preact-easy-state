@@ -4,6 +4,7 @@ import './grid.pcss'
 import {observable} from '@nx-js/observer-util'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface Cell {
     toString(): string
@@ -14,6 +15,7 @@ export interface GridProps extends JSX.HTMLAttributes {
     editable: boolean
 }
 
+@View
 export class Grid extends QuillComponent<GridProps> {
 
     grid: HTMLDivElement

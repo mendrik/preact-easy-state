@@ -3,6 +3,7 @@ import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 import {ensure, resolve} from '../util/ensure'
 import {Component, h} from 'preact'
 import Navigo from 'navigo'
+import {View} from './view'
 
 const router = new Navigo(window.location.origin)
 const currentRouteSymbol = Symbol('__route__')
@@ -47,6 +48,7 @@ export interface LinkProps {
     to: string
 }
 
+@View
 export class Link extends QuillComponent<LinkProps> {
 
     onClick = (ev) => {

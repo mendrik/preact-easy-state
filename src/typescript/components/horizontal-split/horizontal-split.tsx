@@ -5,6 +5,7 @@ import {LocalStorage, Store} from '../../decorators/local-storage'
 import {observable} from '@nx-js/observer-util'
 import './horizontal-split.pcss'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 @LocalStorage
 export class Model {
@@ -12,6 +13,7 @@ export class Model {
     dragging: boolean
 }
 
+@View
 export class HorizontalSplit extends QuillComponent {
 
     model = observable(new Model())

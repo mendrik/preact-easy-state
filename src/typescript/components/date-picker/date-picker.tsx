@@ -13,6 +13,7 @@ import {cls, range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {addYears, setMonth, setYear, subYears} from 'date-fns'
 import {MaskedInput} from '../masked-input/masked-input'
+import {View} from '../../decorators/view'
 
 interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -31,6 +32,7 @@ class Model implements SnapScrollModel {
     }
 }
 
+@View
 export class DatePicker extends QuillComponent<DatePickerProps> {
 
     model: Model

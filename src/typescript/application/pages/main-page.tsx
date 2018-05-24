@@ -14,6 +14,7 @@ import {TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
 import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip';
+import {View} from '../../decorators/view'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -49,6 +50,7 @@ const toTreeNodes = (tree) => tree.houses.map(house =>
     customTreeModel(house.name, house.wikiSuffix, house.people)
 )
 
+@View
 export class MainPage extends QuillComponent {
 
     @Get('/tree.json')
@@ -58,7 +60,6 @@ export class MainPage extends QuillComponent {
     fetchData: () => Promise<any>
 
     async componentDidMount() {
-        super.componentDidMount()
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
         model.data = data.split(/\n\s*/g).filter(l => !!l).map(line => {

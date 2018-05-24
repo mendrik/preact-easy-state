@@ -4,6 +4,7 @@ import {observable} from '@nx-js/observer-util'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import './tabs.pcss'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 @LocalStorage
 export class Model {
@@ -23,6 +24,7 @@ export interface TabsProps extends JSX.HTMLAttributes {
     id: string
 }
 
+@View
 export class Tabs extends QuillComponent<TabsProps> {
 
     model: Model

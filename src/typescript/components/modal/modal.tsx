@@ -3,12 +3,14 @@ import {QuillComponent} from '../../util/quill-component'
 import {observable} from '@nx-js/observer-util'
 import './modal.pcss'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface ModalProps  {
     visible: boolean
     onClose: () => void
 }
 
+@View
 export class Modal extends QuillComponent<ModalProps> {
 
     constructor(props) {

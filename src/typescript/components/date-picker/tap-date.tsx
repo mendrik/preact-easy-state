@@ -6,6 +6,7 @@ import {CustomEvent} from '../../decorators/custom-event'
 import isSameDay from 'date-fns/is_same_day'
 import isSameMonth from 'date-fns/is_same_month'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface TabDateProps {
     onDateClick: (date: Date) => void
@@ -14,6 +15,7 @@ export interface TabDateProps {
     selected: boolean
 }
 
+@View
 export class TapDate extends QuillComponent<TabDateProps> {
 
     static today = new Date()

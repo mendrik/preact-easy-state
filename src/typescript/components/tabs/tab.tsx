@@ -1,6 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface TabProps extends JSX.HTMLAttributes {
     icon?: string
@@ -9,6 +10,7 @@ export interface TabProps extends JSX.HTMLAttributes {
     click?: () => void
 }
 
+@View
 export class Tab extends QuillComponent<TabProps> {
 
     render({icon, text, active, click, ...props}) {

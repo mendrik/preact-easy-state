@@ -6,6 +6,7 @@ import {DomChanged} from '../../decorators/dom-changed'
 import {cls, scrollBarWidth} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {CustomEvent as OnCustomEvent} from '../../decorators/custom-event'
+import {View} from '../../decorators/view'
 
 export class Model {
     hover = false
@@ -16,6 +17,7 @@ export interface ScrollPaneProps extends JSX.HTMLAttributes {
     scrollToSelector?: string // todo scroll to this on mount
 }
 
+@View
 export class ScrollPane extends QuillComponent<ScrollPaneProps> {
 
     model: Model
@@ -26,7 +28,6 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     }
 
     componentDidMount() {
-        super.componentDidMount()
         const base = this.base
         const {trackWidth} = this.props
         base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)

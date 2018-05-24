@@ -1,6 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import './masked-input.pcss'
+import {View} from '../../decorators/view'
 // import InputMask from 'react-input-mask'
 
 export interface MaskedInputProps extends JSX.HTMLAttributes {
@@ -9,6 +10,7 @@ export interface MaskedInputProps extends JSX.HTMLAttributes {
     formatChars?: {[s: string]: string}
 }
 
+@View
 export class MaskedInput extends QuillComponent<MaskedInputProps> {
     input: HTMLInputElement
 

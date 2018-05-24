@@ -4,6 +4,7 @@ import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
 import './snap-scroll.pcss'
 import {CustomEvent} from '../../decorators/custom-event'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface SnapScrollModel {
     panel: number
@@ -21,6 +22,7 @@ interface SnapScrollState {
     diffX: number
 }
 
+@View
 export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState> {
 
     static defaultProps = {
@@ -29,7 +31,6 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
     }
 
     componentDidMount() {
-        super.componentDidMount()
         this.base.style.setProperty('--slides', `${this.props.children.length}`)
     }
 

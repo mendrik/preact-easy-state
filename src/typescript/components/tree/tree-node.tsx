@@ -4,6 +4,7 @@ import {LocalStorage, Store} from '../../decorators/local-storage'
 import {box, cls} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {h} from 'preact'
+import {View} from '../../decorators/view'
 
 const NODE_DATA_TYPE = 'preact-quill/node-id'
 
@@ -35,6 +36,7 @@ export interface TreeNodeProps<T> {
     editable: boolean
 }
 
+@View
 export class TreeNode<T> extends QuillComponent<TreeNodeProps<T>> {
 
     base: HTMLLIElement

@@ -9,6 +9,7 @@ import './month.pcss'
 import addDays from 'date-fns/add_days'
 import isSameDay from 'date-fns/is_same_day'
 import {TapDate} from './tap-date'
+import {View} from '../../decorators/view'
 
 export interface MonthProps {
     month: Date
@@ -18,6 +19,7 @@ export interface MonthProps {
 
 const DAYS_RANGE = range(0, 41)
 
+@View
 export class Month extends QuillComponent<MonthProps> {
 
     constructor(props) {

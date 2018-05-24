@@ -2,6 +2,7 @@ import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import './tooltip.pcss'
 import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface WithTooltipProps {
     tooltip: JSX.Element
@@ -11,6 +12,7 @@ export interface WithTooltipState {
     open: boolean
 }
 
+@View
 export class WithTooltip extends QuillComponent<WithTooltipProps, WithTooltipState> {
 
     enter = () => this.setState({open: true})
@@ -28,6 +30,7 @@ export class WithTooltip extends QuillComponent<WithTooltipProps, WithTooltipSta
     }
 }
 
+@View
 export class Tooltip extends QuillComponent<JSX.HTMLAttributes> {
     render({children, ...props}) {
         return (
