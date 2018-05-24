@@ -15,7 +15,7 @@ import {addYears, setMonth, setYear, subYears} from 'date-fns'
 import {MaskedInput} from '../masked-input/masked-input'
 import {View} from '../../decorators/view'
 
-interface DatePickerProps extends FormProps<Date> {
+export interface DatePickerProps extends FormProps<Date> {
     error?: string
     format: string
     withTime: boolean
@@ -30,6 +30,19 @@ class Model implements SnapScrollModel {
     constructor(currentMonth: Date) {
         this.currentMonth = currentMonth
     }
+}
+
+const timeInput = {
+    '1': '[0-2]',
+    '2': '[0-9]',
+    '3': '[0-5]',
+    '4': '[0-9]',
+    }
+
+const dateInput = {
+    'd': '[0-3]',
+    'm': '[0-1]',
+    '9': '[0-9]',
 }
 
 @View
@@ -97,10 +110,12 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         return (
             <div class={cls('control has-icons-right date-picker dropdown', {'is-active': this.model.dropDownVisible})}>
                 <MaskedInput
-                    mask="\d{2}\.\d{2}\.\d{4}"
+                    mask={format.replace(/DD/, 'd9').replace(/MM/, 'm9').replace(/Y/g, '9')}
                     type="text"
                     class="input is-small date"
                     name={name}
+                    placeholder={format}
+                    formatChars={dateInput}
                     value={formatDate(value, format)}/>
                 <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
                     <i class="mdi mdi-calendar-range"/>
@@ -192,10 +207,11 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
             <li class="time">
                 <div class="control has-icon-right">
                     <MaskedInput
-                        onChange={() => 0}
+                        type="text"
                         class="input is-small"
                         placeholder="hh:mm"
-                        mask="\d{2}:\d{2}"/>
+                        formatChars={timeInput}
+                        mask="12:34"/>
                     <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
                     </span>

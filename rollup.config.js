@@ -3,6 +3,7 @@ import tsc from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
 import postcss from 'rollup-plugin-postcss'
 import minify from 'rollup-plugin-minify'
+import virtual_alias from 'rollup-plugin-virtual-alias'
 
 import pkg from './package.json'
 
@@ -26,6 +27,10 @@ export default {
         }
     ],
     plugins: [
+        virtual_alias({
+            'react': 'preact-compat',
+            'react-dom': 'preact-compat',
+        }),
         commonjs(),
         postcss(),
         resolve({
@@ -46,6 +51,7 @@ export default {
         })
     ],
     external: [
-        'preact'
+        'preact',
+        'preact-compat'
     ]
 }
