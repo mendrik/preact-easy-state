@@ -4,7 +4,7 @@ import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 export const DomChanged = (getElement?: (el: Element) => Element) => (proto: QuillComponentClass, method: string) => {
     addToMountQueue(proto, (instance: QuillComponent, node: HTMLElement) => {
         const el = getElement ? getElement(node) : node
-        const observer = new MutationObserver((mr: MutationRecord[]) => instance[method]())
+        const observer = new MutationObserver((mr: MutationRecord[]) => instance[method](instance))
         observer.observe(el, {childList: true, subtree: true, attributes: true})
         addToCleanupQueue(instance, () => observer.disconnect())
     })

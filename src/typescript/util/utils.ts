@@ -22,3 +22,13 @@ export const box = (x: number, min: number, max: number) =>
 
 export const range = (start: number, end: number) =>
     Array.from(Array(end - start + 1).keys()).map(n => n + start)
+
+export const cls = (...parts): string => parts.reduce((p, c) => {
+    if (typeof c === 'string') {
+        return [...p, c]
+    } else if (Array.isArray(c)) {
+        return [...p, ...c]
+    } else if (Object.prototype.toString.call(c) === '[object Object]') {
+        return [...p, ...Object.keys(c).filter(k => c[k])]
+    }
+}, []).join(' ')

@@ -2,6 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import tsc from 'rollup-plugin-typescript2'
 import commonjs from 'rollup-plugin-commonjs'
 import postcss from 'rollup-plugin-postcss'
+import minify from 'rollup-plugin-minify'
 
 import pkg from './package.json'
 
@@ -40,6 +41,9 @@ export default {
                 clean: true
             }
         }),
+        minify({
+            cjs: "lib/quill.min.js"
+        })
     ],
     external: [
         'preact'

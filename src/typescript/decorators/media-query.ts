@@ -12,7 +12,7 @@ export const MediaQuery = (query: string) => (proto: QuillComponentClass, method
             value: function (props, state) {
                 const currentRenderMethod = this[mediaQuerySymbol] || method
                 if (currentRenderMethod) {
-                    return this[currentRenderMethod](props, state)
+                    return this[currentRenderMethod].call(this, props, state)
                 }
             },
             writable: true,

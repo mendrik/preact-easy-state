@@ -2,15 +2,14 @@
 
 .date-picker {
     max-width: 115px;
+    user-select: none;
 
     &.control.has-icons-right .icon {
         pointer-events: all;
         cursor: pointer;
 
-        @mixin hover-supported {
-            &:hover i {
-                color: gray;
-            }
+        &:hover i {
+            color: gray;
         }
     }
 

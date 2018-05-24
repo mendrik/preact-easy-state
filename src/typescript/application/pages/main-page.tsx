@@ -1,5 +1,4 @@
 import {h} from 'preact'
-import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
@@ -50,7 +49,6 @@ const toTreeNodes = (tree) => tree.houses.map(house =>
     customTreeModel(house.name, house.wikiSuffix, house.people)
 )
 
-@View
 export class MainPage extends QuillComponent {
 
     @Get('/tree.json')
@@ -60,6 +58,7 @@ export class MainPage extends QuillComponent {
     fetchData: () => Promise<any>
 
     async componentDidMount() {
+        super.componentDidMount()
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
         model.data = data.split(/\n\s*/g).filter(l => !!l).map(line => {

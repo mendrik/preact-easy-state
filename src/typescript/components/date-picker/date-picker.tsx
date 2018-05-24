@@ -1,17 +1,15 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import {FormProps} from '../forms/types'
 import formatDate from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import './date-picker.pcss'
 import addMonths from 'date-fns/add_months'
 import subMonths from 'date-fns/sub_months'
-import os from 'obj-str'
 import {DocumentClick} from '../../decorators/document-click'
 import {SnapScroll, SnapScrollModel} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
-import {range} from '../../util/utils'
+import {cls, range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {addYears, setMonth, setYear, subYears} from 'date-fns'
 import {MaskedInput} from '../masked-input/masked-input'
@@ -33,7 +31,6 @@ class Model implements SnapScrollModel {
     }
 }
 
-@View
 export class DatePicker extends QuillComponent<DatePickerProps> {
 
     model: Model
@@ -96,15 +93,13 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     render({children, name, withTime, changes, value, format, ...props}) {
         return (
-            <div class={os({
-                'control has-icons-right date-picker dropdown': 1,
-                'is-active': this.model.dropDownVisible})}>
+            <div class={cls('control has-icons-right date-picker dropdown', {'is-active': this.model.dropDownVisible})}>
                 <MaskedInput
-                       mask="\d{2}\.\d{2}\.\d{4}"
-                       type="text"
-                       class="input is-small date"
-                       name={name}
-                       value={formatDate(value, format)}/>
+                    mask="\d{2}\.\d{2}\.\d{4}"
+                    type="text"
+                    class="input is-small date"
+                    name={name}
+                    value={formatDate(value, format)}/>
                 <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
                     <i class="mdi mdi-calendar-range"/>
                 </span>
@@ -147,7 +142,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         const active = this.model.currentMonth
         const months = range(0, 11).map(month =>
             <li onClick={() => this.month(month)}
-                class={os({active: active.getMonth() === month})}>
+                class={cls({active: active.getMonth() === month})}>
                 {formatDate(new Date(2018, month, 1), 'MMM')}
             </li>
         )
@@ -162,7 +157,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     years = () => {
         const now = this.model.currentMonth
         const years = range(now.getFullYear() - 80, now.getFullYear() + 20).map(year =>
-            <li class={os({'current-year': now.getFullYear() === year})}
+            <li class={cls({'current-year': now.getFullYear() === year})}
                 onClick={() => this.year(year)}>{year}</li>
         )
         return (

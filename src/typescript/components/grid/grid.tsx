@@ -1,10 +1,9 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
-import os from 'obj-str'
 import './grid.pcss'
 import {observable} from '@nx-js/observer-util'
 import {ScrollPane} from '../scroll-pane/scrollpane'
+import {cls} from '../../util/utils'
 
 export interface Cell {
     toString(): string
@@ -15,7 +14,6 @@ export interface GridProps extends JSX.HTMLAttributes {
     editable: boolean
 }
 
-@View
 export class Grid extends QuillComponent<GridProps> {
 
     grid: HTMLDivElement
@@ -33,7 +31,7 @@ export class Grid extends QuillComponent<GridProps> {
 
     render({children, editable, cells, ...props}) {
         const className = props.class
-        props.class = os({[className]: className, grid: 1, editable})
+        props.class = cls('grid', {[className]: className, editable})
         props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
             <ScrollPane class="grid-wrap" style={{height: '300px', border: 'var(--border)'}} trackWidth={3}>

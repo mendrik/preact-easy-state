@@ -1,16 +1,16 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import startOfWeek from 'date-fns/start_of_week'
 import startOfMonth from 'date-fns/start_of_month'
 import format from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import {range} from '../../util/utils'
 import './month.pcss'
-import {addDays, isSameDay} from 'date-fns'
+import addDays from 'date-fns/add_days'
+import isSameDay from 'date-fns/is_same_day'
 import {TapDate} from './tap-date'
 
-interface MonthProps {
+export interface MonthProps {
     month: Date
     selectedDate?: Date
     onDateClick: (date: Date) => void
@@ -18,7 +18,6 @@ interface MonthProps {
 
 const DAYS_RANGE = range(0, 41)
 
-@View
 export class Month extends QuillComponent<MonthProps> {
 
     constructor(props) {

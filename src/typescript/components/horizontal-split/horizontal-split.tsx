@@ -1,11 +1,10 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import {observable} from '@nx-js/observer-util'
-import os from 'obj-str'
 import './horizontal-split.pcss'
+import {cls} from '../../util/utils'
 
 @LocalStorage
 export class Model {
@@ -13,7 +12,6 @@ export class Model {
     dragging: boolean
 }
 
-@View
 export class HorizontalSplit extends QuillComponent {
 
     model = observable(new Model())
@@ -38,7 +36,7 @@ export class HorizontalSplit extends QuillComponent {
         }
         children[0].attributes = {...children[0].attributes, style: {width: `${this.model.width}px`}}
         return (
-            <div class={os({dragging: this.model.dragging, 'horizontal-split': 1})}>
+            <div class={cls('horizontal-split', {dragging: this.model.dragging})}>
                 {children[0]}
                 <div class="handle"/>
                 {children[1]}
