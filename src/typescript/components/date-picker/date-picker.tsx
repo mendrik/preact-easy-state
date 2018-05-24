@@ -24,7 +24,7 @@ export interface DatePickerProps extends FormProps<Date> {
 export class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = true
+    dropDownVisible = false
     panel = 1
 
     constructor(currentMonth: Date) {
