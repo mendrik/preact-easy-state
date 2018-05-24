@@ -10,14 +10,14 @@ export interface SnapScrollModel {
     panel: number
 }
 
-interface SnapScrollProps extends JSX.HTMLAttributes {
+export interface SnapScrollProps extends JSX.HTMLAttributes {
     model: SnapScrollModel
     onPanelChanged: () => void
     timeThreshold?: number
     pixelThreshold?: number
 }
 
-interface SnapScrollState {
+export interface SnapScrollState {
     animate: boolean
     diffX: number
 }
