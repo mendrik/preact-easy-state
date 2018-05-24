@@ -6,13 +6,18 @@ export interface MaskedInputProps extends JSX.HTMLAttributes {
     mask: string
     maskChar?: string
     formatChars?: {[s: string]: string}
+    alwaysShowMask?: boolean
 }
 
 export class MaskedInput extends Component<MaskedInputProps> {
     input: HTMLInputElement
 
-    render({children, mask, formatChars, maskChar = '_', ...props}) {
+    render({mask, formatChars, maskChar = '_', ...props}) {
         props.class = [...props.class.split(/\s+/), 'masked'].join(' ')
-        return <InputMask {...props} alwaysShowMask={false} mask={mask} maskChar={maskChar} formatChars={formatChars}/>
+        return <InputMask {...props}
+                          alwaysShowMask={false}
+                          mask={mask}
+                          maskChar={maskChar}
+                          formatChars={formatChars}/>
     }
 }

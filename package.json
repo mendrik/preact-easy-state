@@ -19,8 +19,9 @@
         "@nx-js/observer-util": "4.1.2",
         "date-fns": "1.29.0",
         "navigo": "7.1.2",
-        "shim-keyboard-event-key": "1.0.2",
-        "react-input-mask": "latest"
+        "preact-compat": "^3.18.0",
+        "react-input-mask": "latest",
+        "shim-keyboard-event-key": "1.0.2"
     },
     "peerDependencies": {
         "preact": "^8.2.9",
@@ -55,7 +56,6 @@
         "rollup-plugin-node-resolve": "3.3.0",
         "rollup-plugin-postcss": "1.6.1",
         "rollup-plugin-typescript2": "0.14.0",
-        "rollup-plugin-virtual-alias": "^1.0.1",
         "sinon": "5.0.10",
         "stylelint": "9.2.1",
         "ts-node": "6.0.5",
