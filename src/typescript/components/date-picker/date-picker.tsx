@@ -1,36 +1,48 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import {FormProps} from '../forms/types'
 import formatDate from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import './date-picker.pcss'
 import addMonths from 'date-fns/add_months'
 import subMonths from 'date-fns/sub_months'
-import os from 'obj-str'
 import {DocumentClick} from '../../decorators/document-click'
 import {SnapScroll, SnapScrollModel} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
-import {range} from '../../util/utils'
+import {cls, range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
 import {addYears, setMonth, setYear, subYears} from 'date-fns'
 import {MaskedInput} from '../masked-input/masked-input'
+import {View} from '../../decorators/view'
 
-interface DatePickerProps extends FormProps<Date> {
+export interface DatePickerProps extends FormProps<Date> {
     error?: string
     format: string
     withTime: boolean
 }
 
-class Model implements SnapScrollModel {
+export class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = false
+    dropDownVisible = true
     panel = 1
 
     constructor(currentMonth: Date) {
         this.currentMonth = currentMonth
     }
+}
+
+const timeInput = {
+    '1': '[0-2]',
+    '2': '[0-9]',
+    '3': '[0-5]',
+    '4': '[0-9]',
+}
+
+const dateInput = {
+    'd': '[0-3]',
+    'm': '[0-1]',
+    '9': '[0-9]',
 }
 
 @View
@@ -96,15 +108,15 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     render({children, name, withTime, changes, value, format, ...props}) {
         return (
-            <div class={os({
-                'control has-icons-right date-picker dropdown': 1,
-                'is-active': this.model.dropDownVisible})}>
+            <div class={cls('control has-icons-right date-picker dropdown', {'is-active': this.model.dropDownVisible})}>
                 <MaskedInput
-                       mask="\d{2}\.\d{2}\.\d{4}"
-                       type="text"
-                       class="input is-small date"
-                       name={name}
-                       value={formatDate(value, format)}/>
+                    mask={format.replace(/DD/, 'd9').replace(/MM/, 'm9').replace(/Y/g, '9')}
+                    type="text"
+                    class="input is-small date"
+                    name={name}
+                    placeholder={format}
+                    formatChars={dateInput}
+                    value={formatDate(value, format)}/>
                 <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
                     <i class="mdi mdi-calendar-range"/>
                 </span>
@@ -147,7 +159,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         const active = this.model.currentMonth
         const months = range(0, 11).map(month =>
             <li onClick={() => this.month(month)}
-                class={os({active: active.getMonth() === month})}>
+                class={cls({active: active.getMonth() === month})}>
                 {formatDate(new Date(2018, month, 1), 'MMM')}
             </li>
         )
@@ -162,7 +174,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     years = () => {
         const now = this.model.currentMonth
         const years = range(now.getFullYear() - 80, now.getFullYear() + 20).map(year =>
-            <li class={os({'current-year': now.getFullYear() === year})}
+            <li class={cls({'current-year': now.getFullYear() === year})}
                 onClick={() => this.year(year)}>{year}</li>
         )
         return (
@@ -195,10 +207,11 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
             <li class="time">
                 <div class="control has-icon-right">
                     <MaskedInput
-                        onChange={() => 0}
+                        type="text"
                         class="input is-small"
                         placeholder="hh:mm"
-                        mask="\d{2}:\d{2}"/>
+                        formatChars={timeInput}
+                        mask="12:34"/>
                     <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
                     </span>

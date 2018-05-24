@@ -1,9 +1,9 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
+import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
-import os from 'obj-str'
 
-interface TabProps extends JSX.HTMLAttributes {
+export interface TabProps extends JSX.HTMLAttributes {
     icon?: string
     text: string
     active?: boolean
@@ -15,7 +15,7 @@ export class Tab extends QuillComponent<TabProps> {
 
     render({icon, text, active, click, ...props}) {
         return (
-            <li class={os({'is-active': active})}>
+            <li class={cls({'is-active': active})}>
                 <a onClick={click}>
                     {icon ? (
                         <span class="icon is-small">

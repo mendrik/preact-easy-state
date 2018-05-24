@@ -1,11 +1,10 @@
 import {DropPostion, NodeDrop} from './tree'
 import {QuillComponent} from '../../util/quill-component'
 import {LocalStorage, Store} from '../../decorators/local-storage'
-import {box} from '../../util/utils'
-import {View} from '../../decorators/view'
+import {box, cls} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {h} from 'preact'
-import os from 'obj-str'
+import {View} from '../../decorators/view'
 
 const NODE_DATA_TYPE = 'preact-quill/node-id'
 
@@ -181,7 +180,7 @@ export class TreeNode<T> extends QuillComponent<TreeNodeProps<T>> {
                 onDragLeave={this.dragleave}
                 onDrop={this.drop}
                 draggable={true}>
-                <div class={os({'node': 1, open, editing, 'is-small': 1})}
+                <div class={cls('node is-small', {open, editing})}
                      onKeyDown={this.keyTreeNav}
                      onKeyUp={this.keyTreeInput}
                      tabIndex={-1}>

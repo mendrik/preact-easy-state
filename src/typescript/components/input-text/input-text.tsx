@@ -1,10 +1,10 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import {FormProps} from '../forms/types'
-import os from 'obj-str'
+import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
-interface InputTextProps extends FormProps<string> {
+export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
     iconRight?: string
     error?: string
@@ -34,7 +34,7 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
-            <div class={os({control: 1, mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
+            <div class={cls('control', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                 <input type={this.getType()}
                        class="input is-small"
                        placeholder={placeHolder}

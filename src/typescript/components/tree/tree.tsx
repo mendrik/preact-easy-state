@@ -1,10 +1,10 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
 import {observable} from '@nx-js/observer-util'
 import 'shim-keyboard-event-key'
 import './tree.pcss'
 import {TreeNode, TreeNodeModel} from './tree-node'
+import {View} from '../../decorators/view'
 
 export interface TreeProps<T> {
     treeNodes: TreeNodeModel<T>[]

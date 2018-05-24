@@ -102,10 +102,10 @@ const initPanX = (component: QuillComponent, method: string, node: HTMLElement) 
         // - - - end - - - //
         const endListener = (eev: PointerEvent) => {
             const endEvent = getPanXEvent(eev, Phase.end, extra)
+            component[method](endEvent)
             if (distance(endEvent) < 5) {
                 eev.target.dispatchEvent(new CustomEvent('tap', {bubbles: true, cancelable: true}))
             }
-            component[method](endEvent)
             doc.removeEventListener(eventSet.move[setIndex], moveListener)
             doc.removeEventListener(eventSet.end[setIndex], endListener)
         }

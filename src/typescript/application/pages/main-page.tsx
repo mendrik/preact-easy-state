@@ -1,5 +1,4 @@
 import {h} from 'preact'
-import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
@@ -15,6 +14,7 @@ import {TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
 import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip';
+import {View} from '../../decorators/view'
 
 class CustomNode extends TreeNodeModel<string> {
 

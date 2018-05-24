@@ -1,8 +1,8 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import './tooltip.pcss'
-import os from 'obj-str'
-import {extendVNode} from '../../util/nvode-extension'
+import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 export interface WithTooltipProps {
     tooltip: JSX.Element
@@ -12,6 +12,7 @@ export interface WithTooltipState {
     open: boolean
 }
 
+@View
 export class WithTooltip extends QuillComponent<WithTooltipProps, WithTooltipState> {
 
     enter = () => this.setState({open: true})
@@ -19,7 +20,7 @@ export class WithTooltip extends QuillComponent<WithTooltipProps, WithTooltipSta
 
     render({children, tooltip}, {open}) {
         return (
-            <div class={os({'with-tooltip': 1, open})}
+            <div class={cls('with-tooltip', {open})}
                     onMouseEnter={this.enter}
                     onMouseLeave={this.leave}>
                 {children}
@@ -29,10 +30,11 @@ export class WithTooltip extends QuillComponent<WithTooltipProps, WithTooltipSta
     }
 }
 
+@View
 export class Tooltip extends QuillComponent<JSX.HTMLAttributes> {
     render({children, ...props}) {
         return (
-            <div class={os({tooltip:1})}>
+            <div class="tooltip">
                 {children}
             </div>
         )

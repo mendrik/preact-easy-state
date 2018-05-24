@@ -36,11 +36,12 @@ export const ensure = <T>(map: WeakMap<{}, T> | Map<{}, T>,
     return lookup
 }
 
-export const resolve = <T>(map: WeakMap<QuillComponentClass, T>, obj: any): T => {
+export const resolve = <T>(map: WeakMap<QuillComponentClass, T>, obj: any, prop?: string): T => {
     let c = obj
     while (c = Object.getPrototypeOf(c)) {
-        if (map.has(c)) {
-            return map.get(c)
+        const key = prop ? c[prop] : c
+        if (map.has(key)) {
+            return map.get(key)
         }
     }
 }

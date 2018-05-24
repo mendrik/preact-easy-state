@@ -1,13 +1,13 @@
 import {cloneElement, h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {View} from '../../decorators/view'
-import os from 'obj-str'
 import {observable} from '@nx-js/observer-util'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import './tabs.pcss'
+import {cls} from '../../util/utils'
+import {View} from '../../decorators/view'
 
 @LocalStorage
-class Model {
+export class Model {
 
     @Store((model) => `${model.id}`)
     activeTab = 0
@@ -20,7 +20,7 @@ class Model {
 
 }
 
-interface TabsProps extends JSX.HTMLAttributes {
+export interface TabsProps extends JSX.HTMLAttributes {
     id: string
 }
 
@@ -40,7 +40,7 @@ export class Tabs extends QuillComponent<TabsProps> {
 
     render({children, id, ...props}) {
         const className = props.class
-        props.class = os({[className]: className, tabs: 1})
+        props.class = cls('tabs', {[className]: className})
         return (
             <div {...props}>
                 <ul>

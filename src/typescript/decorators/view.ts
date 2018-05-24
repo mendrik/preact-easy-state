@@ -1,7 +1,7 @@
 import {observe, unobserve} from '@nx-js/observer-util'
 import {runMountQueue, runUnmountQueue} from '../util/construct'
 
-export function View<P = {}, S = {}>(Comp: {new (props: P, context?: any): any}): any {
+export function View<P = {}, S = {}>(Comp: {new (props: P, context?: any): any}): any {
 
     class ViewComponent<P, S> extends Comp {
 

@@ -1,19 +1,26 @@
-import {h} from 'preact'
-import {QuillComponent} from '../../util/quill-component'
+import {Component, h} from 'preact'
 import './masked-input.pcss'
+import InputMask from 'react-input-mask'
 
-interface MaskedInputProps extends JSX.HTMLAttributes {
+// make input mask work with preact
+InputMask.prototype.forceUpdate = Component.prototype.forceUpdate
+
+export interface MaskedInputProps extends JSX.HTMLAttributes {
     mask: string
+    maskChar?: string
+    formatChars?: {[s: string]: string}
+    alwaysShowMask?: boolean
 }
 
-export class MaskedInput extends QuillComponent<MaskedInputProps> {
+export class MaskedInput extends Component<MaskedInputProps> {
+    input: HTMLInputElement
 
-    componentWillMount(): void {
-        // todo
-    }
-
-    render({children, mask, ...props}) {
+    render({mask, formatChars, maskChar = '_', ...props}) {
         props.class = [...props.class.split(/\s+/), 'masked'].join(' ')
-        return <input {...props}/>
+        return <InputMask {...props}
+                          alwaysShowMask={false}
+                          mask={mask}
+                          maskChar={maskChar}
+                          formatChars={formatChars}/>
     }
 }
