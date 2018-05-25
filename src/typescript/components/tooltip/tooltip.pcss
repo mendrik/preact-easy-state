@@ -1,13 +1,13 @@
 .with-tooltip {
     position: relative;
 
-    &.open .tooltip {
+    &.open .tooltip.mounted {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
 
     .tooltip {
-        opacity: 0;
+        display: none;
         transition: .2s all ease-out;
         pointer-events: none;
         position: absolute;
@@ -15,11 +15,16 @@
         bottom: calc(100% + 10px);
         left: 50%;
         padding: 5px 10px;
-        transform: translateX(-50%) translateY(10px);
         border-radius: 3px;
         font-size: 80%;
         color: white;
         white-space: nowrap;
+
+        &.mounted {
+            transform: translateX(-50%) translateY(10px);
+            display: block;
+            opacity: 0;
+        }
 
         &:after {
             top: 100%;
