@@ -1,0 +1,39 @@
+.control.number-input {
+    max-width: 150px;
+
+    input {
+        appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    &.two-icons {
+
+        input {
+            padding-right: 3em;
+        }
+
+        span:first-of-type {
+            right: 1.5em
+        }
+
+        .icon {
+            width: 1.5em;
+            pointer-events: all;
+            cursor: pointer;
+            color: gray;
+            top: 3px;
+            bottom: 2px;
+            right: 2px;
+            height: auto;
+
+            &:hover {
+                color: black;
+                background-color: whitesmoke;
+            }
+        }
+    }
+}

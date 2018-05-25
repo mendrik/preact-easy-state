@@ -18,6 +18,7 @@
         "@mdi/font": "2.3.54",
         "@nx-js/observer-util": "4.1.2",
         "date-fns": "2.0.0-alpha.8",
+        "format-number": "^3.0.0",
         "navigo": "7.1.2",
         "preact-compat": "^3.18.0",
         "react-input-mask": "latest",

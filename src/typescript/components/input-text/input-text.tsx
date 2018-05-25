@@ -8,7 +8,6 @@ export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
     iconRight?: string
     error?: string
-    value?: string
 }
 
 @View

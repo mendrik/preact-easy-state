@@ -16,6 +16,7 @@ import {DatePicker} from '../../components/date-picker/date-picker'
 import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip'
 import {View} from '../../decorators/view'
 import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
+import {InputNumber} from '../../components/input-number/input-number'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -33,6 +34,8 @@ class CustomCell implements Cell {
 
 class Model {
     text = 'My little demo text'
+    integer = 10
+    float = 10.5
     date = new Date()
     datetime = new Date()
     tree: CustomNode[] = []
@@ -85,6 +88,16 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
+                            <WithLabel name="Test number">
+                                <InputNumber changes={field('integer')} value={model.integer}/>
+                            </WithLabel>
+                            <WithLabel name="Test fraction">
+                                <InputNumber changes={field('integer')}
+                                             value={model.float}
+                                             prefix="€ "
+                                             suffix=" / kpl"
+                                             integer={false}/>
+                            </WithLabel>
                             <WithLabel name="Dropdown test">
                                 <DropDown text="Dropdown button">
                                     <DropDownItem onClick={() => 0}>Bla</DropDownItem>
