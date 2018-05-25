@@ -122,7 +122,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     }
 
     timeChanged = (ev) => {
-        this.props.changes(this.model.selectedDate)
+        // this.props.changes(this.model.selectedDate)
     }
 
     clockClick = () => {
@@ -171,7 +171,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                         <Month month={this.nextMonth()}
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
-                                    {this.footer(withTime)}
+                                    {this.footer(withTime, value)}
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         this.model.dropDownVisible = false
     }
 
-    footer = (withTime: boolean) => (
+    footer = (withTime: boolean, value: Date) => (
         <ul class="time-selector">
             <li><button class="button is-small" onClick={this.today}>Today</button></li>
             <li class="time">
@@ -239,6 +239,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         class="input is-small"
                         placeholder="hh:mm"
                         formatChars={timeInput}
+                        value={formatDate(value, 'hh:mm')}
                         onChange={this.timeChanged}
                         mask="12:34"/>
                     <span class="icon is-small is-right" onClick={this.clockClick}>
