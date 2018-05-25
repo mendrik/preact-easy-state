@@ -239,7 +239,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         class="input is-small"
                         placeholder="hh:mm"
                         formatChars={timeInput}
-                        value={formatDate(value, 'hh:mm')}
+                        value={formatDate(value, 'HH:mm')}
                         onChange={this.timeChanged}
                         mask="12:34"/>
                     <span class="icon is-small is-right" onClick={this.clockClick}>
