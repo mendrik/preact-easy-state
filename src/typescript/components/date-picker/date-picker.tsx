@@ -33,6 +33,7 @@ export class Model implements SnapScrollModel {
     dropDownVisible = false
     panel = 1
     timeChanged = false
+    dateChanged = false
 
     constructor(currentMonth: Date) {
         this.currentMonth = currentMonth
@@ -140,10 +141,11 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                 <MaskedInput
                     mask={format.replace(/dd/, 'd9').replace(/MM/, 'm9').replace(/\w/ig, '9')}
                     type="text"
-                    class="input is-small date"
+                    class={cls('input is-small date', {changed: this.model.dateChanged})}
                     name={name}
                     placeholder={format}
                     onChange={this.dateChanged}
+                    onAnimationEnd={this.dateHighlightEnded}
                     formatChars={dateInput}
                     value={formatDate(value, format)}/>
                 <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
@@ -268,9 +270,11 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         selected = setMinutes(selected, this.model.currentMonth.getMinutes())
         this.props.changes(selected)
         this.model.dropDownVisible = false
+        this.model.dateChanged = true
     }
 
-    highlightEnded = () => this.model.timeChanged = false
+    timeHighlightEnded = () => this.model.timeChanged = false
+    dateHighlightEnded = () => this.model.dateChanged = false
 
     footer = (withTime: boolean, value: Date) => (
         <ul class="time-selector">
@@ -285,7 +289,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         formatChars={timeInput}
                         value={formatDate(value, 'HH:mm')}
                         onChange={this.timeChanged}
-                        onAnimationEnd={this.highlightEnded}
+                        onAnimationEnd={this.timeHighlightEnded}
                         mask="12:34"/>
                     <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
