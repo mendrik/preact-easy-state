@@ -15,6 +15,7 @@ import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
 import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip'
 import {View} from '../../decorators/view'
+import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -84,6 +85,14 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
+                            <WithLabel name="Dropdown test">
+                                <DropDown text="Dropdown button">
+                                    <DropDownItem onClick={() => 0}>Bla</DropDownItem>
+                                    <DropDownItem onClick={() => 0}>Blub</DropDownItem>
+                                    <DropDownDivider/>
+                                    <DropDownItem onClick={() => 0}>Test</DropDownItem>
+                                </DropDown>
+                            </WithLabel>
                             <WithLabel name="Test input">
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
                             </WithLabel>
