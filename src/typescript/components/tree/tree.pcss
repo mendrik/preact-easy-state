@@ -27,7 +27,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    height: 1.5rem;
 
     &:focus {
         outline: none;
@@ -41,25 +40,23 @@
     }
 
     &.is-small .text {
-        font-size: .85em;
-    }
-
-    .text {
         display: block;
         overflow: hidden;
         margin-left: 5px;
         white-space: nowrap;
         max-width: 100%;
         text-overflow: ellipsis;
-        line-height: 1.5rem;
-        max-height: 1.5rem;
+        font-size: .75rem;
+        padding-top: 4.5px;
+        padding-bottom: 4.5px;
         user-select: none;
     }
 
     .tree-input {
         width: 100%;
         margin-left: 3px;
-        font-family: var(--default-font)
+        font-family: var(--default-font);
+        font-size: .75rem;
     }
 
     &:after,

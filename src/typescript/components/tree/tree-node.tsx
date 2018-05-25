@@ -187,7 +187,7 @@ export class TreeNode<T> extends QuillComponent<TreeNodeProps<T>> {
                     <i class={`mdi ${this.chevron()} toggle`} onClick={this.toggle}/>
                     <i class={`mdi mdi-dark mdi-inactive ${this.iconKey()}`}/>
                     {editing ? (
-                        <input class="tree-input"
+                        <input class="tree-input input"
                                type="text"
                                value={text}
                                onKeyUp={this.keyEditInput}
