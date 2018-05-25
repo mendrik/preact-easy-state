@@ -63,6 +63,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     }
 
     iconClick = () => {
+        this.model.currentMonth = this.props.value
         this.model.dropDownVisible = !this.model.dropDownVisible
         if (!this.model.dropDownVisible) {
             this.model.panel = 1
