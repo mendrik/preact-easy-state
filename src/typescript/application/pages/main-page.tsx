@@ -87,14 +87,12 @@ export class MainPage extends QuillComponent {
                             <WithLabel name="Test input">
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
                             </WithLabel>
-{/*
                             <WithLabel name="Test date input">
                                 <DatePicker withTime={false}
                                             changes={field('date')}
                                             format="dd.MM.yyyy"
                                             value={model.date}/>
                             </WithLabel>
-*/}
                             <WithLabel name="Test date time input">
                                 <DatePicker withTime={true}
                                             changes={field('datetime')}

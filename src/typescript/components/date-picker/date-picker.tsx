@@ -30,8 +30,9 @@ export interface DatePickerProps extends FormProps<Date> {
 export class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = true
+    dropDownVisible = false
     panel = 1
+    timeChanged = false
 
     constructor(currentMonth: Date) {
         this.currentMonth = currentMonth
@@ -118,13 +119,16 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         this.props.changes(this.model.selectedDate)
     }
 
-    dateFromStr = (str: string, defaultDate: Date = new Date()): Date => {
-        const d = parseDate(str, this.props.format, defaultDate)
+    dateFromStr = (str: string, defaultDate: Date = new Date(), format = this.props.format): Date => {
+        const d = parseDate(str, format, defaultDate)
         return isNaN(d.getTime()) ? defaultDate : d
     }
 
     timeChanged = (ev) => {
-        // this.props.changes(this.model.selectedDate)
+        const d = this.dateFromStr(ev.target.value, new Date(), 'HH:mm')
+        this.model.currentMonth = setHours(this.model.currentMonth, d.getHours())
+        this.model.currentMonth = setMinutes(this.model.currentMonth, d.getMinutes())
+        this.model.timeChanged = true
     }
 
     render({children, name, withTime, changes, value, format, ...props}) {
@@ -215,6 +219,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     hour = (hour: number) => {
         this.model.currentMonth = setHours(this.model.currentMonth, hour)
+        this.model.timeChanged = true
     }
 
     hours = () => {
@@ -237,6 +242,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     minute = (minute: number) => {
         this.model.currentMonth = setMinutes(this.model.currentMonth, minute)
+        this.model.timeChanged = true
     }
 
     minutes = () => {
@@ -257,12 +263,14 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     }
 
     confirm = () => {
-        const selected = this.model.selectedDate
-        if (selected) {
-            this.props.changes(selected)
-        }
+        let selected = this.model.selectedDate || this.model.currentMonth
+        selected = setHours(selected, this.model.currentMonth.getHours())
+        selected = setMinutes(selected, this.model.currentMonth.getMinutes())
+        this.props.changes(selected)
         this.model.dropDownVisible = false
     }
+
+    highlightEnded = () => this.model.timeChanged = false
 
     footer = (withTime: boolean, value: Date) => (
         <ul class="time-selector">
@@ -272,11 +280,12 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                 <div class="control has-icon-right">
                     <MaskedInput
                         type="text"
-                        class="input is-small"
+                        class={cls('input is-small', {changed: this.model.timeChanged})}
                         placeholder="hh:mm"
                         formatChars={timeInput}
                         value={formatDate(value, 'HH:mm')}
                         onChange={this.timeChanged}
+                        onAnimationEnd={this.highlightEnded}
                         mask="12:34"/>
                     <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
