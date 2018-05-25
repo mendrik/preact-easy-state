@@ -18,6 +18,8 @@ import setYear from 'date-fns/setYear'
 import subYears from 'date-fns/subYears'
 import {MaskedInput} from '../masked-input/masked-input'
 import {View} from '../../decorators/view'
+import setHours from 'date-fns/setHours'
+import setMinutes from 'date-fns/setMinutes'
 
 export interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -28,7 +30,7 @@ export interface DatePickerProps extends FormProps<Date> {
 export class Model implements SnapScrollModel {
     currentMonth: Date
     selectedDate: Date
-    dropDownVisible = false
+    dropDownVisible = true
     panel = 1
 
     constructor(currentMonth: Date) {
@@ -125,10 +127,6 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         // this.props.changes(this.model.selectedDate)
     }
 
-    clockClick = () => {
-        console.log('click')
-    }
-
     render({children, name, withTime, changes, value, format, ...props}) {
         return (
             <div class={cls('control has-icons-right date-picker dropdown', {
@@ -171,8 +169,9 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                         <Month month={this.nextMonth()}
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
-                                    {this.footer(withTime, value)}
+                                    {this.footer(withTime, this.model.currentMonth)}
                                 </div>
+                                {withTime ? [this.hours(), this.minutes()] : null}
                             </div>
                         </div>
                     </div>): null}
@@ -214,6 +213,43 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         )
     }
 
+    hour = (hour: number) => {
+        this.model.currentMonth = setHours(this.model.currentMonth, hour)
+    }
+
+    hours = () => {
+        const hours = range(0, 23).map(hour => {
+            const hh = formatDate(new Date(2018, 1, 1, hour), 'HH')
+            return (
+                <li class={`hour-${hh}`} onClick={() => this.hour(hour)}>
+                    {hh}
+                </li>)
+            }
+        )
+        return (
+            <ScrollPane class="picker-section"
+                        scrollToSelector=".hour-14"
+                        trackWidth={2}>
+                <ul class="picker-section hours">{hours}</ul>
+            </ScrollPane>
+        )
+    }
+
+    minute = (minute: number) => {
+        this.model.currentMonth = setMinutes(this.model.currentMonth, minute)
+    }
+
+    minutes = () => {
+        const minutes = range(0, 11).map(minute =>
+            <li onClick={() => this.minute(minute * 5)}>
+                {formatDate(new Date(2018, 1, 1, 0, minute * 5), ':mm')}
+            </li>
+        )
+        return (
+            <ul class="picker-section minutes">{minutes}</ul>
+        )
+    }
+
     today = (ev: MouseEvent) => {
         this.model.currentMonth = this.model.selectedDate = new Date()
         const target = ev.target as HTMLButtonElement
@@ -242,7 +278,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         value={formatDate(value, 'HH:mm')}
                         onChange={this.timeChanged}
                         mask="12:34"/>
-                    <span class="icon is-small is-right" onClick={this.clockClick}>
+                    <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
                     </span>
                 </div>): null}

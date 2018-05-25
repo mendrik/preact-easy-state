@@ -43,6 +43,9 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
         const {scrollToSelector} = this.props
         if (scrollToSelector) {
             const element = base.querySelector(scrollToSelector) as HTMLDivElement
+            if (!element) {
+                console.warn(scrollToSelector + ' not found in scrollpane')
+            }
             const top = element.offsetTop + element.clientHeight / 2
             base.firstElementChild.scrollTop = top - base.getBoundingClientRect().height / 2
         }

@@ -17,8 +17,11 @@
         -ms-overflow-style: scrollbar;
         pointer-events: initial;
         width: calc(100% + var(--scrollbar-width));
-        overflow-x: hidden;
         overflow-y: scroll;
+
+        @media (max-width: 460px) {
+            overflow-x: auto;
+        }
     }
 
     .track {
