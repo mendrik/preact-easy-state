@@ -15,6 +15,7 @@ export interface SnapScrollProps extends JSX.HTMLAttributes {
     onPanelChanged: () => void
     timeThreshold?: number
     pixelThreshold?: number
+    selector: string
 }
 
 export interface SnapScrollState {
@@ -34,7 +35,7 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
         this.base.style.setProperty('--slides', `${this.props.children.length}`)
     }
 
-    @PanX('.months-panel > li.month:nth-child(2)')
+    @PanX((ss: SnapScroll) => ss.props.selector)
     panX1 = (ev: CustomEvent<PanXEventInit>) => {
         if (this.state.animate) {
             return
@@ -85,7 +86,7 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
         this.props.model.panel -= 1
     }
 
-    render({children, model, timeThreshold, pixelThreshold, onPanelChanged, ...props},
+    render({children, model, selector, timeThreshold, pixelThreshold, onPanelChanged, ...props},
            {animate = false, diffX = 0}) {
         const style = {
             transform: `translateX(${-(100/children.length) * model.panel}%) translateX(${diffX}px)`

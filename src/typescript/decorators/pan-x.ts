@@ -115,8 +115,8 @@ const initPanX = (component: QuillComponent, method: string, node: HTMLElement) 
     addToCleanupQueue(component, () => removeEventListeners(eventSet.start, node, handler))
 }
 
-export const PanX = (selector?: string) => (proto: QuillComponentClass, method: string) => {
+export const PanX = (selector: (comp: QuillComponent) => string) => (proto: QuillComponentClass, method: string) => {
     addToMountQueue(proto, (instance: QuillComponent, node: HTMLElement) => {
-        initPanX(instance, method, selector ? node.querySelector(selector) : node)
+        initPanX(instance, method, selector ? node.querySelector(selector(instance)) : node)
     })
 }

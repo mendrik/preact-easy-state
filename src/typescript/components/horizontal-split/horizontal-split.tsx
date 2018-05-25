@@ -18,7 +18,7 @@ export class HorizontalSplit extends QuillComponent {
 
     model = observable(new Model())
 
-    @PanX('.handle')
+    @PanX(() => '.handle')
     onPanX(ev: CustomEvent<PanXEventInit>) {
         const {phase, x} = {...ev.detail}
         if (phase === Phase.start) {
