@@ -112,19 +112,31 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     }
 
     dateChanged = (ev) => {
-        this.model.selectedDate = parseDate(ev.target.value, this.props.format, new Date())
+        this.model.selectedDate = this.dateFromStr(ev.target.value)
         this.props.changes(this.model.selectedDate)
+    }
+
+    dateFromStr = (str: string, defaultDate: Date = new Date()): Date => {
+        const d = parseDate(str, this.props.format, defaultDate)
+        return isNaN(d.getTime()) ? defaultDate : d
     }
 
     timeChanged = (ev) => {
         this.props.changes(this.model.selectedDate)
     }
 
+    clockClick = () => {
+        console.log('click')
+    }
+
     render({children, name, withTime, changes, value, format, ...props}) {
         return (
-            <div class={cls('control has-icons-right date-picker dropdown', {'is-active': this.model.dropDownVisible})}>
+            <div class={cls('control has-icons-right date-picker dropdown', {
+                'is-active': this.model.dropDownVisible,
+                'with-time': withTime
+            })}>
                 <MaskedInput
-                    mask={format.replace(/dd/, 'd9').replace(/MM/, 'm9').replace(/y/ig, '9')}
+                    mask={format.replace(/dd/, 'd9').replace(/MM/, 'm9').replace(/\w/ig, '9')}
                     type="text"
                     class="input is-small date"
                     name={name}
@@ -159,7 +171,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                         <Month month={this.nextMonth()}
                                                onDateClick={this.dateClick}/>
                                     </SnapScroll>
-                                    {this.footer()}
+                                    {this.footer(withTime)}
                                 </div>
                             </div>
                         </div>
@@ -216,10 +228,11 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         this.model.dropDownVisible = false
     }
 
-    footer = () => (
+    footer = (withTime: boolean) => (
         <ul class="time-selector">
             <li><button class="button is-small" onClick={this.today}>Today</button></li>
             <li class="time">
+                {withTime ? (
                 <div class="control has-icon-right">
                     <MaskedInput
                         type="text"
@@ -228,10 +241,10 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         formatChars={timeInput}
                         onChange={this.timeChanged}
                         mask="12:34"/>
-                    <span class="icon is-small is-right">
+                    <span class="icon is-small is-right" onClick={this.clockClick}>
                         <i class="mdi mdi-clock"/>
                     </span>
-                </div>
+                </div>): null}
             </li>
             <li><button class="button is-small is-primary"
                         onClick={this.confirm}>Ok</button></li>
