@@ -87,7 +87,10 @@ export class MainPage extends QuillComponent {
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
                             </WithLabel>
                             <WithLabel name="Test date input">
-                                <DatePicker withTime={true} changes={field('date')} format="DD.MM.YYYY" value={model.date}/>
+                                <DatePicker withTime={true}
+                                            changes={field('date')}
+                                            format="dd.MM.yyyy"
+                                            value={model.date}/>
                             </WithLabel>
                             <Tabs class="is-boxed is-small" id="demo-tabs">
                                 <Tab text="Tab A" icon="car-side">

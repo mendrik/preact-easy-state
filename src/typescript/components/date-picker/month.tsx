@@ -1,13 +1,13 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import startOfWeek from 'date-fns/start_of_week'
-import startOfMonth from 'date-fns/start_of_month'
+import startOfWeek from 'date-fns/startOfWeek'
+import startOfMonth from 'date-fns/startOfMonth'
 import format from 'date-fns/format'
 import {observable} from '@nx-js/observer-util'
 import {range} from '../../util/utils'
 import './month.pcss'
-import addDays from 'date-fns/add_days'
-import isSameDay from 'date-fns/is_same_day'
+import addDays from 'date-fns/addDays'
+import isSameDay from 'date-fns/isSameDay'
 import {TapDate} from './tap-date'
 import {View} from '../../decorators/view'
 
@@ -33,7 +33,7 @@ export class Month extends QuillComponent<MonthProps> {
 
     render({month, selectedDate, onDateClick, ...props}) {
         const daysToRender = this.getDays(month)
-        const weekDays = daysToRender.slice(0, 7).map(d => <li>{format(d, 'ddd')}</li>)
+        const weekDays = daysToRender.slice(0, 7).map(d => <li>{format(d, 'eee')}</li>)
         const days = daysToRender.map(d =>
             <TapDate onDateClick={onDateClick}
                      date={d}

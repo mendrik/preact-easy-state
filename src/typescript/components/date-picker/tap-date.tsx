@@ -3,8 +3,8 @@ import {QuillComponent} from '../../util/quill-component'
 import format from 'date-fns/format'
 import './month.pcss'
 import {CustomEvent} from '../../decorators/custom-event'
-import isSameDay from 'date-fns/is_same_day'
-import isSameMonth from 'date-fns/is_same_month'
+import isSameDay from 'date-fns/isSameDay'
+import isSameMonth from 'date-fns/isSameMonth'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 
@@ -31,7 +31,7 @@ export class TapDate extends QuillComponent<TabDateProps> {
                 out: !isSameMonth(currentMonth, date),
                 selected,
                 today: isSameDay(date, TapDate.today)})}>
-                <div>{format(date, 'D')}</div>
+                <div>{format(date, 'd')}</div>
             </li>
         )
     }

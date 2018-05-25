@@ -2,16 +2,20 @@ import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import formatDate from 'date-fns/format'
+import parseDate from 'date-fns/parse'
 import {observable} from '@nx-js/observer-util'
 import './date-picker.pcss'
-import addMonths from 'date-fns/add_months'
-import subMonths from 'date-fns/sub_months'
+import addMonths from 'date-fns/addMonths'
+import subMonths from 'date-fns/subMonths'
 import {DocumentClick} from '../../decorators/document-click'
 import {SnapScroll, SnapScrollModel} from '../snap-scroll/snap-scroll'
 import {Month} from './month'
 import {cls, range} from '../../util/utils'
 import {ScrollPane} from '../scroll-pane/scrollpane'
-import {addYears, setMonth, setYear, subYears} from 'date-fns'
+import addYears from 'date-fns/addYears'
+import setMonth from 'date-fns/setMonth'
+import setYear from 'date-fns/setYear'
+import subYears from 'date-fns/subYears'
 import {MaskedInput} from '../masked-input/masked-input'
 import {View} from '../../decorators/view'
 
@@ -106,15 +110,25 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         }
     }
 
+    dateChanged = (ev) => {
+        this.model.selectedDate = parseDate(ev.target.value, this.props.format, new Date())
+        this.props.changes(this.model.selectedDate)
+    }
+
+    timeChanged = (ev) => {
+        this.props.changes(this.model.selectedDate)
+    }
+
     render({children, name, withTime, changes, value, format, ...props}) {
         return (
             <div class={cls('control has-icons-right date-picker dropdown', {'is-active': this.model.dropDownVisible})}>
                 <MaskedInput
-                    mask={format.replace(/DD/, 'd9').replace(/MM/, 'm9').replace(/Y/g, '9')}
+                    mask={format.replace(/dd/, 'd9').replace(/MM/, 'm9').replace(/y/ig, '9')}
                     type="text"
                     class="input is-small date"
                     name={name}
                     placeholder={format}
+                    onChange={this.dateChanged}
                     formatChars={dateInput}
                     value={formatDate(value, format)}/>
                 <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
@@ -211,6 +225,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         class="input is-small"
                         placeholder="hh:mm"
                         formatChars={timeInput}
+                        onChange={this.timeChanged}
                         mask="12:34"/>
                     <span class="icon is-small is-right">
                         <i class="mdi mdi-clock"/>
