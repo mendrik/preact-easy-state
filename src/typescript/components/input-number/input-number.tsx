@@ -79,8 +79,9 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     }
 
     rawNumber = () => {
-        const str = this.input.value.replace(/[^\d.]/g, '')
-        return this.props.integer ?
+        const {input, props} = this
+        const str = input.value.replace(/[^\d.]/g, '')
+        return props.integer ?
             parseInt(str, 10) :
             parseFloat(str)
     }
@@ -91,7 +92,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     }
 
     @GlobalEvent('selectionchange', document)
-    selectionChange = (ev) => {
+    selectionChange = () => {
         const {props, input} = this
         if (document.activeElement === input) {
             const {prefix, suffix} = props
@@ -118,7 +119,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         return (
             <div class="control two-icons has-icons-right number-input">
                 <input
-                    ref={i => this.input =i}
+                    ref={i => this.input = i}
                     type="text"
                     class="input is-small"
                     value={this.format(value)}
