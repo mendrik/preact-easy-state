@@ -25,6 +25,7 @@ const formatConfig = {
     truncate: 2
 }
 
+// experimental, doesn't work yet on android nor firefox
 @View
 export class InputNumber extends QuillComponent<InputNumberProps, InputNumberState> {
 
@@ -91,7 +92,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         ev.clipboardData.setData('text/plain', `${this.rawNumber()}`)
     }
 
-    @GlobalEvent('selectionchange', document)
+    @GlobalEvent('selectionchange', document) // doesn't work yet in firefox
     selectionChange = () => {
         const {props, input} = this
         if (document.activeElement === input) {
