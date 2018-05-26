@@ -25,7 +25,7 @@ const formatConfig = {
     truncate: 2
 }
 
-// experimental, doesn't work yet on android nor firefox
+// experimental, doesn't work yet on firefox and android has limitations
 @View
 export class InputNumber extends QuillComponent<InputNumberProps, InputNumberState> {
 
@@ -50,7 +50,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     validateKey = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
-        if (!ctrlKey && key.length === 1) {
+        if (!!key && !ctrlKey && key.length === 1) {
             if (!/[\d.]/.test(key)) {
                 ev.preventDefault()
             }
@@ -59,7 +59,10 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     onChange = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
-        if (!ctrlKey && /[0-9]/.test(key) || /backspace|delete/i.test(key)) {
+        if (!key) {
+            return
+        }
+        if (!ctrlKey && /[0-9]/.test(key) || /null|backspace|delete/i.test(key)) {
             const {selectionStart, selectionEnd} = this.input
             const old =  this.format(this.state.value)
             const n = this.rawNumber()
@@ -114,6 +117,30 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     change = (diff: number) => () => {
         this.setState({value: this.rawNumber() + diff})
         this.confirm()
+    }
+
+    androidBeforeInput = (ev) => {
+        ev.key = `${ev.data}`
+        this.validateKey(ev)
+    }
+
+    androidInput = (ev) => {
+        ev.key = `${ev.data}`
+        this.onChange(ev)
+    }
+
+    componentDidMount(): void {
+        if (/android/i.test(navigator.userAgent)) {
+            this.input.addEventListener('beforeinput', this.androidBeforeInput)
+            this.input.addEventListener('input', this.androidInput)
+        }
+    }
+
+    componentWillUnmount(): void {
+        if (/android/i.test(navigator.userAgent)) {
+            this.input.removeEventListener('beforeinput', this.androidBeforeInput)
+            this.input.removeEventListener('input', this.androidInput)
+        }
     }
 
     render({children, changes, integer, placeHolder, ...props}, {value}) {
