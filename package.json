@@ -20,7 +20,7 @@
         "date-fns": "2.0.0-alpha.8",
         "format-number": "^3.0.0",
         "navigo": "7.1.2",
-        "preact-compat": "^3.18.0",
+        "preact-compat": "3.18.0",
         "react-input-mask": "latest",
         "shim-keyboard-event-key": "1.0.2"
     },
