@@ -73,7 +73,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                 })
             }
         }
-        if ('.' === key) {
+        if ('.' === key) { // after dot was entered we need to allow 0s without formatting the number
             this.setState({dot: true})
         }
     }
