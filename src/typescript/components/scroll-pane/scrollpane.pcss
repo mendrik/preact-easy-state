@@ -18,9 +18,10 @@
         pointer-events: initial;
         width: calc(100% + var(--scrollbar-width));
         overflow-y: scroll;
+        overflow-x: auto;
 
-        @media (max-width: 460px) {
-            overflow-x: auto;
+        @mixin hover-supported {
+            overflow-x: hidden;
         }
     }
 
