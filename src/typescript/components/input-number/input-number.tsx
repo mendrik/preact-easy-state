@@ -8,6 +8,7 @@ import {GlobalEvent} from '../../decorators/global-event'
 
 export interface InputNumberState {
     value: number
+    dot: boolean
 }
 
 export interface InputNumberProps extends FormProps<number> {
@@ -41,7 +42,8 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         const {prefix, suffix, value} = props
         this.format = formatter({...formatConfig, prefix, suffix})
         this.state = {
-            value
+            value,
+            dot: false
         }
     }
 
@@ -60,14 +62,19 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             const {selectionStart, selectionEnd} = this.input
             const old =  this.format(this.state.value)
             const n = this.rawNumber()
-            this.setState({value: n})
-            this.forceUpdate(() => {
-                if (old) {
-                    const offset = Math.max(0, this.format(n).length - old.length - 1)
-                    this.input.selectionStart = selectionStart + offset
-                    this.input.selectionEnd = selectionEnd + offset
-                }
-            })
+            if (!this.state.dot || key !== '0') {
+                this.setState({value: n, dot: false})
+                this.forceUpdate(() => {
+                    if (old) {
+                        const offset = Math.max(0, this.format(n).length - old.length - 1)
+                        this.input.selectionStart = selectionStart + offset
+                        this.input.selectionEnd = selectionEnd + offset
+                    }
+                })
+            }
+        }
+        if ('.' === key) {
+            this.setState({dot: true})
         }
     }
 
