@@ -2,6 +2,9 @@ import {Component, h} from 'preact'
 import './masked-input.pcss'
 import InputMask from 'react-input-mask'
 
+// make input mask work with preact
+InputMask.prototype.forceUpdate = Component.prototype.forceUpdate
+
 export interface MaskedInputProps extends JSX.HTMLAttributes {
     mask: string
     maskChar?: string
@@ -11,18 +14,10 @@ export interface MaskedInputProps extends JSX.HTMLAttributes {
 
 export class MaskedInput extends Component<MaskedInputProps> {
     input: HTMLInputElement
-    r: InputMask
-
-    componentDidMount(): void {
-        if (!this.r.forceUpdate) {
-            console.error('compat not working')
-        }
-    }
 
     render({mask, formatChars, onChange, maskChar = '_', ...props}) {
         props.class = [...props.class.split(/\s+/), 'masked'].join(' ')
-        return <InputMask ref={r => this.r = r}
-                          {...props}
+        return <InputMask {...props}
                           alwaysShowMask={false}
                           mask={mask}
                           maskChar={maskChar}
