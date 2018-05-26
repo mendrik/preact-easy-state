@@ -18,7 +18,7 @@ export interface InputNumberProps extends FormProps<number> {
 }
 
 const formatConfig = {
-    integerSeparator: '\u00B7',
+    integerSeparator: '\u2009',
     decimalsSeparator: '',
     decimal: '.',
     round: 2
@@ -56,14 +56,14 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     onChange = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
-        if (!ctrlKey && /[1-9]/.test(key) || /backspace|delete/i.test(key)) {
+        if (!ctrlKey && /[0-9]/.test(key) || /backspace|delete/i.test(key)) {
             const {selectionStart, selectionEnd} = this.input
             const old =  this.format(this.state.value)
             const n = this.rawNumber()
             this.setState({value: n})
             this.forceUpdate(() => {
                 if (old) {
-                    const offset = this.format(n).length - old.length - 1
+                    const offset = Math.max(0, this.format(n).length - old.length - 1)
                     this.input.selectionStart = selectionStart + offset
                     this.input.selectionEnd = selectionEnd + offset
                 }
@@ -72,7 +72,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     }
 
     rawNumber = () => {
-        const str = this.input.value.replace(/,/,'.').replace(/[^\d.]/g, '')
+        const str = this.input.value.replace(/[^\d.]/g, '')
         return this.props.integer ?
             parseInt(str, 10) :
             parseFloat(str)
@@ -97,9 +97,14 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         return false
     }
 
-    confirm = (ev: FocusEvent) => {
+    confirm = () => {
         this.forceUpdate()
-       // this.props.changes(this.state.value)
+        this.props.changes(this.rawNumber())
+    }
+
+    change = (diff: number) => () => {
+        this.setState({value: this.rawNumber() + diff})
+        this.confirm()
     }
 
     render({children, changes, integer, placeHolder, ...props}, {value}) {
@@ -115,11 +120,11 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                     onKeyUp={this.onChange}
                     onKeyDown={this.validateKey}/>
                 {integer ? (
-                    <span className="icon is-small is-right">
+                    <span className="icon is-small is-right" onClick={this.change(1)}>
                         <i className="mdi mdi-chevron-up"/>
                     </span>): null}
                 {integer ? (
-                    <span className="icon is-small is-right">
+                    <span className="icon is-small is-right" onClick={this.change(-1)}>
                         <i className="mdi mdi-chevron-down"/>
                     </span>): null}
                 {children}

@@ -89,10 +89,11 @@ export class MainPage extends QuillComponent {
                         </div>
                         <div class="panel page">
                             <WithLabel name="Test number">
-                                <InputNumber changes={field('integer')} value={model.integer}/>
+                                <InputNumber changes={(number) => console.log(number)}
+                                             value={model.integer}/>
                             </WithLabel>
                             <WithLabel name="Test fraction">
-                                <InputNumber changes={field('integer')}
+                                <InputNumber changes={(number) => console.log(number)}
                                              value={model.float}
                                              prefix="€ "
                                              suffix=" / kpl"
