@@ -22,7 +22,7 @@ const formatConfig = {
     integerSeparator: '\u2009',
     decimalsSeparator: '',
     decimal: '.',
-    round: 2
+    truncate: 2
 }
 
 @View
