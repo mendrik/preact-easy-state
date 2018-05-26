@@ -31,6 +31,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     format: Format
     input: HTMLInputElement
+    changingSelection = false
 
     static defaultProps = {
         integer: true,
@@ -50,7 +51,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     validateKey = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
-        if (!!key && !ctrlKey && key.length === 1) {
+        if (!ctrlKey && key.length === 1) {
             if (!/[\d.]/.test(key)) {
                 ev.preventDefault()
             }
@@ -63,21 +64,24 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             return
         }
         if (!ctrlKey && /[0-9]/.test(key) || /null|backspace|delete/i.test(key)) {
-            const {selectionStart, selectionEnd} = this.input
-            const old =  this.format(this.state.value)
+            const {state, input} = this
+            const {selectionStart, selectionEnd} = input
+            const old =  this.format(state.value)
             const n = this.rawNumber()
             if (!this.state.dot || key !== '0') {
                 this.setState({value: n, dot: false})
                 this.forceUpdate(() => {
-                    if (old) {
+                    if (!this.changingSelection) {
+                        this.changingSelection = true
                         const offset = Math.max(0, this.format(n).length - old.length - 1)
-                        this.input.selectionStart = selectionStart + offset
-                        this.input.selectionEnd = selectionEnd + offset
+                        input.selectionStart = selectionStart + offset
+                        input.selectionEnd = selectionEnd + offset
+                        this.changingSelection = false
                     }
                 })
             }
         }
-        if ('.' === key) { // after dot was entered we need to allow 0s without formatting the number
+        if (!ctrlKey && '.' === key) { // after dot was entered we need to allow 0s without formatting the number
             this.setState({dot: true})
         }
     }
@@ -98,10 +102,12 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     @GlobalEvent('selectionchange', document) // doesn't work yet in firefox
     selectionChange = () => {
         const {props, input} = this
-        if (document.activeElement === input) {
+        if (!this.changingSelection && document.activeElement === input) {
+            this.changingSelection = true
             const {prefix, suffix} = props
             input.selectionStart = Math.max(input.selectionStart, prefix.length)
             input.selectionEnd = Math.min(input.selectionEnd, input.value.length - suffix.length)
+            setTimeout(() => this.changingSelection = false, 10)
         }
     }
 

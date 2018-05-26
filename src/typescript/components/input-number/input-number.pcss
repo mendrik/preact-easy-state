@@ -5,6 +5,10 @@
 
     input {
         appearance: textfield;
+
+        &::-ms-clear {
+            display: none;
+        }
     }
 
     input::-webkit-outer-spin-button,
