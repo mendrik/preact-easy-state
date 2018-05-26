@@ -1,7 +1,7 @@
 import {h} from 'preact'
 import './scrollpane.pcss'
 import {QuillComponent} from '../../util/quill-component'
-import {WindowEvent} from '../../decorators/window-event'
+import {GlobalEvent} from '../../decorators/global-event'
 import {DomChanged} from '../../decorators/dom-changed'
 import {cls, scrollBarWidth} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
@@ -52,7 +52,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     }
 
     @DomChanged((el) => el.firstElementChild)
-    @WindowEvent('resize')
+    @GlobalEvent('resize')
     calculateThumb = () => {
         const el = this.base
         const inner = el.firstElementChild

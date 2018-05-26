@@ -32,7 +32,7 @@ export {PanX, Phase, PanXEventInit} from './decorators/pan-x'
 export {CustomEvent} from './decorators/custom-event'
 export {DocumentClick} from './decorators/document-click'
 export {OpenInView, Overlap} from './decorators/open-in-view'
-export {WindowEvent} from './decorators/window-event'
+export {GlobalEvent} from './decorators/window-event'
 
 export {DatePicker} from './components/date-picker/date-picker'
 export {WithLabel, WithLabelProps} from './components/forms/with-label'
