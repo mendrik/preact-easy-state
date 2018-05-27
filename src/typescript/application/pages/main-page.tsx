@@ -17,6 +17,7 @@ import {Tooltip, WithTooltip} from '../../components/tooltip/tooltip'
 import {View} from '../../decorators/view'
 import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
 import {InputNumber} from '../../components/input-number/input-number'
+import {InputSwitch} from '../../components/input-switch/input-switch'
 
 class CustomNode extends TreeNodeModel<string> {
 
@@ -36,6 +37,7 @@ class Model {
     text = 'My little demo text'
     integer = 10
     float = 10.5
+    bool = false
     date = new Date()
     datetime = new Date()
     tree: CustomNode[] = []
@@ -55,6 +57,14 @@ const toTreeNodes = (tree) => tree.houses.map(house =>
     customTreeModel(house.name, house.wikiSuffix, house.people)
 )
 
+function toCellData(data: any) {
+    return data.split(/\n\s*/g).filter(l => !!l).map(line => {
+        return line.split(/\s*,\s*/).map(value =>
+            new CustomCell(value.replace(/"?(.*?)"?/gi, '$1'))
+        )
+    })
+}
+
 @View
 export class MainPage extends QuillComponent {
 
@@ -67,11 +77,7 @@ export class MainPage extends QuillComponent {
     async componentDidMount() {
         const [tree, data] = await Promise.all([this.fetchTree(), this.fetchData()])
         model.tree.push(...toTreeNodes(tree))
-        model.data = data.split(/\n\s*/g).filter(l => !!l).map(line => {
-            return line.split(/\s*,\s*/).map(value =>
-                new CustomCell(value.replace(/"?(.*?)"?/gi, '$1'))
-            )
-        })
+        model.data = toCellData(data)
     }
 
     @CustomEvent('nodeDrop')
@@ -88,6 +94,10 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
+                            <WithLabel name="Test switch">
+                                <InputSwitch changes={(bool) => model.bool = bool}
+                                             value={model.bool}/>
+                            </WithLabel>
                             <WithLabel name="Test number">
                                 <InputNumber changes={(number) => console.log(number)}
                                              value={model.integer}/>

@@ -12,7 +12,6 @@ export interface InputNumberState {
 }
 
 export interface InputNumberProps extends FormProps<number> {
-    error?: string
     integer?: boolean
     prefix?: string
     suffix?: string
