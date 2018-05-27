@@ -1,54 +1,61 @@
 @parcel-import '../../variables.pcss';
 
 .control.boolean-input {
-
-    --off-width: 0;
-    --on-width: 0;
+    --min-width: 0;
+    display: inline-block;
+    border-radius: 4px;
+    font-size: .75rem;
+    height: 2.25em;
+    line-height: 1.5;
+    padding: calc(.375em - 1px) 0;
+    border: 1px solid #dbdbdb;
+    color: #363636;
+    box-shadow: inset 0 1px 2px rgba(10, 10, 10, .1);
+    background-color: whitesmoke;
+    width: calc(var(--min-width) / 2 + 34px);
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 
     .switch-wrapper {
-        display: inline-block;
-        border-radius: 4px;
-        font-size: .75rem;
-        height: 2.25em;
-        line-height: 1.5;
-        padding: calc(.375em - 1px) 0;
-        position: relative;
-        border: 1px solid #dbdbdb;
-        color: #363636;
-        box-shadow: inset 0 1px 2px rgba(10, 10, 10, .1);
-        overflow: hidden;
-        background-color: whitesmoke;
+        position: absolute;
+        display: block;
+        transition: .2s all ease-in;
+        cursor: pointer;
 
-        &.on {
+        &.on .slider {
+
+            /* noinspection CssInvalidFunction */
+            transform: translateX(calc(var(--min-width) / -2 - 2px));
         }
 
         .slider {
-            border-left: calc(.625em - 1px) solid transparent;
-            border-right: calc(.625em - 1px) solid transparent;
-            display: inline-flex;
-            align-items: stretch;
-            justify-content: flex-start;
+            transition: .2s all ease-in;
+            font-size: .75rem;
+            display: inline-grid;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            grid-template-columns: 1fr 20px 1fr;
             backface-visibility: hidden;
             will-change: all;
-            cursor: pointer;
-            max-width: calc(20px + var(--off-width));
-            white-space: nowrap;
         }
 
         .toggle {
             background-color: white;
-            flex: none;
-            width: 20px;
             border: var(--pixelline);
             border-radius: 5px;
         }
 
-        .off-label {
-            padding-left: 4px;
+        .off-label,
+        .on-label {
+            white-space: nowrap;
         }
 
-        .on-label {
-            padding-right: 4px;
+        .off-label > span {
+            padding-left: 5px;
+        }
+
+        .on-label > span {
+            padding-right: 5px;
         }
     }
 }

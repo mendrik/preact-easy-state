@@ -18,21 +18,21 @@ export class InputSwitch extends QuillComponent<InputSwitchProps> {
         offLabel: 'off'
     }
 
-    componentDidMount() {
-        const offLabelWidth = this.base.querySelector('.off-label').getBoundingClientRect().width
-        const onLabelWidth = this.base.querySelector('.on-label').getBoundingClientRect().width
-        this.base.style.setProperty('--off-width', `${offLabelWidth}px`)
-        this.base.style.setProperty('--on-width', `${onLabelWidth}px`)
+    componentDidMount(): void {
+        const {base, base: {style}} = this
+        const slider = base.querySelector('.slider') as HTMLDivElement
+        const minWidth = slider.getBoundingClientRect().width
+        style.setProperty('--min-width', `${Math.round(minWidth)}px`)
     }
 
     render({children, changes, value, onLabel, offLabel, ...props}) {
         return (
-            <div class="control has-icons-right boolean-input">
+            <div class="control has-icons-right boolean-input" onClick={() => changes(!value)}>
                 <div class={cls('switch-wrapper', {on: value})}>
                     <div class="slider">
-                        <div class="on-label">{onLabel}</div>
+                        <div class="on-label"><span>{onLabel}</span></div>
                         <div class="toggle"/>
-                        <div className="off-label">{offLabel}</div>
+                        <div className="off-label"><span>{offLabel}</span></div>
                     </div>
                 </div>
                 {children}
