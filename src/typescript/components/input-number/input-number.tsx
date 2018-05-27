@@ -25,7 +25,10 @@ const formatConfig = {
     truncate: 2
 }
 
-// experimental, doesn't work yet on firefox and android has limitations
+/**
+ * experimental, android has limitations
+ * 27.05.2018: firefox needs dom.select_events.textcontrols.enabled=true in about:config
+ */
 @View
 export class InputNumber extends QuillComponent<InputNumberProps, InputNumberState> {
 
@@ -99,7 +102,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         ev.clipboardData.setData('text/plain', `${this.rawNumber()}`)
     }
 
-    @GlobalEvent('selectionchange', document) // doesn't work yet in firefox
+    @GlobalEvent('selectionchange', document)
     selectionChange = () => {
         const {props, input} = this
         if (!this.changingSelection && document.activeElement === input) {
@@ -140,12 +143,20 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             this.input.addEventListener('beforeinput', this.androidBeforeInput)
             this.input.addEventListener('input', this.androidInput)
         }
+        if (/firefox/i.test(navigator.userAgent)) {
+            this.input.addEventListener('focus', this.selectionChange)
+            this.input.addEventListener('selectionchange', this.selectionChange)
+        }
     }
 
     componentWillUnmount(): void {
         if (/android/i.test(navigator.userAgent)) {
             this.input.removeEventListener('beforeinput', this.androidBeforeInput)
             this.input.removeEventListener('input', this.androidInput)
+        }
+        if (/firefox/i.test(navigator.userAgent)) {
+            this.input.removeEventListener('focus', this.selectionChange)
+            this.input.removeEventListener('selectionchange', this.selectionChange)
         }
     }
 

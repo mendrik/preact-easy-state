@@ -13,7 +13,7 @@
   - Multiselect with remote data lists
   - Icon
   - Checkbox / switch
-  - Form container
+  - Form container with validation handler
   - Progress bar
   - Loading indicator 
 - Tests
