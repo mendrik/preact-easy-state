@@ -4,6 +4,7 @@ import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import './input-switch.pcss'
 import {cls} from '../../util/utils'
+import {CustomEvent} from '../../decorators/custom-event'
 
 export interface InputSwitchProps extends FormProps<boolean> {
     onLabel?: string
@@ -13,27 +14,32 @@ export interface InputSwitchProps extends FormProps<boolean> {
 @View
 export class InputSwitch extends QuillComponent<InputSwitchProps> {
 
+    slider: HTMLDivElement
+    loaded = false
+
     static defaultProps = {
-        onLabel: 'this is on',
-        offLabel: 'off'
+        onLabel: 'enabled',
+        offLabel: 'disabled'
     }
 
-    componentDidMount(): void {
-        const {base, base: {style}} = this
-        const slider = base.querySelector('.slider') as HTMLDivElement
+    @CustomEvent('animationstart')
+    cssReady() {
+        const {slider} = this
         const minWidth = slider.getBoundingClientRect().width
-        console.log(minWidth)
-        style.setProperty('--min-width', `${Math.round(minWidth)}px`)
+        this.setState({minWidth})
+        this.loaded = true
     }
 
-    render({children, changes, value, onLabel, offLabel, ...props}) {
+    render({children, changes, value, onLabel, offLabel, ...props}, {minWidth = 0}) {
         return (
-            <div class="control has-icons-right boolean-input" onClick={() => changes(!value)}>
-                <div class={cls('switch-wrapper', {on: value})}>
-                    <div class="slider">
+            <div class={cls('control boolean-input', {loaded: this.loaded})}
+                 style={`--min-width: ${minWidth}px`}
+                 onClick={() => changes(!value)}>
+                <div class={cls('switch-wrapper', {off: !value})}>
+                    <div class="slider" ref={r => this.slider = r}>
                         <div class="on-label"><span>{onLabel}</span></div>
                         <div class="toggle"/>
-                        <div className="off-label"><span>{offLabel}</span></div>
+                        <div class="off-label"><span>{offLabel}</span></div>
                     </div>
                 </div>
                 {children}
