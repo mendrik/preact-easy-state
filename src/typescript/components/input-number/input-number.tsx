@@ -74,13 +74,11 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             if (!this.state.dot || key !== '0') {
                 this.setState({value: n, dot: false})
                 this.forceUpdate(() => {
-                    if (!this.changingSelection) {
-                        this.changingSelection = true
-                        const offset = Math.max(0, this.format(n).length - old.length - 1)
-                        input.selectionStart = selectionStart + offset
-                        input.selectionEnd = selectionEnd + offset
-                        this.changingSelection = false
-                    }
+                    this.changingSelection = true
+                    const offset = Math.max(0, this.format(n).length - old.length - 1)
+                    input.selectionStart = selectionStart + offset
+                    input.selectionEnd = selectionEnd + offset
+                    this.changingSelection = false
                 })
             }
         }
@@ -165,7 +163,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             <div class="control two-icons has-icons-right number-input">
                 <input
                     ref={i => this.input = i}
-                    type="tel"
+                    type="text"
                     class="input is-small"
                     value={this.format(value)}
                     onBlur={this.confirm}
