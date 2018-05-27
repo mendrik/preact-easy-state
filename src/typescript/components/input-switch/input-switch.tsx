@@ -22,6 +22,7 @@ export class InputSwitch extends QuillComponent<InputSwitchProps> {
         const {base, base: {style}} = this
         const slider = base.querySelector('.slider') as HTMLDivElement
         const minWidth = slider.getBoundingClientRect().width
+        console.log(minWidth)
         style.setProperty('--min-width', `${Math.round(minWidth)}px`)
     }
 
