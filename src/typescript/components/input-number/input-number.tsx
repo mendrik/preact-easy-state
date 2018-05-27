@@ -165,7 +165,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             <div class="control two-icons has-icons-right number-input">
                 <input
                     ref={i => this.input = i}
-                    type="text"
+                    type="tel"
                     class="input is-small"
                     value={this.format(value)}
                     onBlur={this.confirm}
