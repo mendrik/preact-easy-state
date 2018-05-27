@@ -66,8 +66,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
             return
         }
         if (!ctrlKey && /[0-9]/.test(key) || /null|backspace|delete/i.test(key)) {
-            const {state, input} = this
-            const {selectionStart, selectionEnd} = input
+            const {state, input, input: {selectionStart, selectionEnd}} = this
             const old =  this.format(state.value)
             const n = this.rawNumber()
             if (!this.state.dot || key !== '0') {
@@ -101,10 +100,9 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     @GlobalEvent('selectionchange', document)
     selectionChange = () => {
-        const {props, input} = this
+        const {props: {prefix, suffix}, input} = this
         if (!this.changingSelection && document.activeElement === input) {
             this.changingSelection = true
-            const {prefix, suffix} = props
             input.selectionStart = Math.max(input.selectionStart, prefix.length)
             input.selectionEnd = Math.min(input.selectionEnd, input.value.length - suffix.length)
             setTimeout(() => this.changingSelection = false, 10)
