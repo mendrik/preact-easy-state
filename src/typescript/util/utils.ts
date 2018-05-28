@@ -32,3 +32,27 @@ export const cls = (...parts): string => parts.reduce((p, c) => {
         return [...p, ...Object.keys(c).filter(k => c[k])]
     }
 }, []).join(' ')
+
+class Rect {
+    x: number
+    y: number
+    width: number
+    height: number
+
+    constructor(x: number, y: number, width: number, height: number) {
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+    }
+}
+
+export const intersect = (a: ClientRect, b: ClientRect): Rect|never => {
+    const x = Math.max(a.left, b.left)
+    const num1 = Math.min(a.left + a.width, b.left + b.width)
+    const y = Math.max(a.top, b.top)
+    const num2 = Math.min(a.top + a.height, b.top + b.height)
+    if (num1 >= x && num2 >= y) {
+        return new Rect(x, y, num1 - x, num2 - y)
+    }
+}
