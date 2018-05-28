@@ -20,6 +20,7 @@ import {MaskedInput} from '../masked-input/masked-input'
 import {View} from '../../decorators/view'
 import setHours from 'date-fns/esm/setHours'
 import setMinutes from 'date-fns/esm/setMinutes'
+import {InView} from '../in-view/in-view'
 
 export interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -159,7 +160,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                          ref={r => this.dropDown = r}
                          onKeyDown={this.keyDown}
                          role="menu">
-                        <div class="dropdown-content">
+                        <InView class="dropdown-content" observableFn={() => this.model.dropDownVisible}>
                             <div class="selector-elements">
                                 {withMonths ? [this.years(), this.months()] : null}
                                 <div class="date-time-picker">
@@ -180,7 +181,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                 </div>
                                 {withTime ? [this.hours(), this.minutes()] : null}
                             </div>
-                        </div>
+                        </InView>
                     </div>): null}
             </div>
         )

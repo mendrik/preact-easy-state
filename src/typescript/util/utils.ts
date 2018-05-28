@@ -56,3 +56,12 @@ export const intersect = (a: ClientRect, b: ClientRect): Rect|never => {
         return new Rect(x, y, num1 - x, num2 - y)
     }
 }
+
+export const findParent = (start: HTMLElement, predicate: (start: HTMLElement) => boolean) => {
+    let parent = start
+    while (parent = parent.parentElement) {
+        if (predicate(parent)) {
+            return parent
+        }
+    }
+}
