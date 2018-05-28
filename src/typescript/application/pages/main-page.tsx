@@ -3,13 +3,12 @@ import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
 import {InputText} from '../../components/input-text/input-text'
-import {observable} from '@nx-js/observer-util'
 import {WithLabel} from '../../components/forms/with-label'
 import {NodeDrop, Tree} from '../../components/tree/tree'
 import {Get} from '../../decorators/fetch'
 import {Tabs} from '../../components/tabs/tabs'
 import {Tab} from '../../components/tabs/tab'
-import {Cell, Grid} from '../../components/grid/grid'
+import {Grid} from '../../components/grid/grid'
 import {TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
@@ -18,35 +17,10 @@ import {View} from '../../decorators/view'
 import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
 import {InputNumber} from '../../components/input-number/input-number'
 import {InputSwitch} from '../../components/input-switch/input-switch'
+import model, {Data} from '../../model/application'
+import {CustomCell} from '../../model/custom-cell'
 
-class CustomNode extends TreeNodeModel<string> {
-
-}
-
-class CustomCell implements Cell {
-    text: string
-
-    constructor(text: string) {
-        this.text = text
-    }
-
-    toString = () => this.text
-}
-
-class Model {
-    text = 'My little demo text'
-    integer = 10
-    float = 10.5
-    bool = false
-    date = new Date()
-    datetime = new Date()
-    tree: CustomNode[] = []
-    data: Cell[][] = [[]]
-}
-
-const model = observable(new Model())
-
-const field = (field: keyof Model) => (val) => model[field] = val
+const field = (field: keyof Data) => (val) => model[field] = val
 
 const customTreeModel = (name: string, value: string, people: any[], icon?: string) =>
     new TreeNodeModel<string>(name, value, (people || []).map(person =>
