@@ -42,17 +42,17 @@ export class DropDown extends Component<DropDownProps> {
 
     render({children, text, ...props}) {
         return (
-            <div className={cls('control dropdown', {'is-active': this.model.open})}>
-                <div className="dropdown-trigger">
-                    <button className="button is-small is-fullwidth" onClick={this.toggle}>
+            <div class={cls('control dropdown', {'is-active': this.model.open})}>
+                <div class="dropdown-trigger">
+                    <button class="button is-small is-fullwidth" onClick={this.toggle}>
                         <span>text</span>
-                        <span className="icon is-small">
-                            <i className="mdi mdi-chevron-down"/>
+                        <span class="icon is-small">
+                            <i class="mdi mdi-chevron-down"/>
                         </span>
                     </button>
                 </div>
-                <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div className="dropdown-content" onClick={this.maybeClose}>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content" onClick={this.maybeClose}>
                         {children}
                     </div>
                 </div>

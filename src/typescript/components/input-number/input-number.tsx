@@ -168,12 +168,12 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                     onKeyUp={this.onChange}
                     onKeyDown={this.validateKey}/>
                 {integer ? (
-                    <span className="icon is-small is-right" onClick={this.change(1)}>
-                        <i className="mdi mdi-chevron-up"/>
+                    <span class="icon is-small is-right" onClick={this.change(1)}>
+                        <i class="mdi mdi-chevron-up"/>
                     </span>): null}
                 {integer ? (
-                    <span className="icon is-small is-right" onClick={this.change(-1)}>
-                        <i className="mdi mdi-chevron-down"/>
+                    <span class="icon is-small is-right" onClick={this.change(-1)}>
+                        <i class="mdi mdi-chevron-down"/>
                     </span>): null}
                 {children}
             </div>

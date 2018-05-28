@@ -11,12 +11,12 @@ export class FieldGroup extends QuillComponent<FieldGroupProps> {
 
     render({children, label, ...props}) {
         return (
-            <div className="field is-horizontal">
-                <div className="field-label is-small">
-                    <label className="label">{label}</label>
+            <div class="field is-horizontal">
+                <div class="field-label is-small">
+                    <label class="label">{label}</label>
                 </div>
-                <div className="field-body">
-                    {children.map(control => <div className="field">{control}</div>)}
+                <div class="field-body">
+                    {children.map(control => <div class="field">{control}</div>)}
                 </div>
             </div>
         )

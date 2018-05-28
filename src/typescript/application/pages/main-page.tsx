@@ -20,6 +20,7 @@ import {InputSwitch} from '../../components/input-switch/input-switch'
 import model, {Data} from '../../model/application'
 import {CustomCell} from '../../model/custom-cell'
 import {FieldGroup} from '../../components/forms/field-group'
+import {Form} from '../../components/forms/form'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -69,37 +70,7 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
-                            <FieldGroup label="Test">
-                                <InputSwitch changes={(bool) => model.bool = bool}
-                                             labelWidth={70}
-                                             value={model.bool}/>
-                                <InputNumber changes={(number) => console.log(number)}
-                                             value={model.integer}/>
-                                <InputNumber changes={(number) => console.log(number)}
-                                             value={model.float}
-                                             prefix="€ "
-                                             suffix=" / kpl"
-                                             integer={false}/>
-                            </FieldGroup>
-                            <FieldGroup label="Dropdown test">
-                                <DropDown text="Dropdown button">
-                                    <DropDownItem onClick={() => 0}>Bla</DropDownItem>
-                                    <DropDownItem onClick={() => 0}>Blub</DropDownItem>
-                                    <DropDownDivider/>
-                                    <DropDownItem onClick={() => 0}>Test</DropDownItem>
-                                </DropDown>
-                                <InputText changes={field('text')} iconLeft="account" value={model.text}/>
-                                <DatePicker changes={field('date')}
-                                            format="dd.MM.yyyy"
-                                            value={model.date}/>
-                            </FieldGroup>
-                            <WithLabel name="Test date time input">
-                                <DatePicker withTime={true}
-                                            withMonths={true}
-                                            changes={field('datetime')}
-                                            format="dd.MM.yyyy HH:mm"
-                                            value={model.datetime}/>
-                            </WithLabel>
+                            {this.testForm()}
                             <Tabs class="is-boxed is-small" id="demo-tabs">
                                 <Tab text="Tab A" icon="car-side">
                                     Content A
@@ -125,5 +96,41 @@ export class MainPage extends QuillComponent {
                 <footer class="footer"/>
             </div>
         )
+    }
+
+    private testForm() {
+        return <Form>
+            <FieldGroup label="Test">
+                <InputSwitch changes={(bool) => model.bool = bool}
+                             labelWidth={70}
+                             value={model.bool}/>
+                <InputNumber changes={(number) => console.log(number)}
+                             value={model.integer}/>
+                <InputNumber changes={(number) => console.log(number)}
+                             value={model.float}
+                             prefix="€ "
+                             suffix=" / kpl"
+                             integer={false}/>
+            </FieldGroup>
+            <FieldGroup label="Dropdown test">
+                <DropDown text="Dropdown button">
+                    <DropDownItem onClick={() => 0}>Bla</DropDownItem>
+                    <DropDownItem onClick={() => 0}>Blub</DropDownItem>
+                    <DropDownDivider/>
+                    <DropDownItem onClick={() => 0}>Test</DropDownItem>
+                </DropDown>
+                <InputText changes={field('text')} iconLeft="account" value={model.text}/>
+                <DatePicker changes={field('date')}
+                            format="dd.MM.yyyy"
+                            value={model.date}/>
+            </FieldGroup>
+            <FieldGroup label="Test time">
+                <DatePicker withTime={true}
+                            withMonths={true}
+                            changes={field('datetime')}
+                            format="dd.MM.yyyy HH:mm"
+                            value={model.datetime}/>
+            </FieldGroup>
+        </Form>
     }
 }
