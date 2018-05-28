@@ -1,10 +1,10 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import format from 'date-fns/format'
+import format from 'date-fns/esm/format'
 import './month.pcss'
 import {CustomEvent} from '../../decorators/custom-event'
-import isSameDay from 'date-fns/isSameDay'
-import isSameMonth from 'date-fns/isSameMonth'
+import isSameDay from 'date-fns/esm/isSameDay'
+import isSameMonth from 'date-fns/esm/isSameMonth'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 

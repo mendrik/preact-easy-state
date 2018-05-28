@@ -32,7 +32,6 @@
     },
     "devDependencies": {
         "@types/mocha": "5.2.0",
-        "@types/navigo": "7.0.1",
         "@types/node": "10.1.2",
         "ajv": "6.5.0",
         "autoprefixer": "8.5.0",
