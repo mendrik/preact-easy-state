@@ -3,12 +3,12 @@ import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import './input-switch.pcss'
-import {CustomEvent} from '../../decorators/custom-event'
 import {cls} from '../../util/utils'
 
 export interface InputSwitchProps extends FormProps<boolean> {
     onLabel?: string
     offLabel?: string
+    labelWidth: number
 }
 
 export interface InputSwitchState {
@@ -23,19 +23,17 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
 
     static defaultProps = {
         onLabel: 'enabled',
-        offLabel: 'off'
+        offLabel: 'disabled'
     }
 
-    hasCss = () => {
-        const {slider, label} = this
-        label.style.setProperty('--max-width', `${slider.offsetWidth}px`)
+    cssReady = () => {
         this.setState({loaded: true})
     }
 
-    render({children, changes, value, onLabel, offLabel, ...props}, {loaded = false}) {
+    render({children, changes, labelWidth, value, onLabel, offLabel, ...props}, {loaded = false}) {
         return (
-            <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.hasCss} >
-                <label class="switch" ref={l => this.label = l}>
+            <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.cssReady}>
+                <label class="switch" ref={l => this.label = l} style={`--width: ${labelWidth}px`}>
                     <input type="checkbox" onClick={() => changes(!value)} checked={value}/>
                     <div class="slider" ref={r => this.slider = r}>
                         <div class="label-off">{offLabel}</div>

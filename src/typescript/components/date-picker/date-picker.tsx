@@ -24,7 +24,8 @@ import setMinutes from 'date-fns/esm/setMinutes'
 export interface DatePickerProps extends FormProps<Date> {
     error?: string
     format: string
-    withTime: boolean
+    withTime?: boolean
+    withMonths?: boolean
 }
 
 export class Model implements SnapScrollModel {
@@ -132,7 +133,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         this.model.timeChanged = true
     }
 
-    render({children, name, withTime, changes, value, format, ...props}) {
+    render({children, name, withMonths, withTime, changes, value, format, ...props}) {
         return (
             <div class={cls('control has-icons-right date-picker dropdown', {
                 'is-active': this.model.dropDownVisible,
@@ -160,8 +161,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                          role="menu">
                         <div class="dropdown-content">
                             <div class="selector-elements">
-                                {this.years()}
-                                {this.months()}
+                                {withMonths ? [this.years(), this.months()] : null}
                                 <div class="date-time-picker">
                                     {this.header()}
                                     <SnapScroll onPanelChanged={this.monthChanged}

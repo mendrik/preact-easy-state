@@ -2,24 +2,16 @@
 @parcel-import '../../animations.pcss';
 
 .boolean-input {
-    animation: wait-for .001s normal forwards; /* hack to wait for the css rules to be applied */
+    animation: wait-for 1ms forwards;
 
-    .switch {
-        visibility: hidden;
-    }
-
-    &.loaded .switch {
-        visibility: visible;
-
-        .slider {
-            transition: all .2s ease-out;
-            position: relative;
-        }
+    &.loaded .slider {
+        transition: .2s all ease-out;
     }
 }
 
 .switch {
-    --max-width: auto;
+    --width: 0;
+    position: relative;
     display: block;
     border-radius: 4px;
     font-size: .75rem;
@@ -33,7 +25,7 @@
     user-select: none;
     cursor: pointer;
     overflow: hidden;
-    max-width: calc(var(--max-width) / 2 + 18px);
+    max-width: calc(var(--width) + 28px);
 
     input {
         display: none;
@@ -45,17 +37,22 @@
 
     .slider {
         position: absolute;
-        display: inline-grid;
+        display: grid;
         grid-template-columns: 1fr 20px 1fr;
         height: 20px;
         line-height: 20px;
         font-size: .75rem;
-        min-width: var(--max-width);
     }
 
     .toggle {
         border: var(--pixelline);
-        border-radius: 3px;
+        margin: 1px;
+        border-radius: 5px;
+    }
+
+    .label-on,
+    .label-off {
+        width: var(--width);
     }
 
     .label-on {

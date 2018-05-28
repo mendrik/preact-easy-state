@@ -70,6 +70,7 @@ export class MainPage extends QuillComponent {
                         <div class="panel page">
                             <WithLabel name="Test switch">
                                 <InputSwitch changes={(bool) => model.bool = bool}
+                                             labelWidth={70}
                                              value={model.bool}/>
                             </WithLabel>
                             <WithLabel name="Test number">
@@ -95,13 +96,13 @@ export class MainPage extends QuillComponent {
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
                             </WithLabel>
                             <WithLabel name="Test date input">
-                                <DatePicker withTime={false}
-                                            changes={field('date')}
+                                <DatePicker changes={field('date')}
                                             format="dd.MM.yyyy"
                                             value={model.date}/>
                             </WithLabel>
                             <WithLabel name="Test date time input">
                                 <DatePicker withTime={true}
+                                            withMonths={true}
                                             changes={field('datetime')}
                                             format="dd.MM.yyyy HH:mm"
                                             value={model.datetime}/>

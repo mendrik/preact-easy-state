@@ -7,7 +7,7 @@ export class Data {
     text = 'My little demo text'
     integer = 10
     float = 10.5
-    bool = true
+    bool = false
     date = new Date()
     datetime = new Date()
     tree: CustomNode[] = []
