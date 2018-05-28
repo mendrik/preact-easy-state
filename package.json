@@ -8,6 +8,7 @@
     "types": "lib/quill.d.ts",
     "scripts": {
         "run": "parcel src/html/index.html --no-hmr",
+        "build": "cross-env NODE_ENV=production parcel build src/html/index.html",
         "bundle": "cross-env NODE_ENV=production rollup -c",
         "bundle:watch": "rollup -c -w",
         "test": "mocha --require ts-node/register --require src/typescript/util/mocha-setup.ts src/typescript/**/*.spec.*"

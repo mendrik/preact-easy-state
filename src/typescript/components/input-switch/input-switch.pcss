@@ -1,64 +1,69 @@
 @parcel-import '../../variables.pcss';
 @parcel-import '../../animations.pcss';
 
-.control.boolean-input {
-    --min-width: 0;
-    animation: wait-for .001s forwards; /* hack to wait for the css rules to be applied */
-    display: inline-block;
+.boolean-input {
+    animation: wait-for .001s normal forwards; /* hack to wait for the css rules to be applied */
+
+    .switch {
+        visibility: hidden;
+    }
+
+    &.loaded .switch {
+        visibility: visible;
+
+        .slider {
+            transition: all .2s ease-out;
+            position: relative;
+        }
+    }
+}
+
+.switch {
+    --max-width: auto;
+    display: block;
     border-radius: 4px;
     font-size: .75rem;
     height: 2.25em;
     line-height: 1.5;
-    padding: calc(.375em - 1px) 0;
+    padding: calc(.375em - 1.5px) 3px;
     border: 1px solid #dbdbdb;
     color: #363636;
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, .1);
-    overflow: hidden;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    cursor: pointer;
+    overflow: hidden;
+    max-width: calc(var(--max-width) / 2 + 18px);
 
-    &.loaded {
-        width: calc(var(--min-width) / 2 + 20px);
+    input {
+        display: none;
 
-        .switch-wrapper {
-            transition: .2s all ease-in;
-            width: auto;
+        &:checked + .slider {
+            transform: translateX(calc(-50% + 10px));
         }
     }
 
-    .switch-wrapper {
+    .slider {
         position: absolute;
-        width: 250px;
-        display: block;
-        cursor: pointer;
-        padding: 0 5px;
-
-        &.off {
-            transform: translateX(calc(-50% + 15px));
-        }
-
-        .slider {
-            display: inline-grid;
-            grid-template-columns: 1fr 20px 1fr;
-            backface-visibility: hidden;
-            will-change: all;
-            min-width: var(--min-width);
-        }
-
-        .toggle {
-            background-color: white;
-            border: var(--pixelline);
-            border-radius: 5px;
-        }
-
-        .off-label,
-        .on-label {
-            font-size: .75rem;
-            white-space: nowrap;
-
-            > span {
-                padding: 5px;
-            }
-        }
+        display: inline-grid;
+        grid-template-columns: 1fr 20px 1fr;
+        height: 20px;
+        line-height: 20px;
+        font-size: .75rem;
+        min-width: var(--max-width);
     }
+
+    .toggle {
+        border: 1px solid gray;
+        border-radius: 3px;
+    }
+
+    .label-on {
+        padding-left: 5px;
+    }
+
+    .label-off {
+        padding-right: 5px;
+    }
+
 }
