@@ -19,6 +19,7 @@ import {InputNumber} from '../../components/input-number/input-number'
 import {InputSwitch} from '../../components/input-switch/input-switch'
 import model, {Data} from '../../model/application'
 import {CustomCell} from '../../model/custom-cell'
+import {FieldGroup} from '../../components/forms/field-group'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -68,38 +69,30 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
-                            <WithLabel name="Test switch">
+                            <FieldGroup label="Test">
                                 <InputSwitch changes={(bool) => model.bool = bool}
                                              labelWidth={70}
                                              value={model.bool}/>
-                            </WithLabel>
-                            <WithLabel name="Test number">
                                 <InputNumber changes={(number) => console.log(number)}
                                              value={model.integer}/>
-                            </WithLabel>
-                            <WithLabel name="Test fraction">
                                 <InputNumber changes={(number) => console.log(number)}
                                              value={model.float}
                                              prefix="€ "
                                              suffix=" / kpl"
                                              integer={false}/>
-                            </WithLabel>
-                            <WithLabel name="Dropdown test">
+                            </FieldGroup>
+                            <FieldGroup label="Dropdown test">
                                 <DropDown text="Dropdown button">
                                     <DropDownItem onClick={() => 0}>Bla</DropDownItem>
                                     <DropDownItem onClick={() => 0}>Blub</DropDownItem>
                                     <DropDownDivider/>
                                     <DropDownItem onClick={() => 0}>Test</DropDownItem>
                                 </DropDown>
-                            </WithLabel>
-                            <WithLabel name="Test input">
                                 <InputText changes={field('text')} iconLeft="account" value={model.text}/>
-                            </WithLabel>
-                            <WithLabel name="Test date input">
                                 <DatePicker changes={field('date')}
                                             format="dd.MM.yyyy"
                                             value={model.date}/>
-                            </WithLabel>
+                            </FieldGroup>
                             <WithLabel name="Test date time input">
                                 <DatePicker withTime={true}
                                             withMonths={true}
