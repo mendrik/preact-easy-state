@@ -1,9 +1,9 @@
 import {Component, h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {cls} from '../../util/utils'
-import './tooltip.pcss'
 import {MountedWithDelay} from '../../decorators/mounted-with-delay'
 import {View} from '../../decorators/view'
+import './tooltip.pcss'
 
 export interface WithTooltipProps {
     tooltip: JSX.Element

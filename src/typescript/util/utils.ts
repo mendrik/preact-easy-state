@@ -1,3 +1,5 @@
+import {Overlap} from '../decorators/open-in-view'
+
 export const scrollBarWidth = (): number => {
     const outside = document.createElement('div')
     const inside = document.createElement('div')
@@ -47,13 +49,22 @@ class Rect {
     }
 }
 
-export const intersect = (a: ClientRect, b: ClientRect): Rect|never => {
-    const x = Math.max(a.left, b.left)
-    const num1 = Math.min(a.left + a.width, b.left + b.width)
-    const y = Math.max(a.top, b.top)
-    const num2 = Math.min(a.top + a.height, b.top + b.height)
-    if (num1 >= x && num2 >= y) {
-        return new Rect(x, y, num1 - x, num2 - y)
+export const includesX = (outer: ClientRect, inner: ClientRect): boolean => {
+    return inner.left >= outer.left &&
+           inner.right <= outer.right
+}
+
+export const includesY = (outer: ClientRect, inner: ClientRect): boolean => {
+    return inner.top >= outer.top &&
+           inner.bottom <= outer.bottom
+}
+
+export const intersectDiff = (outer: ClientRect, inner: ClientRect): Overlap => {
+    return {
+        diffX: includesX(outer, inner) || inner.width >= outer.width ? 0 :
+               inner.left < outer.left ? outer.left - inner.left : inner.right - outer.right,
+        diffY: includesY(outer, inner) || inner.height >= outer.height ? 0 :
+               inner.top < outer.top ? outer.top - inner.top : inner.bottom - outer.bottom
     }
 }
 
