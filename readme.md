@@ -9,8 +9,6 @@
   - Application header
   - Auto suggest search
   - Multiselect with remote data lists
-  - Icon
-  - Checkbox / switch
   - Form container with validation handler
   - Progress bar
   - Loading indicator 

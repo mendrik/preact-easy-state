@@ -21,6 +21,7 @@ import {CustomCell} from '../../model/custom-cell'
 import {FieldGroup} from '../../components/forms/field-group'
 import {Form} from '../../components/forms/form'
 import {Modal} from '../../components/modal/modal'
+import {ProgressBar} from '../../components/progress-bar/progress-bar'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -87,9 +88,10 @@ export class MainPage extends QuillComponent {
                                 <WithTooltip tooltip={tooltip}>
                                     <a class="button is-primary">Primary</a>
                                 </WithTooltip>
-                                <a className="button is-link" onClick={() => model.modal = true}>Link</a>
+                                <a className="button is-link" onClick={() => model.modal = true}>Modal</a>
                                 {this.modal()}
-                                <a class="button is-info">Info</a>
+                                <a class="button is-info" onClick={this.showProgress}>Progress</a>
+                                {this.progress()}
                             </div>
                         </div>
                     </HorizontalSplit>
@@ -99,7 +101,14 @@ export class MainPage extends QuillComponent {
         )
     }
 
-    modal= () => model.modal ? (
+    showProgress = () => {
+        model.progress = true
+        setTimeout(() => model.progress = false, 2000)
+    }
+
+    progress = () => model.progress ? <ProgressBar/> : null
+
+    modal = () => model.modal ? (
         <Modal onClose={() => model.modal = false}>
             <div class="buttons is-right">
                 <a className="button is-primary">Ok</a>

@@ -13,7 +13,7 @@ export class Data {
     tree: CustomNode[] = []
     data: Cell[][] = [[]]
     modal: boolean
-
+    progress = false
 }
 
 export default observable(new Data())
