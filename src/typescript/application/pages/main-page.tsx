@@ -22,6 +22,7 @@ import {FieldGroup} from '../../components/forms/field-group'
 import {Form} from '../../components/forms/form'
 import {Modal} from '../../components/modal/modal'
 import {ProgressBar} from '../../components/progress-bar/progress-bar'
+import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -118,6 +119,9 @@ export class MainPage extends QuillComponent {
 
     testForm = () => (
         <Form>
+            <FieldGroup label="Search">
+                <AutoSuggest changes={() => 0}/>
+            </FieldGroup>
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
                              labelWidth={70}
