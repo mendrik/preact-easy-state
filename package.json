@@ -7,6 +7,7 @@
     "module": "lib/index.es6.js",
     "types": "lib/quill.d.ts",
     "scripts": {
+        "run~": "parcel src/html/index.html",
         "run": "parcel src/html/index.html --no-hmr",
         "build": "cross-env NODE_ENV=production parcel build src/html/index.html",
         "bundle": "cross-env NODE_ENV=production rollup -c",

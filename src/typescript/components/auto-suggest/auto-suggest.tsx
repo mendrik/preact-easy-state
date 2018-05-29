@@ -4,26 +4,28 @@ import {FormProps} from '../forms/types'
 import {observable} from '@nx-js/observer-util'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
-import {InView} from '../in-view/in-view'
 import {Icon} from '../icon/icon'
 import './auto-suggest.pcss'
 
-export interface AutoSuggestProps extends FormProps<string> {
+export interface AutoSuggestProps<T> extends FormProps<T> {
+    dataSourceUrl?: string
+    renderer: (item: T) => JSX.Element
 }
 
-class Model {
+class Model<T> {
     dropDownVisible = false
+    items: T[]
 }
 
 @View
-export class AutoSuggest extends QuillComponent<AutoSuggestProps> {
+export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>> {
 
-    model: Model
+    model: Model<T>
     input: HTMLInputElement
 
     constructor(props) {
         super(props)
-        this.model = observable(new Model())
+        this.model = observable(new Model<T>())
     }
 
     onInput = (ev) => {
@@ -34,10 +36,11 @@ export class AutoSuggest extends QuillComponent<AutoSuggestProps> {
         this.model.dropDownVisible = true
     }
 
-    render({children, name, withMonths, withTime, changes, value, format, ...props}) {
+    render({children, dataSourceUrl, renderer, changes, value, ...props}) {
+        const {dropDownVisible, items} = this.model
         return (
             <div class={cls('control has-icons-right auto-suggest dropdown', {
-                'is-active': this.model.dropDownVisible
+                'is-active': dropDownVisible
             })}>
                 <input
                     ref={r => this.input = r}
@@ -48,14 +51,14 @@ export class AutoSuggest extends QuillComponent<AutoSuggestProps> {
                     onInput={this.onInput}
                     value={value}/>
                 <Icon name="chevron-down" right={true} class="dropdown-trigger" onClick={this.openDropDown}/>
-                {this.model.dropDownVisible ? (
+                {dropDownVisible ? (
                     <div class="dropdown-menu"
                          id="dropdown-menu"
                          tabIndex={-1}
                          role="menu">
-                        <InView class="dropdown-content">
-                            Searching...
-                        </InView>
+                        <div class="dropdown-content">
+                            {items ? <ul>{items.map(renderer)}</ul> : <span class="loading">Loading...</span>}
+                        </div>
                     </div>): null}
             </div>
         )
