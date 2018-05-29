@@ -1,30 +1,58 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {observable} from '@nx-js/observer-util'
 import './modal.pcss'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
+import 'animate.css'
 
 export interface ModalProps  {
-    visible: boolean
     onClose: () => void
 }
 
-@View
-export class Modal extends QuillComponent<ModalProps> {
+export interface ModalState {
+    visible: boolean
+}
 
-    constructor(props) {
-        super(observable(props))
+@View
+export class Modal extends QuillComponent<ModalProps, ModalState> {
+
+    componentDidMount() {
+        this.setState({visible: true})
+        this.base.focus()
     }
 
-    render({children, onClose, visible, ...props}) {
-        return visible ? (
-            <div class={cls('modal', {'is-active': visible})}>
-                <div class="modal-background"/>
-                <div class="modal-content">
-                    {children}
+    close = () => {
+        this.setState({visible: false})
+    }
+
+    animationEnd = () => {
+        if (!this.state.visible) {
+            this.props.onClose()
+        }
+    }
+
+    keyDown = (ev) => {
+        if (ev.key === 'Escape') {
+            this.close()
+        }
+    }
+
+    render({children, onClose, ...props}, {visible}) {
+        return (
+            <div class={cls('modal is-active')}
+                 onKeyDown={this.keyDown}
+                 tabIndex={-1}>
+                <div class="modal-background" onClick={this.close}/>
+                <div class={cls('modal-content animated', {fadeIn: visible, fadeOut: !visible})}
+                     onAnimationEnd={this.animationEnd}>
+                    <div class="box">
+                        {children}
+                    </div>
                 </div>
-                <button class="modal-close has-background-dark has-text-white" aria-label="close" onClick={onClose}/>
-            </div>) : null
+                <button class="modal-close has-background-dark has-text-white"
+                        aria-label="close"
+                        onClick={this.close}/>
+            </div>
+        )
     }
 }

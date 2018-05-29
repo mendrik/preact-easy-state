@@ -20,6 +20,7 @@ import model, {Data} from '../../model/application'
 import {CustomCell} from '../../model/custom-cell'
 import {FieldGroup} from '../../components/forms/field-group'
 import {Form} from '../../components/forms/form'
+import {Modal} from '../../components/modal/modal'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -86,7 +87,8 @@ export class MainPage extends QuillComponent {
                                 <WithTooltip tooltip={tooltip}>
                                     <a class="button is-primary">Primary</a>
                                 </WithTooltip>
-                                <a class="button is-link">Link</a>
+                                <a className="button is-link" onClick={() => model.modal = true}>Link</a>
+                                {this.modal()}
                                 <a class="button is-info">Info</a>
                             </div>
                         </div>
@@ -96,6 +98,14 @@ export class MainPage extends QuillComponent {
             </div>
         )
     }
+
+    modal= () => model.modal ? (
+        <Modal onClose={() => model.modal = false}>
+            <div class="buttons is-right">
+                <a className="button is-primary">Ok</a>
+            </div>
+        </Modal>
+    ) : null
 
     private testForm() {
         return <Form>

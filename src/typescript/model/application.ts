@@ -12,6 +12,7 @@ export class Data {
     datetime = new Date()
     tree: CustomNode[] = []
     data: Cell[][] = [[]]
+    modal: boolean
 
 }
 
