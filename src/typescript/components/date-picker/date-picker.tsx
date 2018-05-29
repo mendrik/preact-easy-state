@@ -109,6 +109,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                 case 'ArrowDown': return addYears(this.model.currentMonth, 1)
                 case 'ArrowLeft': return subMonths(this.model.currentMonth, 1)
                 case 'ArrowRight': return addMonths(this.model.currentMonth, 1)
+                case 'Escape': return this.closeDropDown()
                 default: return
             }
         })()
