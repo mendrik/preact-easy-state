@@ -78,8 +78,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     }
 
     render({children, trackWidth, ...props}) {
-        const className = props.class
-        props.class = cls('scrollpane', {[className]: className, hover: this.model.hover})
+        props.class = cls('scrollpane', props.class, {hover: this.model.hover})
         props.onMouseEnter = this.mouseEnter
         props.onMouseLeave = this.mouseLeave
         return (

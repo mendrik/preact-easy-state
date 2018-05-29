@@ -2,6 +2,7 @@ import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
+import {Icon} from '../icon/icon'
 
 export interface TabProps extends JSX.HTMLAttributes {
     icon?: string
@@ -17,10 +18,7 @@ export class Tab extends QuillComponent<TabProps> {
         return (
             <li class={cls({'is-active': active})}>
                 <a onClick={click}>
-                    {icon ? (
-                        <span class="icon is-small">
-                            <i class={`mdi mdi-${icon}`} aria-hidden="true"/>
-                        </span>) : null}
+                    {icon ? <Icon name={icon}/> : null}
                     <span>{text}</span>
                 </a>
             </li>

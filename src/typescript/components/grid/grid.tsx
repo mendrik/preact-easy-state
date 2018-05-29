@@ -32,8 +32,7 @@ export class Grid extends QuillComponent<GridProps> {
     )
 
     render({children, editable, cells, ...props}) {
-        const className = props.class
-        props.class = cls('grid', {[className]: className, editable})
+        props.class = cls('grid', props.class, {editable})
         props.style = {gridTemplateColumns: cells[0].map(c => 'auto').join(' ')}
         return (
             <ScrollPane class="grid-wrap" style={{height: '300px', border: 'var(--border)'}} trackWidth={3}>

@@ -5,6 +5,8 @@ import {FormProps} from '../forms/types'
 import './input-number.pcss'
 import {format as Format, default as formatter} from 'format-number'
 import {GlobalEvent} from '../../decorators/global-event'
+import {Icon} from '../icon/icon'
+import {cls} from '../../util/utils'
 
 export interface InputNumberState {
     value: number
@@ -167,14 +169,8 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                     onCopy={this.copy}
                     onKeyUp={this.onChange}
                     onKeyDown={this.validateKey}/>
-                {integer ? (
-                    <span class="icon is-small is-right" onClick={this.change(1)}>
-                        <i class="mdi mdi-chevron-up"/>
-                    </span>): null}
-                {integer ? (
-                    <span class="icon is-small is-right" onClick={this.change(-1)}>
-                        <i class="mdi mdi-chevron-down"/>
-                    </span>): null}
+                {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
+                {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
                 {children}
             </div>
         )

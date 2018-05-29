@@ -26,7 +26,9 @@ export const range = (start: number, end: number) =>
     Array.from(Array(end - start + 1).keys()).map(n => n + start)
 
 export const cls = (...parts): string => parts.reduce((p, c) => {
-    if (typeof c === 'string') {
+    if (c === null || typeof c === 'undefined') {
+        return [...p]
+    } else if (typeof c === 'string') {
         return [...p, c]
     } else if (Array.isArray(c)) {
         return [...p, ...c]
@@ -75,4 +77,9 @@ export const findParent = (start: HTMLElement, predicate: (start: HTMLElement) =
             return parent
         }
     }
+}
+
+export const withClass = <T extends {class: string}>(props: T, className: string): T => {
+    props.class = props.class ? [...props.class.split(/\s+/), className].join(' ') : className
+    return props
 }

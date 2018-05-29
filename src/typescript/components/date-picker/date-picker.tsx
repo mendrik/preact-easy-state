@@ -21,6 +21,7 @@ import {View} from '../../decorators/view'
 import setHours from 'date-fns/esm/setHours'
 import setMinutes from 'date-fns/esm/setMinutes'
 import {InView} from '../in-view/in-view'
+import {Icon} from '../icon/icon'
 
 export interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -150,9 +151,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                     onAnimationEnd={this.dateHighlightEnded}
                     formatChars={dateInput}
                     value={formatDate(value, format)}/>
-                <span class="icon is-small is-right dropdown-trigger" onClick={this.iconClick}>
-                    <i class="mdi mdi-calendar-range"/>
-                </span>
+                <Icon name="calendar-range" right={true} class="dropdown-trigger" onClick={this.iconClick}/>
                 {this.model.dropDownVisible ? (
                     <div class="dropdown-menu"
                          id="dropdown-menu"
@@ -293,9 +292,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                         onChange={this.timeChanged}
                         onAnimationEnd={this.timeHighlightEnded}
                         mask="12:34"/>
-                    <span class="icon is-small is-right">
-                        <i class="mdi mdi-clock"/>
-                    </span>
+                    <Icon name="clock" right={true}/>
                 </div>): null}
             </li>
             <li><button class="button is-small is-primary"
@@ -309,13 +306,9 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
 
     header = () => (
         <ul class="picker-title">
-            <li>
-                <span class="icon" onClick={this.prev}><i class="mdi mdi-chevron-left"/></span>
-            </li>
+            <li><Icon name="chevron-left" onClick={this.prev}/></li>
             <li class="current-date">{formatDate(this.model.currentMonth, 'MMMM YYYY')}</li>
-            <li>
-                <span class="icon" onClick={this.next}><i class="mdi mdi-chevron-right"/></span>
-            </li>
+            <li><Icon name="chevron-right" onClick={this.next}/></li>
         </ul>
     )
 }

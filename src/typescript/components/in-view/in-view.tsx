@@ -1,7 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
-import {findParent, intersectDiff} from '../../util/utils'
+import {findParent, intersectDiff, withClass} from '../../util/utils'
 import './in-view.pcss'
 
 export interface InViewProps extends JSX.HTMLAttributes {
@@ -47,9 +47,8 @@ export class InView extends QuillComponent<InViewProps> {
     }
 
     render({children, observableFn, ...props}) {
-        props.class = [...props.class.split(/\s+/), 'in-view'].join(' ')
         return (
-            <div {...props}>
+            <div {...withClass(props, 'in-view')}>
                 {children}
             </div>
         )

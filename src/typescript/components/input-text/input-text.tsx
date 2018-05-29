@@ -3,6 +3,7 @@ import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
+import {Icon} from '../icon/icon'
 
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
@@ -19,17 +20,9 @@ export class InputText extends QuillComponent<InputTextProps> {
         this.props.changes((ev.target as HTMLInputElement).value)
     }
 
-    leftIcon = () => (
-        <span class="icon is-small is-left">
-            <i class={`mdi mdi-${this.props.iconLeft}`}/>
-        </span>
-    )
+    leftIcon = () => <Icon name={this.props.iconLeft} left={true}/>
 
-    rightIcon = () => (
-        <span class="icon is-small is-right">
-            <i class={`mdi mdi-${this.props.iconRight}`}/>
-        </span>
-    )
+    rightIcon = () => <Icon name={this.props.iconRight} right={true}/>
 
     render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (

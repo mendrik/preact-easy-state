@@ -3,7 +3,7 @@ import {QuillComponent} from '../../util/quill-component'
 import {observable} from '@nx-js/observer-util'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import './tabs.pcss'
-import {cls} from '../../util/utils'
+import {cls, withClass} from '../../util/utils'
 import {View} from '../../decorators/view'
 
 @LocalStorage
@@ -39,10 +39,8 @@ export class Tabs extends QuillComponent<TabsProps> {
     }
 
     render({children, id, ...props}) {
-        const className = props.class
-        props.class = cls('tabs', {[className]: className})
         return (
-            <div {...props}>
+            <div {...withClass(props, 'tabs')}>
                 <ul>
                     {children.map((child, index) => cloneElement(child, {
                         click: () => this.tabClicked(index),

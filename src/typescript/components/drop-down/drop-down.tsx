@@ -3,6 +3,7 @@ import {cls} from '../../util/utils'
 import {DocumentClick} from '../../decorators/document-click'
 import {View} from '../../decorators/view'
 import {observable} from '@nx-js/observer-util'
+import {Icon} from '../icon/icon'
 
 export interface DropDownItem {
     text: string
@@ -46,9 +47,7 @@ export class DropDown extends Component<DropDownProps> {
                 <div class="dropdown-trigger">
                     <button class="button is-small is-fullwidth" onClick={this.toggle}>
                         <span>text</span>
-                        <span class="icon is-small">
-                            <i class="mdi mdi-chevron-down"/>
-                        </span>
+                        <Icon name="chevron-down"/>
                     </button>
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
