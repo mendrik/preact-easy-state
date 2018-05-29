@@ -3,7 +3,9 @@ import {QuillComponent} from '../../util/quill-component'
 import './modal.pcss'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
-import 'animate.css'
+import 'animate.css/source/_base.css'
+import 'animate.css/source/fading_entrances/fadeIn.css'
+import 'animate.css/source/fading_exits/fadeOut.css'
 
 export interface ModalProps  {
     onClose: () => void

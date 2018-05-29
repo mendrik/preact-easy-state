@@ -160,7 +160,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                          ref={r => this.dropDown = r}
                          onKeyDown={this.keyDown}
                          role="menu">
-                        <InView class="dropdown-content" observableFn={() => this.model.dropDownVisible}>
+                        <InView class="dropdown-content">
                             <div class="selector-elements">
                                 {withMonths ? [this.years(), this.months()] : null}
                                 <div class="date-time-picker">

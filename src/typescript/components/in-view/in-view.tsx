@@ -8,6 +8,11 @@ export interface InViewProps extends JSX.HTMLAttributes {
     gap?: number
 }
 
+export interface Overlap {
+    diffX: number
+    diffY: number
+}
+
 @View
 export class InView extends QuillComponent<InViewProps> {
 

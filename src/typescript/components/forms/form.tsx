@@ -3,11 +3,11 @@ import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
 import './form.pcss'
 
-export interface FormProps extends JSX.HTMLAttributes {
+export interface HtmlFormProps extends JSX.HTMLAttributes {
 }
 
 @View
-export class Form extends QuillComponent<FormProps> {
+export class Form extends QuillComponent<HtmlFormProps> {
 
     render({children, label, ...props}) {
         return (

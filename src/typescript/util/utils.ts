@@ -1,4 +1,4 @@
-import {Overlap} from '../decorators/open-in-view'
+import {Overlap} from '../components/in-view/in-view'
 
 export const scrollBarWidth = (): number => {
     const outside = document.createElement('div')

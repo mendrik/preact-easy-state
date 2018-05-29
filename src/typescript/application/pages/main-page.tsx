@@ -107,8 +107,8 @@ export class MainPage extends QuillComponent {
         </Modal>
     ) : null
 
-    private testForm() {
-        return <Form>
+    testForm = () => (
+        <Form>
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
                              labelWidth={70}
@@ -141,5 +141,5 @@ export class MainPage extends QuillComponent {
                             value={model.datetime}/>
             </FieldGroup>
         </Form>
-    }
+    )
 }

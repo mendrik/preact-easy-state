@@ -11,19 +11,6 @@ export interface TreeProps<T> {
     editable: boolean
 }
 
-export enum DropPostion {
-    inside = 'inside',
-    above = 'above',
-    below = 'below'
-}
-
-export interface NodeDrop {
-    from: string
-    to: string,
-    position: DropPostion,
-    open
-}
-
 @View
 export class Tree<T> extends QuillComponent<TreeProps<T>> {
 

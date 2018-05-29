@@ -1,10 +1,22 @@
-import {DropPostion, NodeDrop} from './tree'
 import {QuillComponent} from '../../util/quill-component'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import {box, cls} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {h} from 'preact'
 import {View} from '../../decorators/view'
+
+export enum DropPostion {
+    inside = 'inside',
+    above = 'above',
+    below = 'below'
+}
+
+export interface NodeDrop {
+    from: string
+    to: string,
+    position: DropPostion,
+    open
+}
 
 const NODE_DATA_TYPE = 'preact-quill/node-id'
 
