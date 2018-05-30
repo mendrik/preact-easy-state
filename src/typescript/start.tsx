@@ -1,5 +1,5 @@
-import '../../node_modules/bulma/css/bulma.css'
-import '../../node_modules/@mdi/font/css/materialdesignicons.css'
+import 'bulma/css/bulma.css'
+import '@mdi/font/css/materialdesignicons.css'
 import {Application} from './application/application'
 import {h, render} from 'preact'
 import {fetchJson} from './decorators/fetch'
