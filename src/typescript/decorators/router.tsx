@@ -5,7 +5,7 @@ import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
 
-export const router: Navigo = new Navigo(window.location.origin)
+const router: Navigo = new Navigo(window.location.origin)
 const currentRouteSymbol = Symbol('__route__')
 const init = new WeakMap<any, boolean>()
 const routes = new WeakMap<QuillComponentClass, IRoute[]>()
@@ -47,6 +47,8 @@ export const Route = (path: string) => (proto: QuillComponentClass, method: stri
 export interface LinkProps {
     to: string
 }
+
+export const navigate = (path: string) => router.navigate(path)
 
 @View
 export class Link extends QuillComponent<LinkProps> {

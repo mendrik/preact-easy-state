@@ -10,7 +10,7 @@
         "run": "parcel src/html/index.html --no-hmr",
         "clean": "rimraf .rpt2_cache lib",
         "rollup": "cross-env NODE_ENV=production rollup -c",
-        "bundle": "npm-run-all clean rollup",
+        "bundle": "npm-run-all rollup",
         "test": "mocha --require ts-node/register --require src/typescript/util/mocha-setup.ts src/typescript/**/*.spec.*"
     },
     "author": "Andreas Herd",
