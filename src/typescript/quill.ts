@@ -39,7 +39,7 @@ export {
 } from './decorators/fetch'
 export {StringFactory, Writer, Reader, Store, LocalStorage} from './decorators/local-storage'
 export {MediaQuery} from './decorators/media-query'
-export {LinkProps, Link, IRoute, Route} from './decorators/router'
+export {LinkProps, Link, IRoute, Route, router} from './decorators/router'
 export {View} from './decorators/view'
 export {PanX, Phase, PanXEventInit} from './decorators/pan-x'
 export {CustomEvent} from './decorators/custom-event'

@@ -5,7 +5,7 @@ import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
 
-const router = new Navigo(window.location.origin)
+export const router: Navigo = new Navigo(window.location.origin)
 const currentRouteSymbol = Symbol('__route__')
 const init = new WeakMap<any, boolean>()
 const routes = new WeakMap<QuillComponentClass, IRoute[]>()
