@@ -4,8 +4,8 @@ import './modal.pcss'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import 'animate.css/source/_base.css'
-import 'animate.css/source/fading_entrances/fadeIn.css'
-import 'animate.css/source/fading_exits/fadeOut.css'
+import 'animate.css/source/fading_entrances/fadeInDown.css'
+import 'animate.css/source/fading_exits/fadeOutUp.css'
 
 export interface ModalProps  {
     onClose: () => void
@@ -45,7 +45,7 @@ export class Modal extends QuillComponent<ModalProps, ModalState> {
                  onKeyDown={this.keyDown}
                  tabIndex={-1}>
                 <div class="modal-background" onClick={this.close}/>
-                <div class={cls('modal-content animated', {fadeIn: visible, fadeOut: !visible})}
+                <div class={cls('modal-content animated', {fadeInDown: visible, fadeOutUp: !visible})}
                      onAnimationEnd={this.animationEnd}>
                     <div class="box">
                         {children}

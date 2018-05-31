@@ -79,7 +79,7 @@ export const findParent = (start: HTMLElement, predicate: (start: HTMLElement) =
     }
 }
 
-export const withClass = <T extends {class: string}>(props: T, className: string): T => {
+export const withClass = <T extends {class: string}>(props: any, className: string): T => {
     props.class = props.class ? [...props.class.split(/\s+/), className].join(' ') : className
     return props
 }

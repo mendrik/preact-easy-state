@@ -7,9 +7,8 @@
   - Toasts
   - Slider
   - Application header
-  - Auto suggest search
-  - Multiselect with remote data lists
+  - Auto-Suggest search
+  - Multi-Select with remote data lists
   - Form container with validation handler
   - Progress bar
-  - Loading indicator 
 - Tests
