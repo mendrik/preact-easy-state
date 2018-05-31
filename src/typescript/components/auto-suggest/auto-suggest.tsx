@@ -12,7 +12,7 @@ export interface AutoSuggestProps<T> extends FormProps<T> {
     renderer: (item: T) => JSX.Element
 }
 
-class Model<T> {
+export class Model<T> {
     dropDownVisible = false
     items: T[]
 }

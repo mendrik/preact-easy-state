@@ -8,6 +8,7 @@
         "noImplicitAny": false,
         "sourceMap": true,
         "traceResolution": true,
+        "declaration": true,
         "outDir": "./dist",
         "lib": [
             "dom",

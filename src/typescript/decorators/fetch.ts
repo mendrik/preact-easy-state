@@ -8,7 +8,7 @@ export interface RequestWithUrl extends RequestInit {
     processor?: Processor
 }
 
-class ResponseError extends Error {
+export class ResponseError extends Error {
 
     response: Response
 
