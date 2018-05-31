@@ -53,11 +53,11 @@ const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (pr
     })
 }
 
-export const fetchJson = async <T = {}>(url: string): Promise<T> => {
+export const fetchJson = async <T = {}>(url: string, req: RequestWithUrl = {}): Promise<T> => {
     const fetcher = {
         fetch: () => 0 as any
     }
-    Get(url)(fetcher, 'fetch')
+    Get(url, req)(fetcher, 'fetch')
     return fetcher.fetch()
 }
 

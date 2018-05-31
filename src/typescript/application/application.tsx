@@ -9,7 +9,7 @@ import {View} from '../decorators/view'
 export class Application extends QuillComponent {
 
     @Route('/')
-    mainPage() {
+    mainPage(): any {
         return import('./pages/main-page')
     }
 
