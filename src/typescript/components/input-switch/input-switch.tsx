@@ -8,7 +8,6 @@ import {cls} from '../../util/utils'
 export interface InputSwitchProps extends FormProps<boolean> {
     onLabel?: string
     offLabel?: string
-    labelWidth: number
 }
 
 export interface InputSwitchState {
@@ -22,18 +21,20 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
     slider: HTMLDivElement
 
     static defaultProps = {
-        onLabel: 'enabled',
+        onLabel: 'on',
         offLabel: 'disabled'
     }
 
     cssReady = () => {
+        const labelWidth = this.base.querySelector('.label-off').getBoundingClientRect().width
+        this.base.style.setProperty('--width', `${labelWidth}px`)
         this.setState({loaded: true})
     }
 
-    render({children, changes, labelWidth, value, onLabel, offLabel, ...props}, {loaded = false}) {
+    render({children, changes, value, onLabel, offLabel, ...props}, {loaded = false}) {
         return (
             <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.cssReady}>
-                <label class="switch" ref={l => this.label = l} style={`--width: ${labelWidth}px`}>
+                <label class="switch" ref={l => this.label = l}>
                     <input type="checkbox" onClick={() => changes(!value)} checked={value}/>
                     <div class="slider" ref={r => this.slider = r}>
                         <div class="label-off">{offLabel}</div>

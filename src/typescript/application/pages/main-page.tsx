@@ -126,7 +126,6 @@ export class MainPage extends QuillComponent {
             </FieldGroup>
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
-                             labelWidth={70}
                              value={model.bool}/>
                 <InputNumber changes={(number) => console.log(number)}
                              value={model.integer}/>
