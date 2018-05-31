@@ -6,7 +6,7 @@ import './input-number.pcss'
 import {format as Format, default as formatter} from 'format-number'
 import {GlobalEvent} from '../../decorators/global-event'
 import {Icon} from '../icon/icon'
-import {cls} from '../../util/utils'
+import {localized} from '../../util/localization'
 
 export interface InputNumberState {
     value: number
@@ -46,7 +46,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     constructor(props) {
         super(props)
         const {prefix, suffix, value} = props
-        this.format = formatter({...formatConfig, prefix, suffix})
+        this.format = formatter({...formatConfig, prefix: localized(prefix), suffix: localized(suffix)})
         this.state = {
             value,
             dot: false
@@ -163,6 +163,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                 <input
                     ref={i => this.input = i}
                     type="text"
+                    placeholder={localized(placeHolder)}
                     class="input is-small"
                     value={this.format(value)}
                     onBlur={this.confirm}

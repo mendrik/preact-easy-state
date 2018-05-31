@@ -4,6 +4,7 @@ import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import './input-switch.pcss'
 import {cls} from '../../util/utils'
+import {localized} from '../../util/localization'
 
 export interface InputSwitchProps extends FormProps<boolean> {
     onLabel?: string
@@ -22,7 +23,7 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
 
     static defaultProps = {
         onLabel: 'on',
-        offLabel: 'disabled'
+        offLabel: 'off'
     }
 
     cssReady = () => {
@@ -37,9 +38,9 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
                 <label class="switch" ref={l => this.label = l}>
                     <input type="checkbox" onClick={() => changes(!value)} checked={value}/>
                     <div class="slider" ref={r => this.slider = r}>
-                        <div class="label-off">{offLabel}</div>
+                        <div class="label-off">{localized(offLabel)}</div>
                         <div class="toggle"/>
-                        <div class="label-on">{onLabel}</div>
+                        <div class="label-on">{localized(onLabel)}</div>
                     </div>
                 </label>
                 {children}

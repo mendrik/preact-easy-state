@@ -4,6 +4,7 @@ import {DocumentClick} from '../../decorators/document-click'
 import {View} from '../../decorators/view'
 import {observable} from '@nx-js/observer-util'
 import {Icon} from '../icon/icon'
+import {localized} from '../../util/localization'
 
 export interface DropDownItem {
     text: string
@@ -46,7 +47,7 @@ export class DropDown extends Component<DropDownProps> {
             <div class={cls('control dropdown', {'is-active': this.model.open})}>
                 <div class="dropdown-trigger">
                     <button class="button is-small is-fullwidth" onClick={this.toggle}>
-                        <span>text</span>
+                        <span>{localized(text)}</span>
                         <Icon name="chevron-down"/>
                     </button>
                 </div>

@@ -4,6 +4,7 @@ import {FormProps} from '../forms/types'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
+import {localized} from '../../util/localization'
 
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
@@ -29,7 +30,7 @@ export class InputText extends QuillComponent<InputTextProps> {
             <div class={cls('control', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                 <input type={this.getType()}
                        class="input is-small"
-                       placeholder={placeHolder}
+                       placeholder={localized(placeHolder)}
                        name={name}
                        value={value}
                        onChange={this.onChange}/>

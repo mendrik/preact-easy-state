@@ -4,6 +4,7 @@ import {box, cls} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {h} from 'preact'
 import {View} from '../../decorators/view'
+import {localized} from '../../util/localization'
 
 export enum DropPostion {
     inside = 'inside',
@@ -204,7 +205,7 @@ export class TreeNode<T> extends QuillComponent<TreeNodeProps<T>> {
                                value={text}
                                onKeyUp={this.keyEditInput}
                                onBlur={this.blur}/>) :
-                        <span class="text" onDblClick={this.dblClick}>{text}</span>
+                        <span class="text" onDblClick={this.dblClick}>{localized(text)}</span>
                     }
                 </div>
                 <ul>

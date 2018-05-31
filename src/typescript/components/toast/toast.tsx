@@ -10,6 +10,7 @@ import 'animate.css/source/sliding_exits/slideOutRight.css'
 import 'animate.css/source/sliding_exits/slideOutDown.css'
 import {QuillComponent} from '../../util/quill-component'
 import {MediaQuery} from '../../decorators/media-query'
+import {localized} from '../../util/localization'
 
 export interface ToastProps {
     title: string
@@ -40,8 +41,8 @@ class Toast extends QuillComponent<ToastProps, ToastState> {
         return (
         <li class={cls('toast mobile animate', {slideInUp: visible, slideOutDown: !visible})}
             onAnimationEnd={this.animationEnd}>
-            <h4>{title}</h4>
-            <p>{message}</p>
+            <h4>{localized(title)}</h4>
+            <p>{localized(message)}</p>
             {children}
         </li>)
     }
@@ -51,8 +52,8 @@ class Toast extends QuillComponent<ToastProps, ToastState> {
         return (
         <li class={cls('toast desktop animate', {slideInLeft: visible, slideOutRight: !visible})}
             onAnimationEnd={this.animationEnd}>
-            <h4>{title}</h4>
-            <p>{message}</p>
+            <h4>{localized(title)}</h4>
+            <p>{localized(message)}</p>
             {children}
         </li>)
     }
