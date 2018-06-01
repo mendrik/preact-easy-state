@@ -5,7 +5,7 @@ import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
 
-const router: Navigo = new Navigo(window.location.origin)
+const router = new Navigo(window.location.origin)
 const currentRouteSymbol = Symbol('__route__')
 const init = new WeakMap<any, boolean>()
 const routes = new WeakMap<QuillComponentClass, IRoute[]>()
@@ -31,9 +31,11 @@ export const Route = (path: string) => (proto: QuillComponentClass, method: stri
             resolve(routes, instance).forEach(route => {
                 const handler = async (params = {}, query) => {
                     const ComponentExport = await instance[route.method]()
-                    const Component = ComponentExport.default || Object.values(ComponentExport).find(v => typeof v === 'function')
-                    instance[currentRouteSymbol] = <Component {...params} query={query}/>
-                    instance.forceUpdate()
+                    if (ComponentExport) {
+                        const Component = ComponentExport.default || Object.values(ComponentExport).find(v => typeof v === 'function')
+                        instance[currentRouteSymbol] = <Component {...params} query={query}/>
+                        instance.forceUpdate()
+                    }
                 }
                 router.on(route.path, handler)
                 addToCleanupQueue(instance, () => router.off(route.path, handler))
