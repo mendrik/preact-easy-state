@@ -31,6 +31,12 @@
     overflow: hidden;
     max-width: calc(var(--width) + 28px);
     min-width: calc(var(--width) + 28px);
+    outline: none;
+
+    &:focus {
+        border-color: #3273dc;
+        box-shadow: 0 0 0 .125em rgba(50, 115, 220, .25);
+    }
 
     input {
         display: none;

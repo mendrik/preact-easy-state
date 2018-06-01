@@ -145,6 +145,7 @@ export class MainPage extends QuillComponent {
                     <DropDownItem onClick={() => 0}>Test</DropDownItem>
                 </DropDown>
                 <InputText iconLeft="account"
+                           name="text"
                            changes={(value) => model.text = value}
                            value={model.text}/>
                 <DatePicker changes={field('date')}
