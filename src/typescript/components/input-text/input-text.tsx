@@ -5,6 +5,7 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
+import './input-text.pcss'
 
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
@@ -25,11 +26,11 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     rightIcon = () => <Icon name={this.props.iconRight} right={true}/>
 
-    render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, ...props}) {
+    render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, error, ...props}) {
         return (
-            <div class={cls('control', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
+            <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                 <input type={this.getType()}
-                       class="input is-small"
+                       class={cls('input is-small', {error})}
                        placeholder={localized(placeHolder)}
                        name={name}
                        value={value}
