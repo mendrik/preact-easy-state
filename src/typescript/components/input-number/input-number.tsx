@@ -7,7 +7,7 @@ import {format as Format, default as formatter} from 'format-number'
 import {GlobalEvent} from '../../decorators/global-event'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
-import {cls} from '../../util/utils'
+import {cls, optional} from '../../util/utils'
 
 export interface InputNumberState {
     value: number
@@ -169,7 +169,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                     value={this.format(value)}
                     onBlur={this.confirm}
                     onCopy={this.copy}
-                    onKeyUp={this.onChange}
+                    {...optional('onKeyUp', this.onChange, changes)}
                     onKeyDown={this.validateKey}/>
                 {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
                 {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}

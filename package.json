@@ -24,10 +24,12 @@
         "@types/node": "10.3.0",
         "animate.css": "3.6.1",
         "bulma": "0.7.1",
+        "class-validator": "^0.8.5",
         "date-fns": "2.0.0-alpha.9",
         "format-number": "3.0.0",
         "navigo": "7.1.2",
         "preact-compat": "3.18.0",
+        "preact-context": "^1.0.1",
         "react-input-mask": "latest",
         "shim-keyboard-event-key": "1.0.2",
         "throttle-debounce": "^1.0.1"

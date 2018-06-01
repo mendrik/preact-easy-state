@@ -120,7 +120,7 @@ export class MainPage extends QuillComponent {
     renderer = (item: any) => <li>{item.name}</li>
 
     testForm = () => (
-        <Form>
+        <Form model={model}>
             <FieldGroup label="Search">
                 <AutoSuggest changes={() => 0}
                              dataSourceUrl="https://restcountries.eu/rest/v2/name/"
@@ -129,7 +129,7 @@ export class MainPage extends QuillComponent {
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
                              value={model.bool}/>
-                <InputNumber changes={(number) => console.log(number)}
+                <InputNumber name="integer"
                              value={model.integer}/>
                 <InputNumber changes={(number) => console.log(number)}
                              value={model.float}
@@ -144,7 +144,7 @@ export class MainPage extends QuillComponent {
                     <DropDownDivider/>
                     <DropDownItem onClick={() => 0}>Test</DropDownItem>
                 </DropDown>
-                <InputText changes={field('text')} iconLeft="account" value={model.text}/>
+                <InputText name="text" iconLeft="account" value={model.text}/>
                 <DatePicker changes={field('date')}
                             format="dd.MM.yyyy"
                             value={model.date}/>

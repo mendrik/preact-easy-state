@@ -3,7 +3,7 @@ import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import './input-switch.pcss'
-import {cls} from '../../util/utils'
+import {cls, optional} from '../../util/utils'
 import {localized} from '../../util/localization'
 
 export interface InputSwitchProps extends FormProps<boolean> {
@@ -36,7 +36,9 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
         return (
             <div class={cls('control boolean-input', {loaded, error})} onAnimationEnd={this.cssReady}>
                 <label class="switch" ref={l => this.label = l}>
-                    <input type="checkbox" onClick={() => changes(!value)} checked={value}/>
+                    <input type="checkbox"
+                           {...optional('onClick', () => changes(!value), changes)}
+                           checked={value}/>
                     <div class="slider" ref={r => this.slider = r}>
                         <div class="label-off">{localized(offLabel)}</div>
                         <div class="toggle"/>
