@@ -35,12 +35,10 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
         this.state = {
             errors: []
         }
-        observe(() => validate(props.model), {
-            scheduler: async () => {
-                const errors = await validate(props.model)
-                if (errors) {
-                    this.setState({errors})
-                }
+        observe(async () => {
+            const errors = await validate(props.model)
+            if (errors) {
+                this.setState({errors})
             }
         })
     }
