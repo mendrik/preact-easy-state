@@ -16,7 +16,7 @@ import {View} from '../../decorators/view'
 import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
 import {InputNumber} from '../../components/input-number/input-number'
 import {InputSwitch} from '../../components/input-switch/input-switch'
-import model, {Data} from '../../model/application'
+import {Data, model} from '../../model/application'
 import {CustomCell} from '../../model/custom-cell'
 import {FieldGroup} from '../../components/forms/field-group'
 import {Form} from '../../components/forms/form'
@@ -120,7 +120,7 @@ export class MainPage extends QuillComponent {
     renderer = (item: any) => <li>{item.name}</li>
 
     testForm = () => (
-        <Form>
+        <Form model={model}>
             <FieldGroup label="Search">
                 <AutoSuggest changes={() => 0}
                              dataSourceUrl="https://restcountries.eu/rest/v2/name/"
@@ -129,7 +129,8 @@ export class MainPage extends QuillComponent {
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
                              value={model.bool}/>
-                <InputNumber changes={(number) => console.log(number)}
+                <InputNumber changes={(value) => model.integer = value}
+                             name="integer"
                              value={model.integer}/>
                 <InputNumber changes={(number) => console.log(number)}
                              value={model.float}
@@ -144,7 +145,10 @@ export class MainPage extends QuillComponent {
                     <DropDownDivider/>
                     <DropDownItem onClick={() => 0}>Test</DropDownItem>
                 </DropDown>
-                <InputText changes={field('text')} iconLeft="account" value={model.text}/>
+                <InputText iconLeft="account"
+                           name="text"
+                           changes={(value) => model.text = value}
+                           value={model.text}/>
                 <DatePicker changes={field('date')}
                             format="dd.MM.yyyy"
                             value={model.date}/>

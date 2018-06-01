@@ -6,6 +6,7 @@ import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
 import './input-text.pcss'
+import {showErrors, ValidationContext} from '../forms/form'
 
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
@@ -28,17 +29,22 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, error, ...props}) {
         return (
-            <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
-                <input type={this.getType()}
-                       class={cls('input is-small', {error})}
-                       placeholder={localized(placeHolder)}
-                       name={name}
-                       value={value}
-                       onChange={this.onChange}/>
-                {iconLeft ? this.leftIcon() : null}
-                {iconRight ? this.rightIcon() : null}
-                {children}
-            </div>
+            <ValidationContext.Consumer>{validation => {
+                const errors = showErrors(validation, name)
+                return (
+                    <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
+                        <input type={this.getType()}
+                               class={cls('input is-small', {error: errors})}
+                               placeholder={localized(placeHolder)}
+                               name={name}
+                               value={value}
+                               onChange={this.onChange}/>
+                        {iconLeft ? this.leftIcon() : null}
+                        {iconRight ? this.rightIcon() : null}
+                        {children}
+                        {errors}
+                    </div>)
+            }}</ValidationContext.Consumer>
         )
     }
 }

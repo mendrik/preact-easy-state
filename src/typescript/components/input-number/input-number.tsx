@@ -7,7 +7,8 @@ import {format as Format, default as formatter} from 'format-number'
 import {GlobalEvent} from '../../decorators/global-event'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
-import {cls} from '../../util/utils'
+import {cls, optional} from '../../util/utils'
+import {showErrors, ValidationContext} from '../forms/form'
 
 export interface InputNumberState {
     value: number
@@ -57,7 +58,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     validateKey = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
         if (!ctrlKey && key.length === 1) {
-            if (!/[\d.]/.test(key)) {
+            if (!/^[\-\d.]$/.test(key)) {
                 ev.preventDefault()
             }
         }
@@ -68,7 +69,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         if (!key) {
             return
         }
-        if (!ctrlKey && /[0-9]/.test(key) || /null|backspace|delete/i.test(key)) {
+        if (!ctrlKey && /^[0-9]$/.test(key) || /null|backspace|delete/i.test(key)) {
             const {state, input, input: {selectionStart, selectionEnd}} = this
             const old =  this.format(state.value)
             const n = this.rawNumber()
@@ -83,14 +84,14 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                 })
             }
         }
-        if (!ctrlKey && '.' === key) { // after dot was entered we need to allow 0s without formatting the number
+        if (!ctrlKey && /^[.\-]$/.test(key)) { // after dot was entered we need to allow 0s without formatting the number
             this.setState({dot: true})
         }
     }
 
     rawNumber = () => {
         const {input, props} = this
-        const str = input.value.replace(/[^\d.]/g, '')
+        const str = input.value.replace(/[^\-\d.]/g, '')
         return props.integer ?
             parseInt(str, 10) :
             parseFloat(str)
@@ -158,23 +159,28 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         }
     }
 
-    render({children, changes, integer, placeHolder, error, ...props}, {value}) {
+    render({children, changes, integer, name, placeHolder, error, ...props}, {value}) {
         return (
-            <div class="control two-icons has-icons-right number-input">
-                <input
-                    ref={i => this.input = i}
-                    type="text"
-                    placeholder={localized(placeHolder)}
-                    class={cls('input is-small', {error})}
-                    value={this.format(value)}
-                    onBlur={this.confirm}
-                    onCopy={this.copy}
-                    onKeyUp={this.onChange}
-                    onKeyDown={this.validateKey}/>
-                {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
-                {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
-                {children}
-            </div>
+            <ValidationContext.Consumer>{validation => {
+                const errors = showErrors(validation, name)
+                return (
+                    <div class="control two-icons has-icons-right number-input">
+                    <input
+                        ref={i => this.input = i}
+                        type="text"
+                        placeholder={localized(placeHolder)}
+                        class={cls('input is-small', {error: errors})}
+                        value={this.format(value)}
+                        onBlur={this.confirm}
+                        onCopy={this.copy}
+                        {...optional('onKeyUp', this.onChange, changes)}
+                        onKeyDown={this.validateKey}/>
+                    {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
+                    {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
+                    {children}
+                    {errors}
+                </div>)
+            }}</ValidationContext.Consumer>
         )
     }
 }

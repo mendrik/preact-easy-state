@@ -83,3 +83,6 @@ export const withClass = <T extends {class: string}>(props: any, className: stri
     props.class = props.class ? [...props.class.split(/\s+/), className].join(' ') : className
     return props
 }
+
+export const optional = <T>(property: string, value: T, condition: any) =>
+    condition ? {[property]: value} : {}
