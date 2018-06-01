@@ -58,7 +58,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
     validateKey = (ev: KeyboardEvent) => {
         const {ctrlKey, key} = ev
         if (!ctrlKey && key.length === 1) {
-            if (!/[\d.]/.test(key)) {
+            if (!/^[\-\d.]$/.test(key)) {
                 ev.preventDefault()
             }
         }
@@ -69,7 +69,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         if (!key) {
             return
         }
-        if (!ctrlKey && /[0-9]/.test(key) || /null|backspace|delete/i.test(key)) {
+        if (!ctrlKey && /^[0-9]$/.test(key) || /null|backspace|delete/i.test(key)) {
             const {state, input, input: {selectionStart, selectionEnd}} = this
             const old =  this.format(state.value)
             const n = this.rawNumber()
@@ -84,14 +84,14 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                 })
             }
         }
-        if (!ctrlKey && '.' === key) { // after dot was entered we need to allow 0s without formatting the number
+        if (!ctrlKey && /^[.\-]$/.test(key)) { // after dot was entered we need to allow 0s without formatting the number
             this.setState({dot: true})
         }
     }
 
     rawNumber = () => {
         const {input, props} = this
-        const str = input.value.replace(/[^\d.]/g, '')
+        const str = input.value.replace(/[^\-\d.]/g, '')
         return props.integer ?
             parseInt(str, 10) :
             parseFloat(str)
