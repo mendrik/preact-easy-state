@@ -5,7 +5,6 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
-import './input-text.pcss'
 import {showErrors, ValidationContext} from '../forms/form'
 
 export interface InputTextProps extends FormProps<string> {
