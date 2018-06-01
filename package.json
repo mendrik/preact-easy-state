@@ -8,6 +8,7 @@
     "types": "lib/quill.d.ts",
     "scripts": {
         "run": "parcel src/html/index.html --no-hmr",
+        "parcel-bundle": "parcel build src/typescript/start.tsx -o parcel.js",
         "clean": "rimraf lib cjs",
         "rollup": "cross-env NODE_ENV=production rollup -c",
         "bundle": "npm-run-all rollup",
