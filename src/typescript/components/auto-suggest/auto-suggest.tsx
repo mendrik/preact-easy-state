@@ -6,6 +6,7 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import './auto-suggest.pcss'
+import {DocumentClick} from '../../decorators/document-click'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string
@@ -34,6 +35,11 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>> {
 
     openDropDown = (ev: Event) => {
         this.model.dropDownVisible = true
+    }
+
+    @DocumentClick((as: AutoSuggest<T>) => as.model.dropDownVisible)
+    close() {
+        this.model.dropDownVisible = false
     }
 
     render({children, dataSourceUrl, renderer, changes, value, ...props}) {
