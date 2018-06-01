@@ -4,7 +4,7 @@ import {View} from '../../decorators/view'
 import {validate, ValidationError} from 'class-validator'
 import {Context, createContext} from 'preact-context'
 import './form.pcss'
-import {observe} from '@nx-js/observer-util'
+import {observe, unobserve} from '@nx-js/observer-util'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T
@@ -35,12 +35,21 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
         this.state = {
             errors: []
         }
-        observe(async () => {
-            const errors = await validate(props.model)
-            if (errors) {
-                this.setState({errors})
-            }
-        })
+    }
+
+    validator = async () => {
+        const errors = await validate(this.props.model)
+        if (errors) {
+            this.setState({errors})
+        }
+    }
+
+    componentWillMount() {
+        observe(this.validator)
+    }
+
+    componentWillUnmount() {
+        unobserve(this.validator)
     }
 
     render({children, validate, model, ...props}, {errors}) {
