@@ -8,6 +8,7 @@ import {Icon} from '../icon/icon'
 import './auto-suggest.pcss'
 import {DocumentClick} from '../../decorators/document-click'
 import {fetchJson, ExtendedRequest} from '../../decorators/fetch'
+import {Debounce} from '../../decorators/debounce'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string
@@ -52,6 +53,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
             fetchJson(dataSourceUrl + this.state.value, req) as Promise<T[]>
     }
 
+    @Debounce(200)
     onInput = (ev) => {
         this.setState({value: this.input.value})
         if (this.input.value.length >= this.props.minimumCharacters) {
