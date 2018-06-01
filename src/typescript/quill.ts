@@ -34,7 +34,7 @@ import './components/tree/tree-node'
 import './components/tree/tree'
 
 export {
-    Processor, RequestWithUrl, AcceptStatus, Put, Post, Get,
+    Processor, ExtendedRequest, AcceptStatus, Put, Post, Get,
     Delete, FetchFailure, fetchJson, Option, ResponseError
 } from './decorators/fetch'
 export {StringFactory, Writer, Reader, Store, LocalStorage} from './decorators/local-storage'

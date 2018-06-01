@@ -4,7 +4,7 @@ import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 
 export type Processor = (res: Response) => Promise<any>
 
-export interface RequestWithUrl extends RequestInit {
+export interface ExtendedRequest extends RequestInit {
     processor?: Processor
 }
 
@@ -36,7 +36,7 @@ const handleErrors = (component: QuillComponent, response: Response) => {
     return response
 }
 
-const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (proto: QuillComponentClass, protoMethod: string) => {
+const Fetch = (method: string) => (url: string, req: ExtendedRequest = {}) => (proto: QuillComponentClass, protoMethod: string) => {
     Object.defineProperty(proto, protoMethod, {
         value: function (body?: any) {
             const headers = req.headers || {'Content-Type': 'application/json'}
@@ -53,7 +53,7 @@ const Fetch = (method: string) => (url: string, req: RequestWithUrl = {}) => (pr
     })
 }
 
-export const fetchJson = async <T = {}>(url: string, req: RequestWithUrl = {}): Promise<T> => {
+export const fetchJson = async <T = {}>(url: string, req: ExtendedRequest = {}): Promise<T> => {
     const fetcher = {
         fetch: () => 0 as any
     }

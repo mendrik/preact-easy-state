@@ -7,43 +7,79 @@ import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import './auto-suggest.pcss'
 import {DocumentClick} from '../../decorators/document-click'
+import {fetchJson, ExtendedRequest} from '../../decorators/fetch'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string
+    items?: T[]
+    req?: ExtendedRequest
     renderer: (item: T) => JSX.Element
+    minimumCharacters?: number
 }
 
-export class Model<T> {
-    dropDownVisible = false
+export interface AutoSuggestState<T> {
+    value: string
+    dropDownVisible: boolean
     items: T[]
 }
 
 @View
-export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>> {
+export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSuggestState<T>> {
 
-    model: Model<T>
+    static defaultProps = {
+        minimumCharacters: 3,
+        req: {
+            headers: {
+                'Accept': 'application/json'
+            }
+        }
+    }
+
     input: HTMLInputElement
 
     constructor(props) {
         super(props)
-        this.model = observable(new Model<T>())
+        this.state = {
+            dropDownVisible: false,
+            value: props.value,
+            items: []
+        }
+    }
+
+    fetchItems = async (): Promise<T[]> => {
+        const {items, dataSourceUrl, req} = this.props
+        return items ? Promise.resolve(items) :
+            fetchJson(dataSourceUrl + this.state.value, req) as Promise<T[]>
     }
 
     onInput = (ev) => {
-        console.log(this.input.value)
+        this.setState({value: this.input.value})
+        if (this.input.value.length >= this.props.minimumCharacters) {
+            this.loadAndUpdateItems()
+        } else {
+            this.setState({items: []})
+        }
+    }
+
+    loadAndUpdateItems = async () => {
+        const items = await this.fetchItems()
+        console.log(items)
+        if (items.length) {
+            this.setState({items})
+        }
     }
 
     openDropDown = (ev: Event) => {
-        this.model.dropDownVisible = true
+        this.setState({dropDownVisible: true})
     }
 
-    @DocumentClick((as: AutoSuggest<T>) => as.model.dropDownVisible)
+    @DocumentClick((as: AutoSuggest<T>) => as.state.dropDownVisible)
     close() {
-        this.model.dropDownVisible = false
+        this.setState({dropDownVisible: false})
     }
 
-    render({children, dataSourceUrl, renderer, changes, value, ...props}) {
-        const {dropDownVisible, items} = this.model
+    render({children, dataSourceUrl, placeHolder, renderer, changes, ...props},
+           {value, dropDownVisible, items}) {
         return (
             <div class={cls('control has-icons-right auto-suggest dropdown', {
                 'is-active': dropDownVisible
@@ -53,7 +89,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>> {
                     type="text"
                     class="input is-small"
                     name={name}
-                    onFocus={this.openDropDown}
+                    placeholder={placeHolder}
                     onInput={this.onInput}
                     value={value}/>
                 <Icon name="chevron-down" right={true} class="dropdown-trigger" onClick={this.openDropDown}/>

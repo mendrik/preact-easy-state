@@ -117,12 +117,14 @@ export class MainPage extends QuillComponent {
         </Modal>
     ) : null
 
-    renderer = (item: any) => <li></li>
+    renderer = (item: any) => <li>{item.name}</li>
 
     testForm = () => (
         <Form>
             <FieldGroup label="Search">
-                <AutoSuggest changes={() => 0} renderer={this.renderer}/>
+                <AutoSuggest changes={() => 0}
+                             dataSourceUrl="https://restcountries.eu/rest/v2/name/"
+                             renderer={this.renderer}/>
             </FieldGroup>
             <FieldGroup label="Test">
                 <InputSwitch changes={(bool) => model.bool = bool}
