@@ -6,17 +6,15 @@ export const DocumentClick = <T extends QuillComponent>
     (onWhen: (comp: T) => boolean) => (proto: QuillComponentClass, method: string) => {
 
     addToMountQueue(proto, (instance: T) => {
-        observe(() => onWhen(instance), {
-            scheduler: () => {
-                if (onWhen(instance)) {
-                    const handler = (ev: MouseEvent) => {
-                        if (!instance.base.contains(ev.target as Node)) {
-                            instance[method](ev)
-                            document.removeEventListener('mousedown', handler)
-                        }
+        observe(() => {
+            if (onWhen(instance)) {
+                const handler = (ev: MouseEvent) => {
+                    if (!instance.base.contains(ev.target as Node)) {
+                        instance[method](ev)
+                        document.removeEventListener('mousedown', handler)
                     }
-                    document.addEventListener('mousedown', handler)
                 }
+                document.addEventListener('mousedown', handler)
             }
         })
         addToCleanupQueue(instance, () => unobserve(onWhen))
