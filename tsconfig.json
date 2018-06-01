@@ -7,7 +7,6 @@
         "experimentalDecorators": true,
         "noImplicitAny": false,
         "sourceMap": true,
-        "traceResolution": true,
         "declaration": true,
         "outDir": "./dist",
         "lib": [
@@ -19,6 +18,8 @@
     },
     "exclude": [
         "dist",
+        "lib",
+        "cjs",
         "node_modules"
     ]
 }

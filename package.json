@@ -8,14 +8,18 @@
     "types": "lib/quill.d.ts",
     "scripts": {
         "run": "parcel src/html/index.html --no-hmr",
-        "clean": "rimraf .rpt2_cache lib",
+        "clean": "rimraf lib cjs",
         "rollup": "cross-env NODE_ENV=production rollup -c",
         "bundle": "npm-run-all rollup",
+        "css:compile": "postcss src/typescript/**/*.pcss --dir cjs --base  src/typescript",
+        "ts:compile": "tsc -d --outDir cjs",
+        "compile": "npm-run-all clean ts:compile css:compile",
         "test": "mocha --require ts-node/register --require src/typescript/util/mocha-setup.ts src/typescript/**/*.spec.*"
     },
     "author": "Andreas Herd",
     "license": "MIT",
     "dependencies": {
+        "@types/node": "10.3.0",
         "@mdi/font": "2.3.54",
         "@nx-js/observer-util": "4.1.2",
         "animate.css": "3.6.1",
@@ -67,10 +71,11 @@
         "stylelint": "9.2.1",
         "ts-node": "6.0.5",
         "tslint": "5.10.0",
-        "typescript": "^2.8.3"
+        "typescript": "2.9.1"
     },
     "files": [
-        "lib"
+        "lib",
+        "cjs"
     ],
     "alias": {
         "react": "preact-compat",
