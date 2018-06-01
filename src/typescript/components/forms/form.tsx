@@ -1,36 +1,42 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
-import './form.pcss'
+import {ValidationError} from 'class-validator'
 import {Context, createContext} from 'preact-context'
+import './form.pcss'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
-    model?: T
+    validate: boolean
+    model: T
+}
+
+export interface FormState {
+    errors: ValidationError[]
+}
+
+export const ValidationContext: Context<FormState> = createContext({errors: []})
+
+export const showErrors = (validationState: FormState, name: string) => {
+    const error = validationState.errors.find(e => e.property === name)
+    return error ? (
+        <ul>{Object.values(error.constraints).map(message =>
+            <li>{message}</li>
+        )}</ul>) : null
 }
 
 @View
-export class Form<T> extends QuillComponent<HtmlFormProps<T>> {
-
-    validationContext?: Context<T>
+export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
 
     constructor(props) {
         super(props)
-        if (props.model) {
-            this.validationContext = createContext(props.model)
-        }
     }
 
-    render({children, model, label, ...props}) {
-        const Context = this.validationContext
-        return model ? (
+    render({children, validate, model, ...props}, {errors}) {
+        return (
             <div class="form-group">
-                <Context.Provider value={model}>
+                <ValidationContext.Provider value={errors}>
                     {children}
-                </Context.Provider>
-            </div>
-        ) : (
-            <div class="form-group">
-                {children}
+                </ValidationContext.Provider>
             </div>
         )
     }

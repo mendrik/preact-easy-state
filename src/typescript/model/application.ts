@@ -3,7 +3,7 @@ import {Cell} from '../components/grid/grid'
 import {CustomNode} from './custom-node'
 import {Contains, IsInt, Max, Min} from 'class-validator'
 
-export class Data {
+class Data {
     @Contains('hello')
     text = 'My little demo text'
 
@@ -22,4 +22,5 @@ export class Data {
     progress = false
 }
 
-export default observable(new Data())
+const model = observable(new Data())
+export {model, Data}
