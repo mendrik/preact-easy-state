@@ -31,7 +31,6 @@ export class InputText extends QuillComponent<InputTextProps> {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
-                console.log(errors)
                 return (
                     <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                         <input type={this.getType()}

@@ -120,7 +120,7 @@ export class MainPage extends QuillComponent {
     renderer = (item: any) => <li>{item.name}</li>
 
     testForm = () => (
-        <Form model={model} validate={true}>
+        <Form model={model}>
             <FieldGroup label="Search">
                 <AutoSuggest changes={() => 0}
                              dataSourceUrl="https://restcountries.eu/rest/v2/name/"
@@ -130,6 +130,7 @@ export class MainPage extends QuillComponent {
                 <InputSwitch changes={(bool) => model.bool = bool}
                              value={model.bool}/>
                 <InputNumber changes={(value) => model.integer = value}
+                             name="integer"
                              value={model.integer}/>
                 <InputNumber changes={(number) => console.log(number)}
                              value={model.float}

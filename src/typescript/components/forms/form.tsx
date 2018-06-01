@@ -7,7 +7,6 @@ import './form.pcss'
 import {observe} from '@nx-js/observer-util'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
-    validate: boolean
     model: T
 }
 

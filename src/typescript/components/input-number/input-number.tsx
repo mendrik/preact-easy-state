@@ -8,6 +8,7 @@ import {GlobalEvent} from '../../decorators/global-event'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
 import {cls, optional} from '../../util/utils'
+import {showErrors, ValidationContext} from '../forms/form'
 
 export interface InputNumberState {
     value: number
@@ -160,21 +161,26 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
 
     render({children, changes, integer, placeHolder, error, ...props}, {value}) {
         return (
-            <div class="control two-icons has-icons-right number-input">
-                <input
-                    ref={i => this.input = i}
-                    type="text"
-                    placeholder={localized(placeHolder)}
-                    class={cls('input is-small', {error})}
-                    value={this.format(value)}
-                    onBlur={this.confirm}
-                    onCopy={this.copy}
-                    {...optional('onKeyUp', this.onChange, changes)}
-                    onKeyDown={this.validateKey}/>
-                {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
-                {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
-                {children}
-            </div>
+            <ValidationContext.Consumer>{validation => {
+                const errors = showErrors(validation, name)
+                return (
+                    <div class="control two-icons has-icons-right number-input">
+                    <input
+                        ref={i => this.input = i}
+                        type="text"
+                        placeholder={localized(placeHolder)}
+                        class={cls('input is-small', {error: errors})}
+                        value={this.format(value)}
+                        onBlur={this.confirm}
+                        onCopy={this.copy}
+                        {...optional('onKeyUp', this.onChange, changes)}
+                        onKeyDown={this.validateKey}/>
+                    {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
+                    {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
+                    {children}
+                    {errors}
+                </div>)
+            }}</ValidationContext.Consumer>
         )
     }
 }
