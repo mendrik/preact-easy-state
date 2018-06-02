@@ -49,9 +49,11 @@
                 background-color: gray;
                 color: white;
 
-                &:hover {
-                    background-color: gray;
-                    color: white;
+                @mixin hover-supported {
+                    &:hover {
+                        background-color: gray;
+                        color: white;
+                    }
                 }
             }
 
@@ -59,8 +61,10 @@
                 color: lightgrey;
             }
 
-            &:hover {
-                background-color: whitesmoke;
+            @mixin hover-supported {
+                &:hover {
+                    background-color: whitesmoke;
+                }
             }
         }
     }

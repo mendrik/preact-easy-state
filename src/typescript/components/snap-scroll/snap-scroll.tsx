@@ -31,6 +31,8 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
         pixelThreshold: 10
     }
 
+    panel: HTMLUListElement
+
     componentDidMount() {
         this.base.style.setProperty('--slides', `${this.props.children.length}`)
     }
@@ -41,13 +43,13 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
             return
         }
         const {diffX, diffTime, phase} = ev.detail,
-              {model, timeThreshold, pixelThreshold} = this.props
+              {model, timeThreshold, pixelThreshold, children} = this.props
         switch (phase) {
             case Phase.start:
                 this.setState({animate: false})
                 break
             case Phase.move:
-                this.setState({diffX})
+                this.panel.style.transform = `translateX(${-(100/children.length) * model.panel}%) translateX(${diffX}px)`
                 break
             case Phase.end:
                 if (!this.base) { // component was unmounted
@@ -87,13 +89,14 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
     }
 
     render({children, model, selector, timeThreshold, pixelThreshold, onPanelChanged, ...props},
-           {animate = false, diffX = 0}) {
+           {animate = false}) {
         const style = {
-            transform: `translateX(${-(100/children.length) * model.panel}%) translateX(${diffX}px)`
+            transform: `translateX(${-(100/children.length) * model.panel}%)`
         }
         return (
             <div class={cls('snap-scroll', {animate})}>
                 <ul class="months-panel" style={style}
+                    ref={u => this.panel = u}
                     onTransitionEnd={this.transitionEnd}>
                     {children}
                 </ul>
