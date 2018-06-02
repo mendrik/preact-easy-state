@@ -48,6 +48,9 @@
         line-height: 1;
         color: #656464;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &:after {
             transform: scale(2);
@@ -56,13 +59,11 @@
             opacity: 0;
             background-color: #656464;
             border-radius: 50%;
-            position: absolute;
+            flex: none;
             content: '';
             display: block;
             width: .7em;
             height: .7em;
-            top: .3em;
-            left: .325em;
         }
     }
 }
