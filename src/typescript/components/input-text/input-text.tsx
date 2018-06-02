@@ -26,7 +26,7 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     rightIcon = () => <Icon name={this.props.iconRight} right={true}/>
 
-    render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, error, ...props}) {
+    render({children, name, changes, mask, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)

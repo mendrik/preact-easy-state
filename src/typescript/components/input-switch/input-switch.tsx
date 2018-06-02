@@ -32,9 +32,9 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
         this.setState({loaded: true})
     }
 
-    render({children, changes, value, onLabel, offLabel, error, ...props}, {loaded = false}) {
+    render({children, changes, value, onLabel, offLabel, ...props}, {loaded = false}) {
         return (
-            <div class={cls('control boolean-input', {loaded, error})} onAnimationEnd={this.cssReady}>
+            <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.cssReady}>
                 <label class="switch" ref={l => this.label = l} tabIndex={0}>
                     <input type="checkbox"
                            {...optional('onClick', () => changes(!value), changes)}

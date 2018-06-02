@@ -159,7 +159,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         }
     }
 
-    render({children, changes, integer, name, placeHolder, error, ...props}, {value}) {
+    render({children, changes, integer, name, placeHolder, ...props}, {value}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
