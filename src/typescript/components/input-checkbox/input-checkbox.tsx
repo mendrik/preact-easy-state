@@ -4,8 +4,8 @@ import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import {cls, optional} from '../../util/utils'
 import {showErrors, ValidationContext} from '../forms/form'
-import './input-checkbox.pcss'
 import {Icon} from '../icon/icon'
+import './input-checkbox.pcss'
 
 export interface InputCheckboxProps extends FormProps<boolean> {
 }
