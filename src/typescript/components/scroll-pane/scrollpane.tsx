@@ -21,6 +21,7 @@ export interface ScrollPaneProps extends JSX.HTMLAttributes {
 export class ScrollPane extends QuillComponent<ScrollPaneProps> {
 
     model: Model
+    inner: HTMLDivElement
 
     constructor(props) {
         super(props)
@@ -55,9 +56,10 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     @GlobalEvent('resize')
     calculateThumb = () => {
         const el = this.base
-        const inner = el.firstElementChild
-        const thumbTop = inner.scrollTop * (inner.clientHeight / inner.scrollHeight)
-        let thumbHeight = (inner.clientHeight / inner.scrollHeight * 100)
+        const inner = this.inner
+        const ratio = inner.clientHeight / inner.scrollHeight
+        const thumbTop = inner.scrollTop * ratio
+        let thumbHeight = ratio * 100
         if (thumbHeight >= 100) {
             thumbHeight = 0
         }
@@ -84,6 +86,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
         return (
             <div {...props}>
                 <div class="inner-scroll-pane"
+                     ref={r => this.inner = r}
                      onScroll={this.calculateThumb}>{children}</div>
                 <div class="track"><div class="thumb"/></div>
             </div>
