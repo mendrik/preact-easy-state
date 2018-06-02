@@ -5,7 +5,7 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {DocumentClick} from '../../decorators/document-click'
-import {ExtendedRequest, FetchFailure, fetchJson} from '../../decorators/fetch'
+import {ExtendedRequest, fetchJson} from '../../decorators/fetch'
 import {Debounce} from '../../decorators/debounce'
 import './auto-suggest.pcss'
 
