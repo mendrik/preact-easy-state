@@ -3,6 +3,12 @@ import {Cell} from '../components/grid/grid'
 import {CustomNode} from './custom-node'
 import {Contains, IsInt, Max, Min} from 'class-validator'
 
+export enum RadioValue {
+    VALUE1,
+    VALUE2,
+    VALUE3
+}
+
 class Data {
     @Contains('Hello')
     text = 'Hello Andreas'
@@ -12,6 +18,7 @@ class Data {
     @Max(10)
     integer = 10
 
+    radio = RadioValue.VALUE1
     float = 10.5
     bool = false
     date = new Date()

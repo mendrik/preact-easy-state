@@ -16,7 +16,7 @@ import {View} from '../../decorators/view'
 import {DropDown, DropDownDivider, DropDownItem} from '../../components/drop-down/drop-down'
 import {InputNumber} from '../../components/input-number/input-number'
 import {InputSwitch} from '../../components/input-switch/input-switch'
-import {Data, model} from '../../model/application'
+import {Data, model, RadioValue} from '../../model/application'
 import {CustomCell} from '../../model/custom-cell'
 import {FieldGroup} from '../../components/forms/field-group'
 import {Form} from '../../components/forms/form'
@@ -24,6 +24,8 @@ import {Modal} from '../../components/modal/modal'
 import {ProgressBar} from '../../components/progress-bar/progress-bar'
 import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
+import {InputRadio} from '../../components/input-radio/input-radio'
+import {RadioGroup} from '../../components/input-radio/radio-group'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -163,6 +165,19 @@ export class MainPage extends QuillComponent {
                 <InputCheckbox name="bool"
                                value={model.bool}
                                changes={(v) => model.bool = v}>Checkbox</InputCheckbox>
+            </FieldGroup>
+            <FieldGroup label="Test radios">
+                <RadioGroup selectedValue={model.radio}>
+                    <InputRadio name="bool"
+                                changes={r => model.radio = r}
+                                value={RadioValue.VALUE1}>Value1</InputRadio>
+                    <InputRadio name="bool"
+                                changes={r => model.radio = r}
+                                value={RadioValue.VALUE2}>Value2</InputRadio>
+                    <InputRadio name="bool"
+                                changes={r => model.radio = r}
+                                value={RadioValue.VALUE3}>Value3</InputRadio>
+                </RadioGroup>
             </FieldGroup>
         </Form>
     )

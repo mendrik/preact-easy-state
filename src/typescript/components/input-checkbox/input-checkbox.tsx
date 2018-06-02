@@ -10,11 +10,8 @@ import {Icon} from '../icon/icon'
 export interface InputSwitchProps extends FormProps<boolean> {
 }
 
-export interface InputSwitchState {
-}
-
 @View
-export class InputCheckbox extends QuillComponent<InputSwitchProps, InputSwitchState> {
+export class InputCheckbox extends QuillComponent<InputSwitchProps> {
 
     handleChange = (ev) => {
         this.props.changes(ev.target.checked)
