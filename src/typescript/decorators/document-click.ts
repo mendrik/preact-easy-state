@@ -12,9 +12,11 @@ export const DocumentClick = <T extends QuillComponent>
                     if (!instance.base.contains(ev.target as Node)) {
                         instance[method](ev)
                         document.removeEventListener('mousedown', handler)
+                        document.removeEventListener('touchstart', handler)
                     }
                 }
                 document.addEventListener('mousedown', handler)
+                document.addEventListener('touchstart', handler)
             }
         })
         addToCleanupQueue(instance, () => unobserve(onWhen))
