@@ -12,7 +12,7 @@ export const Key = (key: string) => (proto: QuillComponentClass, protoMethod: st
     })
 }
 
-export const onKey = (component: QuillComponent, target?: EventTarget) => (ev: KeyboardEvent) => {
+export const onKey = (component: QuillComponent<any, any>, target?: EventTarget) => (ev: KeyboardEvent) => {
     const handler = keyHandlers.get(component)
     if (handler && handler[ev.key] && (!target || target === ev.target)) {
         ev.preventDefault()
