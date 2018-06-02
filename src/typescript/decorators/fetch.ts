@@ -1,5 +1,4 @@
-import {ensure} from '../util/ensure'
-import {addToMountQueue} from '../util/construct'
+import {ensure, resolve} from '../util/ensure'
 import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 
 export type Processor = (res: Response) => Promise<any>
@@ -20,10 +19,9 @@ export class ResponseError extends Error {
 
 const handleErrors = (component: QuillComponent, response: Response) => {
     if (!response.ok) {
-        if (failures.has(component)) {
-            failures
-            .get(component)
-            .forEach(handler => {
+        const failures = resolve(failuresReg, component, 'constructor')
+        if (failures) {
+            failures.forEach(handler => {
                 if (handler.filter(response.status)) {
                     handler.callback.call(component, response)
                 }
@@ -69,7 +67,7 @@ export const Put = Fetch('PUT')
 
 export type AcceptStatus = (status: number) => boolean
 
-const failures = new WeakMap<QuillComponent, Array<FailureHandler>>()
+const failuresReg = new WeakMap<QuillComponent, Array<FailureHandler>>()
 
 interface FailureHandler {
     filter: AcceptStatus,
@@ -78,7 +76,5 @@ interface FailureHandler {
 
 export const FetchFailure = (filter: AcceptStatus | number) => (proto: QuillComponentClass, method: string) => {
     const finalFilter: AcceptStatus = Number.isInteger(filter as number) ? ((s: number) => s === filter) : filter as AcceptStatus
-    addToMountQueue(proto, (comp: QuillComponent) => {
-        ensure(failures, comp, [{filter: finalFilter, callback: proto[method]}])
-    })
+    ensure(failuresReg, proto.constructor, [{filter: finalFilter, callback: proto[method]}])
 }

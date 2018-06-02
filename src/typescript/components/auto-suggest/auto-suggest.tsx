@@ -1,4 +1,4 @@
-import {cloneElement, h} from 'preact'
+import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import {cls} from '../../util/utils'
@@ -73,22 +73,17 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
 
     loadAndUpdateItems = async () => {
         this.setState({loading: true})
-        const items = await this.fetchItems()
-        if (items && items.length) {
+        try {
+            const items = await this.fetchItems()
             this.setState({
                 items: items.slice(0, this.props.maxItems),
                 dropDownVisible: true,
                 selected: items[0],
                 loading: false
             })
-        } else {
-            this.setState({loading: false})
+        } catch (e) {
+            this.setState({items: [], loading: false})
         }
-    }
-
-    @FetchFailure(404)
-    notFound = () => {
-        this.setState({items: []})
     }
 
     @DocumentClick((as: AutoSuggest<T>) => as.state.dropDownVisible)
