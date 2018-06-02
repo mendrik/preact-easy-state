@@ -1,9 +1,33 @@
 @import '../../variables.pcss';
 @parcel-import '../../animations.pcss';
+@parcel-import '../../mixins.pcss';
 
 .checkbox-input {
+    display: inline-flex;
+    align-items: center;
+    font-size: .75rem;
+    padding-top: .375em;
 
     input {
-        outline: none;
+        display: none;
+    }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+
+        .label {
+            font-size: .75rem;
+            font-weight: normal;
+        }
+    }
+
+    .tick-box {
+        @mixin input-box;
+        height: 1.5em;
+        width: 1.5em;
+        margin-right: 7px;
+        line-height: 1;
     }
 }

@@ -5,6 +5,7 @@ import {FormProps} from '../forms/types'
 import {cls, optional} from '../../util/utils'
 import {showErrors, ValidationContext} from '../forms/form'
 import './input-checkbox.pcss'
+import {Icon} from '../icon/icon'
 
 export interface InputSwitchProps extends FormProps<boolean> {
 }
@@ -29,8 +30,11 @@ export class InputCheckbox extends QuillComponent<InputSwitchProps, InputSwitchS
                             <input type="checkbox"
                                    value="dummy"
                                    {...optional('checked', 'checked', value)}/>
+                            <div class="tick-box">
+                                <Icon name="tick" big={true}/>
+                            </div>
+                            <span class="label">{children}</span>
                         </label>
-                        {children}
                         {errors}
                     </div>)
             }}</ValidationContext.Consumer>
