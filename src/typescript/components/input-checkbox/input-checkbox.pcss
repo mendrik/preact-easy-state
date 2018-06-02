@@ -10,6 +10,11 @@
 
     input {
         display: none;
+
+        &:checked + .tick-box .icon {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
 
     label {
@@ -30,5 +35,15 @@
         width: 1.5em;
         margin-right: 7px;
         line-height: 1;
+
+        .icon {
+            transition: all .2s ease-out;
+            transform: scale(2);
+            opacity: 0;
+            margin-top: -8px;
+            position: relative;
+            font-size: 15px;
+            margin-left: -7px;
+        }
     }
 }

@@ -26,12 +26,13 @@ export class InputCheckbox extends QuillComponent<InputSwitchProps, InputSwitchS
                 const errors = showErrors(validation, name)
                 return (
                     <div class={cls('control checkbox-input')}>
-                        <label onClick={this.handleChange}>
+                        <label>
                             <input type="checkbox"
+                                   onClick={this.handleChange}
                                    value="dummy"
                                    {...optional('checked', 'checked', value)}/>
                             <div class="tick-box">
-                                <Icon name="tick" big={true}/>
+                                <Icon name="check" big={true}/>
                             </div>
                             <span class="label">{children}</span>
                         </label>
