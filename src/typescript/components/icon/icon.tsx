@@ -6,14 +6,15 @@ export interface IconProps extends JSX.HTMLAttributes {
     left?: boolean
     right?: boolean
     big?: boolean
+    spin?: boolean
 }
 
 export class Icon extends Component<IconProps> {
-    render({name, big = false, left = false, right = false, ...props}) {
+    render({name, big = false, left = false, right = false, spin = false, ...props}) {
         const defaultClasses = cls('icon', {'is-small': !big, 'is-left': left, 'is-right': right})
         return (
             <span {...withClass(props, defaultClasses)}>
-                <i class={`mdi mdi-${name}`}/>
+                <i class={cls(`mdi mdi-${name}`, {'mdi-spin': spin})}/>
             </span>
         )
     }
