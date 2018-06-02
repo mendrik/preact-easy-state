@@ -1,5 +1,10 @@
 ### Project template with UI library
 
+### Prerequisites
+
+- Install parcel globally to run the application `npm i parcel -g`
+- Run `npm run run`
+
 #### To do
 
 - Finish production bundle with rollup
@@ -9,6 +14,6 @@
   - Application header
   - Auto-Suggest search
   - Multi-Select with remote data lists
-  - Form container with validation handler
   - Progress bar
+  - Vertical tabs
 - Tests

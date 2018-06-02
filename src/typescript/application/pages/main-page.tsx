@@ -150,6 +150,7 @@ export class MainPage extends QuillComponent {
                 </DropDown>
                 <InputText iconLeft="account"
                            name="text"
+                           placeHolder="Normal text"
                            changes={(value) => model.text = value}
                            value={model.text}/>
                 <DatePicker changes={field('date')}

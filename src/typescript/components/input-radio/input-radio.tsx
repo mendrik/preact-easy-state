@@ -5,7 +5,6 @@ import {FormProps} from '../forms/types'
 import {cls, optional} from '../../util/utils'
 import {RadioGroupContext} from './radio-group'
 import './input-radio.pcss'
-import {Icon} from '../icon/icon'
 
 export interface InputRadioProps<T> extends FormProps<T> {
 }
