@@ -41,9 +41,7 @@ export class InputRadio<T> extends QuillComponent<InputRadioProps<T>, InputRadio
                                    onClick={this.handleChange}
                                    value="dummy"
                                    {...optional('checked', 'checked', selected.selectedValue === value)}/>
-                            <div class="tick-box">
-                                <Icon name="circle" big={true}/>
-                            </div>
+                            <div class="tick-box"/>
                             <span class="label">{children}</span>
                         </label>
                     </div>)

@@ -9,16 +9,16 @@
     padding-top: .375em;
     animation: wait-for 1ms forwards;
 
-    &.loaded .tick-box .icon {
+    &.loaded .tick-box:after {
         transition: all .2s ease-out;
     }
 
     input {
         display: none;
 
-        &:checked + .tick-box .icon {
+        &:checked + .tick-box:after {
             opacity: 1;
-            transform: translate(-7px, -7px) scale(1);
+            transform: scale(1);
         }
     }
 
@@ -47,14 +47,22 @@
         margin-right: 7px;
         line-height: 1;
         color: #656464;
+        position: relative;
 
-        .icon {
-            transform: translate(-7px, -7px) scale(2);
+        &:after {
+            transform: scale(2);
             will-change: all;
             backface-visibility: hidden;
             opacity: 0;
-            position: relative;
-            font-size: 11px;
+            background-color: #656464;
+            border-radius: 50%;
+            position: absolute;
+            content: '';
+            display: block;
+            width: .7em;
+            height: .7em;
+            top: .3em;
+            left: .325em;
         }
     }
 }
