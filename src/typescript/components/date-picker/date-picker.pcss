@@ -4,10 +4,16 @@
 
 .date-picker {
     max-width: 110px;
+    min-width: 110px;
     user-select: none;
 
+    input::-ms-clear {
+        display: none;
+    }
+
     &.with-time {
-        max-width: 150px;
+        max-width: 160px;
+        min-width: 160px;
 
         .date-time-picker {
             border-right: var(--pixelline);
