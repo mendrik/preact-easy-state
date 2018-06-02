@@ -93,7 +93,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
 
     @DocumentClick((as: AutoSuggest<T>) => as.state.dropDownVisible)
     close() {
-        this.setState({dropDownVisible: false})
+        this.setState({dropDownVisible: false, selected: undefined, loading: false})
     }
 
     nextItem = (dir: number) => {
@@ -103,8 +103,10 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
     }
 
     confirmSelected = () => {
-        this.props.changes(this.state.selected)
-        this.close()
+        if (this.state.dropDownVisible) {
+            this.props.changes(this.state.selected)
+            this.close()
+        }
     }
 
     onKeyDown = (ev: KeyboardEvent) => {
@@ -122,11 +124,15 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
     }
 
     onBlur = () => {
-        const {valueRenderer, value} = this.props
-        if (value) {
-            this.input.value = valueRenderer(value)
+        const {input, props: {valueRenderer, value}} = this
+        if (/^\s*$/.test(input.value)) {
+            this.props.changes(undefined)
         }
-        this.setState({loading: false, dropDownVisible: false})
+        else if (value) {
+            input.value = valueRenderer(value)
+        }
+        input.blur()
+        this.close()
     }
 
     itemClicked = (ev: MouseEvent, item: T) => {
