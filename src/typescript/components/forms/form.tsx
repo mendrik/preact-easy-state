@@ -3,8 +3,8 @@ import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
 import {validate, ValidationError} from 'class-validator'
 import {Context, createContext} from 'preact-context'
-import './form.pcss'
 import {observe, unobserve} from '@nx-js/observer-util'
+import './form.pcss'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T

@@ -24,7 +24,7 @@ export class RadioGroup<T> extends QuillComponent<HtmlFormProps<T>> {
 
     render({children, selectedValue, vertical, ...props}) {
         return (
-            <RadioGroupContext.Provider value={selectedValue}>
+            <RadioGroupContext.Provider value={{selectedValue}}>
                 <div className={cls('radio-group', {vertical})}>
                     {children}
                 </div>

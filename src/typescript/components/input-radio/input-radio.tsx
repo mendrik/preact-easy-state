@@ -32,7 +32,7 @@ export class InputRadio<T> extends QuillComponent<InputRadioProps<T>, InputRadio
                             <input type="radio"
                                    onClick={this.handleChange}
                                    value="dummy"
-                                   {...optional('checked', 'checked', selected === value)}/>
+                                   {...optional('checked', 'checked', selected.selectedValue === value)}/>
                             <div class="tick-box">
                                 <Icon name="circle" big={true}/>
                             </div>

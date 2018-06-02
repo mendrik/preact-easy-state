@@ -4,9 +4,9 @@ import {CustomNode} from './custom-node'
 import {Contains, IsInt, Max, Min} from 'class-validator'
 
 export enum RadioValue {
-    VALUE1 = 'a',
-    VALUE2 = 'b',
-    VALUE3 = 'c'
+    VALUE1,
+    VALUE2,
+    VALUE3
 }
 
 class Data {
