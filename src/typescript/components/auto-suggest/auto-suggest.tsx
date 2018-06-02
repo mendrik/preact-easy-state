@@ -153,7 +153,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                     onInput={this.onInput}/>
                 {loading ?
                     <Icon name="loading" spin={true} right={true} class="dropdown-trigger"/>:
-                    <Icon name="chevron-down" right={true} class="dropdown-trigger"/>
+                    <Icon name="magnify" right={true} class="dropdown-trigger"/>
                 }
                 {dropDownVisible ? (
                     <div class="dropdown-menu"
