@@ -23,12 +23,20 @@ export class InputRadio<T> extends QuillComponent<InputRadioProps<T>, InputRadio
 
     loaded = () => this.setState({loaded: true})
 
+    onKeyDown = (ev: KeyboardEvent) => {
+        const {key} = ev
+        if (' ' === key) {
+            ev.preventDefault()
+            this.props.changes(this.props.value)
+        }
+    }
+
     render({children, changes, value, ...props}, {loaded}) {
         return (
             <RadioGroupContext.Consumer>{selected => {
                 return (
                     <div class={cls('control radio-input', {loaded})} onAnimationEnd={this.loaded}>
-                        <label>
+                        <label tabIndex={0} onKeyDown={this.onKeyDown}>
                             <input type="radio"
                                    onClick={this.handleChange}
                                    value="dummy"
