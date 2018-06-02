@@ -175,7 +175,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                                 <div class="date-time-picker">
                                     {this.header()}
                                     <SnapScroll onPanelChanged={this.monthChanged}
-                                                selector=".months-panel > li.month:nth-child(2)"
+                                                selector=".scroll-panel > li.month:nth-child(2)"
                                                 ref={i => this.snapScroll = i}
                                                 model={this.model}>
                                         <Month month={this.previousMonth()}

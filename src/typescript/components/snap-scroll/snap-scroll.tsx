@@ -5,6 +5,7 @@ import './snap-scroll.pcss'
 import {CustomEvent} from '../../decorators/custom-event'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
+import {NO_DOM_CHANGE} from '../../decorators/dom-changed'
 
 export interface SnapScrollModel {
     panel: number
@@ -94,7 +95,7 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
         }
         return (
             <div class={cls('snap-scroll', {animate})}>
-                <ul class="months-panel" style={style}
+                <ul class={cls('scroll-panel', NO_DOM_CHANGE)} style={style}
                     ref={u => this.panel = u}
                     onTransitionEnd={this.transitionEnd}>
                     {children}
