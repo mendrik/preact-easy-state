@@ -160,7 +160,8 @@ export class MainPage extends QuillComponent {
                             changes={field('datetime')}
                             format="dd.MM.yyyy HH:mm"
                             value={model.datetime}/>
-                <InputCheckbox name="boolean"
+                <InputCheckbox name="bool"
+                               value={model.bool}
                                changes={(v) => model.bool = v}/>
             </FieldGroup>
         </Form>

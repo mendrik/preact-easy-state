@@ -23,5 +23,4 @@ class Data {
 }
 
 const model = observable(new Data())
-observe(() => console.log(model.bool))
 export {model, Data}
