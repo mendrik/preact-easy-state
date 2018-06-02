@@ -27,6 +27,10 @@
         overflow-y: scroll;
         overflow-x: auto;
 
+        &.hidden {
+            visibility: hidden;
+        }
+
         @mixin hover-supported {
             overflow-x: hidden;
         }

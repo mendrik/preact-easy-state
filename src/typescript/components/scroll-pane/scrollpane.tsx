@@ -17,8 +17,12 @@ export interface ScrollPaneProps extends JSX.HTMLAttributes {
     scrollToSelector?: string // todo scroll to this on mount
 }
 
+export interface ScrollPaneState {
+    preScroll: boolean
+}
+
 @View
-export class ScrollPane extends QuillComponent<ScrollPaneProps> {
+export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState> {
 
     model: Model
     inner: HTMLDivElement
@@ -26,6 +30,9 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
     constructor(props) {
         super(props)
         this.model = observable(new Model())
+        this.state = {
+            preScroll: !!props.scrollToSelector
+        }
     }
 
     loaded = () => {
@@ -47,6 +54,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
             }
             const top = element.offsetTop + element.clientHeight / 2
             base.firstElementChild.scrollTop = top - base.getBoundingClientRect().height / 2
+            this.setState({preScroll: false})
         }
     }
 
@@ -77,14 +85,14 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps> {
         this.base.parentElement.dispatchEvent(new CustomEvent('scrollIn', {bubbles: true, scoped: true}))
     }
 
-    render({children, trackWidth, ...props}) {
+    render({children, trackWidth, ...props}, {preScroll}) {
         props.class = cls('scrollpane', props.class, {hover: this.model.hover})
         props.onMouseEnter = this.mouseEnter
         props.onMouseLeave = this.mouseLeave
         props.onAnimationEnd = this.loaded
         return (
             <div {...props}>
-                <div class="inner-scroll-pane"
+                <div class={cls('inner-scroll-pane', {hidden: preScroll})}
                      ref={r => this.inner = r}
                      onScroll={this.calculateThumb}>{children}</div>
                 <div class="track"><div class="thumb"/></div>
