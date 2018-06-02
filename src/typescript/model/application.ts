@@ -1,10 +1,10 @@
-import {observable, observe} from '@nx-js/observer-util'
+import {observable} from '@nx-js/observer-util'
 import {Cell} from '../components/grid/grid'
 import {CustomNode} from './custom-node'
 import {Contains, IsInt, Max, Min} from 'class-validator'
 
 class Data {
-    @Contains('hello')
+    @Contains('Hello')
     text = 'Hello Andreas'
 
     @IsInt()
