@@ -20,7 +20,6 @@ export interface SnapScrollProps extends JSX.HTMLAttributes {
 
 export interface SnapScrollState {
     animate: boolean
-    diffX: number
 }
 
 @View
@@ -61,16 +60,16 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
                         (absDiffX > this.base.getBoundingClientRect().width / 2)) {
                         model.panel += diffX < 0 ? 1 : -1
                     }
-                    this.setState({animate: true, diffX: 0})
+                    this.setState({animate: true})
                 } else {
-                    this.setState({animate: false, diffX: 0})
+                    this.setState({animate: false})
                 }
         }
     }
 
     @CustomEvent('tap')
     tapEnd() {
-        this.setState({animate: false, diffX: 0})
+        this.setState({animate: false})
     }
 
     transitionEnd = () => {
@@ -79,12 +78,12 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
     }
 
     next = () => {
-        this.setState({animate: true, diffX: 0})
+        this.setState({animate: true})
         this.props.model.panel += 1
     }
 
     prev = () => {
-        this.setState({animate: true, diffX: 0})
+        this.setState({animate: true})
         this.props.model.panel -= 1
     }
 
