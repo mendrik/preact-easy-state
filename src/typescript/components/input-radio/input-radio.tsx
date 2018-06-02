@@ -7,21 +7,27 @@ import {RadioGroupContext} from './radio-group'
 import './input-radio.pcss'
 import {Icon} from '../icon/icon'
 
-export interface InputSwitchProps<T> extends FormProps<T> {
+export interface InputRadioProps<T> extends FormProps<T> {
+}
+
+export interface InputRadioState {
+    loaded?: boolean
 }
 
 @View
-export class InputRadio<T> extends QuillComponent<InputSwitchProps<T>> {
+export class InputRadio<T> extends QuillComponent<InputRadioProps<T>, InputRadioState> {
 
     handleChange = () => {
         this.props.changes(this.props.value)
     }
 
-    render({children, changes, value, ...props}) {
+    loaded = () => this.setState({loaded: true})
+
+    render({children, changes, value, ...props}, {loaded}) {
         return (
             <RadioGroupContext.Consumer>{selected => {
                 return (
-                    <div class={cls('control radio-input')}>
+                    <div class={cls('control radio-input', {loaded})} onAnimationEnd={this.loaded}>
                         <label>
                             <input type="radio"
                                    onClick={this.handleChange}

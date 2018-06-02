@@ -7,22 +7,28 @@ import {showErrors, ValidationContext} from '../forms/form'
 import './input-checkbox.pcss'
 import {Icon} from '../icon/icon'
 
-export interface InputSwitchProps extends FormProps<boolean> {
+export interface InputCheckboxProps extends FormProps<boolean> {
+}
+
+export interface InputCheckboxState {
+    loaded?: boolean
 }
 
 @View
-export class InputCheckbox extends QuillComponent<InputSwitchProps> {
+export class InputCheckbox extends QuillComponent<InputCheckboxProps, InputCheckboxState> {
 
     handleChange = (ev) => {
         this.props.changes(ev.target.checked)
     }
 
-    render({children, changes, value, ...props}) {
+    loaded = () => this.setState({loaded: true})
+
+    render({children, changes, value, ...props}, {loaded}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
                 return (
-                    <div class={cls('control checkbox-input')}>
+                    <div class={cls('control checkbox-input', {loaded})} onAnimationEnd={this.loaded}>
                         <label>
                             <input type="checkbox"
                                    onClick={this.handleChange}
