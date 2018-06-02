@@ -1,5 +1,11 @@
 @parcel-import '../../mixins.pcss';
 
+@-moz-document url-prefix() {
+    .scrollpane.hover > .track > .thumb {
+        opacity: 1;
+    }
+}
+
 .scrollpane {
     overflow: hidden;
     position: relative;
