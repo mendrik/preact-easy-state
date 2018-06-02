@@ -125,8 +125,10 @@ export class MainPage extends QuillComponent {
     testForm = () => (
         <Form model={model}>
             <FieldGroup label="Search">
-                <AutoSuggest changes={() => 0}
+                <AutoSuggest changes={(v) => model.autoSuggest = v}
                              dataSourceUrl="https://restcountries.eu/rest/v2/name/"
+                             valueRenderer={(item: any) => item ? item.name : ''}
+                             value={model.autoSuggest}
                              renderer={this.renderer}/>
             </FieldGroup>
             <FieldGroup label="Test">

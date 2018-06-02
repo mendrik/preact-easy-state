@@ -1,20 +1,20 @@
-import {h} from 'preact'
+import {cloneElement, h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
-import {observable} from '@nx-js/observer-util'
 import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
-import './auto-suggest.pcss'
 import {DocumentClick} from '../../decorators/document-click'
-import {fetchJson, ExtendedRequest} from '../../decorators/fetch'
+import {ExtendedRequest, fetchJson} from '../../decorators/fetch'
 import {Debounce} from '../../decorators/debounce'
+import './auto-suggest.pcss'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string
     items?: T[]
     req?: ExtendedRequest
     renderer: (item: T) => JSX.Element
+    valueRenderer: (item: T) => string
     minimumCharacters?: number
 }
 
@@ -22,6 +22,7 @@ export interface AutoSuggestState<T> {
     value: string
     dropDownVisible: boolean
     items: T[]
+    selected: T
 }
 
 @View
@@ -37,13 +38,15 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
     }
 
     input: HTMLInputElement
+    dropDown: HTMLDivElement
 
     constructor(props) {
         super(props)
         this.state = {
             dropDownVisible: false,
             value: props.value,
-            items: []
+            items: [],
+            selected: undefined
         }
     }
 
@@ -54,7 +57,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
     }
 
     @Debounce(200)
-    onInput = (ev) => {
+    onInput = () => {
         this.setState({value: this.input.value})
         if (this.input.value.length >= this.props.minimumCharacters) {
             this.loadAndUpdateItems()
@@ -65,13 +68,12 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
 
     loadAndUpdateItems = async () => {
         const items = await this.fetchItems()
-        console.log(items)
         if (items.length) {
-            this.setState({items})
+            this.setState({items, dropDownVisible: true})
         }
     }
 
-    openDropDown = (ev: Event) => {
+    openDropDown = () => {
         this.setState({dropDownVisible: true})
     }
 
@@ -80,8 +82,27 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         this.setState({dropDownVisible: false})
     }
 
-    render({children, dataSourceUrl, placeHolder, renderer, changes, ...props},
-           {value, dropDownVisible, items}) {
+    onKeyDown = (ev: KeyboardEvent) => {
+        const {key} = ev
+        if (/ArrowUp|ArrowDown/.test(key)) {
+            ev.preventDefault()
+        }
+        switch (key) {
+            case 'ArrowUp': return ''
+            case 'ArrowDown': return ''
+            case 'Enter': return ''
+            case 'Escape': return this.close()
+            default: return
+        }
+    }
+
+    itemClicked = (item: T) => {
+        this.props.changes(item)
+        this.close()
+    }
+
+    render({children, dataSourceUrl, placeHolder, renderer, changes, valueRenderer, ...props},
+           {value, dropDownVisible, items, selected}) {
         return (
             <div class={cls('control has-icons-right auto-suggest dropdown', {
                 'is-active': dropDownVisible
@@ -92,16 +113,25 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                     class="input is-small"
                     name={name}
                     placeholder={placeHolder}
+                    onKeyDown={this.onKeyDown}
                     onInput={this.onInput}
-                    value={value}/>
+                    value={valueRenderer(value)}/>
                 <Icon name="chevron-down" right={true} class="dropdown-trigger" onClick={this.openDropDown}/>
                 {dropDownVisible ? (
                     <div class="dropdown-menu"
                          id="dropdown-menu"
+                         ref={d => this.dropDown = d}
                          tabIndex={-1}
                          role="menu">
                         <div class="dropdown-content">
-                            {items ? <ul>{items.map(renderer)}</ul> : <span class="loading">Loading...</span>}
+                            <ul>{
+                                items.map(item =>
+                                    cloneElement(renderer(item), {
+                                        onClick: () => this.itemClicked(item),
+                                        class: cls({selected: selected === item})
+                                    })
+                                )
+                            }</ul>
                         </div>
                     </div>): null}
             </div>

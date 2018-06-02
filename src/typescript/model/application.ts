@@ -27,6 +27,7 @@ class Data {
     data: Cell[][] = [[]]
     modal: boolean
     progress = false
+    autoSuggest = undefined
 }
 
 const model = observable(new Data())
