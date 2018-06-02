@@ -8,6 +8,7 @@ import {DocumentClick} from '../../decorators/document-click'
 import {ExtendedRequest, fetchJson} from '../../decorators/fetch'
 import {Debounce} from '../../decorators/debounce'
 import './auto-suggest.pcss'
+import {Key, onKey} from '../../decorators/on-key'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string
@@ -91,12 +92,15 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         this.setState({dropDownVisible: false, selected: undefined, loading: false})
     }
 
-    nextItem = (dir: number) => {
+    @Key('ArrowUp')
+    @Key('ArrowDown')
+    nextItem = (key: string) => {
         const {items, selected} = this.state
-        const index = (items.findIndex(i => i === selected) + dir + items.length) % items.length
+        const index = (items.findIndex(i => i === selected) + (/ArrowUp/i.test(key) ? -1 : 1) + items.length) % items.length
         this.setState({selected: items[index]})
     }
 
+    @Key('Enter')
     confirmSelected = () => {
         if (this.state.dropDownVisible) {
             this.props.changes(this.state.selected)
@@ -104,20 +108,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         }
     }
 
-    onKeyDown = (ev: KeyboardEvent) => {
-        const {key} = ev
-        if (/ArrowUp|ArrowDown/.test(key)) {
-            ev.preventDefault()
-        }
-        switch (key) {
-            case 'ArrowUp': return this.nextItem(-1)
-            case 'ArrowDown': return this.nextItem(1)
-            case 'Enter': return this.confirmSelected()
-            case 'Escape': return this.onBlur()
-            default: return
-        }
-    }
-
+    @Key('Escape')
     onBlur = () => {
         const {input, props: {valueRenderer, value}} = this
         if (/^\s*$/.test(input.value)) {
@@ -147,7 +138,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                     class="input is-small"
                     name={name}
                     placeholder={placeHolder}
-                    onKeyDown={this.onKeyDown}
+                    onKeyDown={onKey(this)}
                     onBlur={this.onBlur}
                     onFocus={this.onInput}
                     onInput={this.onInput}/>

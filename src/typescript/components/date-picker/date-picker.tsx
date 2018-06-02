@@ -22,6 +22,7 @@ import setHours from 'date-fns/esm/setHours'
 import setMinutes from 'date-fns/esm/setMinutes'
 import {InView} from '../in-view/in-view'
 import {Icon} from '../icon/icon'
+import {Key, onKey} from '../../decorators/on-key'
 
 export interface DatePickerProps extends FormProps<Date> {
     error?: string
@@ -102,21 +103,29 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
     previousMonth = () => subMonths(this.model.currentMonth, 1)
     nextMonth = () => addMonths(this.model.currentMonth, 1)
 
-    keyDown = (ev: KeyboardEvent) => {
-        const newDate = (() => {
-            switch (ev.key) {
-                case 'ArrowUp': return subYears(this.model.currentMonth, 1)
-                case 'ArrowDown': return addYears(this.model.currentMonth, 1)
-                case 'ArrowLeft': return subMonths(this.model.currentMonth, 1)
-                case 'ArrowRight': return addMonths(this.model.currentMonth, 1)
-                case 'Escape': return this.closeDropDown()
-                default: return
-            }
-        })()
-        if (newDate && ev.target === this.dropDown) {
-            ev.preventDefault()
-            this.model.currentMonth = newDate
-        }
+    @Key('ArrowUp')
+    arrowUp() {
+        this.model.currentMonth = subYears(this.model.currentMonth, 1)
+    }
+
+    @Key('ArrowDown')
+    arrowDown() {
+        this.model.currentMonth = addYears(this.model.currentMonth, 1)
+    }
+
+    @Key('ArrowLeft')
+    arrowLeft() {
+        this.model.currentMonth = subMonths(this.model.currentMonth, 1)
+    }
+
+    @Key('ArrowRight')
+    arrowRight() {
+        this.model.currentMonth = addMonths(this.model.currentMonth, 1)
+    }
+
+    @Key('Escape')
+    escape() {
+        return this.closeDropDown()
     }
 
     dateChanged = (ev) => {
@@ -158,7 +167,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                          id="dropdown-menu"
                          tabIndex={-1}
                          ref={r => this.dropDown = r}
-                         onKeyDown={this.keyDown}
+                         onKeyDown={onKey(this, this.dropDown)}
                          role="menu">
                         <InView class="dropdown-content">
                             <div class="selector-elements">
