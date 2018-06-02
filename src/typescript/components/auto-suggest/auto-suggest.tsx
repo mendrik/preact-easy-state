@@ -19,7 +19,6 @@ export interface AutoSuggestProps<T> extends FormProps<T> {
 }
 
 export interface AutoSuggestState<T> {
-    value: string
     dropDownVisible: boolean
     items: T[]
     selected: T
@@ -44,32 +43,34 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         super(props)
         this.state = {
             dropDownVisible: false,
-            value: props.value,
             items: [],
             selected: undefined
         }
     }
 
+    componentWillReceiveProps(nextProps: Readonly<AutoSuggestProps<T>>, nextContext: any): void {
+        this.input.value = nextProps.valueRenderer(nextProps.value)
+    }
+
     fetchItems = async (): Promise<T[]> => {
         const {items, dataSourceUrl, req} = this.props
         return items ? Promise.resolve(items) :
-            fetchJson(dataSourceUrl + this.state.value, req) as Promise<T[]>
+            fetchJson(dataSourceUrl + this.input.value, req) as Promise<T[]>
     }
 
     @Debounce(200)
     onInput = () => {
-        this.setState({value: this.input.value})
         if (this.input.value.length >= this.props.minimumCharacters) {
             this.loadAndUpdateItems()
         } else {
-            this.setState({items: []})
+            this.setState({items: [], dropDownVisible: false})
         }
     }
 
     loadAndUpdateItems = async () => {
         const items = await this.fetchItems()
-        if (items.length) {
-            this.setState({items, dropDownVisible: true})
+        if (items && items.length) {
+            this.setState({items, dropDownVisible: true, selected: items[0]})
         }
     }
 
@@ -114,8 +115,7 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                     name={name}
                     placeholder={placeHolder}
                     onKeyDown={this.onKeyDown}
-                    onInput={this.onInput}
-                    value={valueRenderer(value)}/>
+                    onInput={this.onInput}/>
                 <Icon name="chevron-down" right={true} class="dropdown-trigger" onClick={this.openDropDown}/>
                 {dropDownVisible ? (
                     <div class="dropdown-menu"
@@ -126,10 +126,10 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                         <div class="dropdown-content">
                             <ul>{
                                 items.map(item =>
-                                    cloneElement(renderer(item), {
-                                        onClick: () => this.itemClicked(item),
-                                        class: cls({selected: selected === item})
-                                    })
+                                    <li class={cls({selected: selected === item})}
+                                        onClick={() => this.itemClicked(item)}>
+                                        {renderer(item)}
+                                    </li>
                                 )
                             }</ul>
                         </div>

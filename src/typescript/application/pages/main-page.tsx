@@ -120,7 +120,7 @@ export class MainPage extends QuillComponent {
         </Modal>
     ) : null
 
-    renderer = (item: any) => <li>{item.name}</li>
+    renderer = (item: any) => <span>{item.name}</span>
 
     testForm = () => (
         <Form model={model}>
