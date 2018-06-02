@@ -35,7 +35,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
         }
     }
 
-    loaded = () => {
+    componentDidMount() {
         const base = this.base
         const {trackWidth} = this.props
         base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
@@ -89,7 +89,6 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
         props.class = cls('scrollpane', props.class, {hover: this.model.hover})
         props.onMouseEnter = this.mouseEnter
         props.onMouseLeave = this.mouseLeave
-        props.onAnimationEnd = this.loaded
         return (
             <div {...props}>
                 <div class={cls('inner-scroll-pane', {hidden: preScroll})}
