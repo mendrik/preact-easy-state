@@ -27,6 +27,11 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
+        outline: none;
+
+        &:focus .tick-box {
+            @mixin default-focus;
+        }
 
         .label {
             font-size: .75rem;
