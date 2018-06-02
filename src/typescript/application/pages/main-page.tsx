@@ -23,6 +23,7 @@ import {Form} from '../../components/forms/form'
 import {Modal} from '../../components/modal/modal'
 import {ProgressBar} from '../../components/progress-bar/progress-bar'
 import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
+import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -127,7 +128,7 @@ export class MainPage extends QuillComponent {
                              renderer={this.renderer}/>
             </FieldGroup>
             <FieldGroup label="Test">
-                <InputSwitch changes={(bool) => model.bool = bool}
+                <InputSwitch changes={(b) => model.bool = b}
                              value={model.bool}/>
                 <InputNumber changes={(value) => model.integer = value}
                              name="integer"
@@ -159,6 +160,8 @@ export class MainPage extends QuillComponent {
                             changes={field('datetime')}
                             format="dd.MM.yyyy HH:mm"
                             value={model.datetime}/>
+                <InputCheckbox name="boolean"
+                               changes={(v) => model.bool = v}/>
             </FieldGroup>
         </Form>
     )

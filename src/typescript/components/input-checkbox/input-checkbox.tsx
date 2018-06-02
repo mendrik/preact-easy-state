@@ -2,8 +2,9 @@ import {h} from 'preact'
 import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
-import {cls, optional} from '../../util/utils'
+import {cls} from '../../util/utils'
 import './input-checkbox.pcss'
+import {showErrors, ValidationContext} from '../forms/form'
 
 export interface InputSwitchProps extends FormProps<boolean> {
 }
@@ -16,14 +17,19 @@ export class InputCheckbox extends QuillComponent<InputSwitchProps, InputSwitchS
 
     render({children, changes, value, ...props}) {
         return (
-            <div class={cls('control checkbox-input')}>
-                <label class="switch" tabIndex={0}>
-                    <input type="checkbox"
-                           {...optional('onClick', () => changes(!value), changes)}
-                           checked={value}/>
-                </label>
-                {children}
-            </div>
+            <ValidationContext.Consumer>{validation => {
+                const errors = showErrors(validation, name)
+                return (
+                    <div class={cls('control checkbox-input')}>
+                        <label tabIndex={0}>
+                            <input type="checkbox"
+                                   onClick={() => changes(!value)}
+                                   checked={value}/>
+                        </label>
+                        {children}
+                        {errors}
+                    </div>)
+            }}</ValidationContext.Consumer>
         )
     }
 

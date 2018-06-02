@@ -1,11 +1,11 @@
-import {observable} from '@nx-js/observer-util'
+import {observable, observe} from '@nx-js/observer-util'
 import {Cell} from '../components/grid/grid'
 import {CustomNode} from './custom-node'
 import {Contains, IsInt, Max, Min} from 'class-validator'
 
 class Data {
     @Contains('hello')
-    text = 'My little demo text'
+    text = 'Hello Andreas'
 
     @IsInt()
     @Min(0)
@@ -23,4 +23,5 @@ class Data {
 }
 
 const model = observable(new Data())
+observe(() => console.log(model.bool))
 export {model, Data}
