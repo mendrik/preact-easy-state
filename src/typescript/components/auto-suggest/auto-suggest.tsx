@@ -5,7 +5,7 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {DocumentClick} from '../../decorators/document-click'
-import {ExtendedRequest, fetchJson} from '../../decorators/fetch'
+import {ExtendedRequest, FetchFailure, fetchJson} from '../../decorators/fetch'
 import {Debounce} from '../../decorators/debounce'
 import './auto-suggest.pcss'
 
@@ -86,8 +86,9 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         }
     }
 
-    openDropDown = () => {
-        this.setState({dropDownVisible: true})
+    @FetchFailure(404)
+    notFound = () => {
+        this.setState({items: []})
     }
 
     @DocumentClick((as: AutoSuggest<T>) => as.state.dropDownVisible)
@@ -125,12 +126,10 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
         if (value) {
             this.input.value = valueRenderer(value)
         }
-        this.setState({loading: false})
-        this.close()
+        this.setState({loading: false, dropDownVisible: false})
     }
 
     itemClicked = (ev: MouseEvent, item: T) => {
-        console.log(item)
         this.props.changes(item)
         this.onBlur()
     }
@@ -159,13 +158,12 @@ export class AutoSuggest<T> extends QuillComponent<AutoSuggestProps<T>, AutoSugg
                     <div class="dropdown-menu"
                          id="dropdown-menu"
                          ref={d => this.dropDown = d}
-                         tabIndex={-1}
                          role="menu">
                         <div class="dropdown-content">
                             <ul>{
                                 items.map(item =>
                                     <li class={cls({selected: selected === item})}
-                                        onClick={e => this.itemClicked(e, item)}>
+                                        onMouseDown={e => this.itemClicked(e, item)}>
                                         {renderer(item)}
                                     </li>
                                 )
