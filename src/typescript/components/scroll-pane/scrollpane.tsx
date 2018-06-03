@@ -40,7 +40,9 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
         const {trackWidth} = this.props
         base.style.setProperty('--scrollbar-width', `${scrollBarWidth()}px`)
         base.style.setProperty('--track-width', `${trackWidth}px`)
-        this.calculateThumb()
+        setTimeout(() => {
+            this.calculateThumb()
+        }, 200)
         this.scrollToSelector()
     }
 

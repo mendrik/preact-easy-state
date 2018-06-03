@@ -13,7 +13,9 @@ export const DomChanged = (getElement?: (el: Element) => Element, condition?: ()
                 }
                 instance[method](instance)
             })
-            observer.observe(el, {childList: true, subtree: true, attributes: true})
+            setTimeout(() => {
+                observer.observe(el, {childList: true, subtree: true, attributes: true})
+            }, 200)
             addToCleanupQueue(instance, () => observer.disconnect())
         })
     }
