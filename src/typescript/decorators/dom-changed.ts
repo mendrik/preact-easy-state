@@ -1,5 +1,6 @@
 import {addToCleanupQueue, addToMountQueue} from '../util/construct'
 import {QuillComponent, QuillComponentClass} from '../util/quill-component'
+import {debounce} from 'throttle-debounce'
 
 export const NO_DOM_CHANGE = 'no-dom-change'
 
@@ -7,15 +8,13 @@ export const DomChanged = (getElement?: (el: Element) => Element, condition?: ()
     if (!condition || condition()) {
         addToMountQueue(proto, (instance: QuillComponent, node: HTMLElement) => {
             const el = getElement ? getElement(node) : node
-            const observer = new MutationObserver((mr: MutationRecord[]) => {
+            const observer = new MutationObserver(debounce(200, (mr: MutationRecord[]) => {
                 if (mr.length === 1 && mr[0].target['classList'] && mr[0].target['classList'].contains(NO_DOM_CHANGE)) {
                     return
                 }
                 instance[method](instance)
-            })
-            setTimeout(() => {
-                observer.observe(el, {childList: true, subtree: true, attributes: true})
-            }, 200)
+            }))
+            observer.observe(el, {childList: true, subtree: true, attributes: true})
             addToCleanupQueue(instance, () => observer.disconnect())
         })
     }
