@@ -8,7 +8,7 @@
     "types": "lib/quill.d.ts",
     "scripts": {
         "run": "parcel src/html/index.html --no-hmr",
-        "github-docs": "cross-env NODE_ENV=production parcel build src/html/index.html -d docs",
+        "github-docs": "cross-env NODE_ENV=production parcel build src/html/index.html -d docs --public-url=/preact-easy-state/",
         "clean": "rimraf lib cjs",
         "rollup": "cross-env NODE_ENV=production rollup -c",
         "bundle": "npm-run-all rollup",
