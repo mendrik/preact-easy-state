@@ -6,7 +6,9 @@
 
 .grid {
     display: grid;
-    font-size: .85em;
+    align-items: center;
+    font-size: .75rem;
+    min-width: 100%;
 
     [role='cell'],
     [role='cell-even'] {
@@ -36,5 +38,10 @@
         border-bottom: var(--hairline);
         top: 0;
         padding: 2px;
+
+        > span {
+            min-height: 1.5em;
+            display: block;
+        }
     }
 }

@@ -73,7 +73,7 @@ export class MainPage extends QuillComponent {
 
     cellEditor = (cell: Cell) => <input
         type="text"
-        autofocus={true}
+        value={cell.toString()}
         class="input is-small"
         onBlur={this.stopCellEditing}
         onChange={this.stopCellEditing}/> // use proper cell editor

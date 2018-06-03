@@ -36,9 +36,13 @@ export class Grid extends QuillComponent<GridProps, GridState> {
         this.setState({edit: undefined})
     }
 
+    editNext = () => {
+
+    }
+
     renderCell = (role: string, cell: Cell) => {
         const {editor} = this.props
-        return <div {...optional('onClick', () => this.editCell(cell), !!editor)} role={role}>{cell.toString()}</div>
+        return <div {...optional('onClick', () => this.editCell(cell), !!editor)} role={role}><span>{cell.toString()}</span></div>
     }
 
     renderRow = (role: string, row: Cell[]) => row.map(
