@@ -8,7 +8,7 @@ import {initTranslations} from './util/localization'
 
 (async () => {
     const [locales] = await Promise.all([
-        fetchJson('./locales.json'),
+        fetchJson('locales.json'),
         domReady()
     ])
     initTranslations(locales)
