@@ -3,7 +3,7 @@ import {QuillComponent} from '../../util/quill-component'
 import {observable} from '@nx-js/observer-util'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import './tabs.pcss'
-import {cls, withClass} from '../../util/utils'
+import {withClass} from '../../util/utils'
 import {View} from '../../decorators/view'
 
 @LocalStorage
