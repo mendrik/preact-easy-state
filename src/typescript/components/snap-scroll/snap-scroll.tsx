@@ -49,7 +49,9 @@ export class SnapScroll extends QuillComponent<SnapScrollProps, SnapScrollState>
                 this.setState({animate: false})
                 break
             case Phase.move:
-                this.panel.style.transform = `translateX(${-(100/children.length) * model.panel}%) translate3d(${diffX}px, 0, 0)`
+                if (this.panel) {
+                    this.panel.style.transform = `translateX(${-(100/children.length) * model.panel}%) translate3d(${diffX}px, 0, 0)`
+                }
                 break
             case Phase.end:
                 if (!this.base) { // component was unmounted

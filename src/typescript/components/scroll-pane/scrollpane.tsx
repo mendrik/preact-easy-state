@@ -66,6 +66,9 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
     calculateThumb = () => {
         const el = this.base
         const inner = this.inner
+        if (!inner) {
+            return
+        }
         const ratio = inner.clientHeight / inner.scrollHeight
         const thumbTop = inner.scrollTop * ratio
         let thumbHeight = ratio * 100
