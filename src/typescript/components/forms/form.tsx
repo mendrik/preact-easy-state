@@ -54,11 +54,11 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
 
     render({children, validate, model, ...props}, {errors}) {
         return (
-            <div class="form-group">
-                <ValidationContext.Provider value={{errors}}>
-                    {children}
-                </ValidationContext.Provider>
-            </div>
+            <ValidationContext.Provider value={{errors}}>
+                <div class="form-group">
+                        {children}
+                </div>
+            </ValidationContext.Provider>
         )
     }
 }

@@ -92,7 +92,9 @@ export class MainPage extends QuillComponent {
                             {this.testForm()}
                             <Tabs class="is-boxed is-small" id="demo-tabs">
                                 <Tab text="Tab A" icon="car-side">
-                                    Content A
+                                    <Grid cells={model.data}
+                                          editor={this.cellEditor}
+                                          ref={g => this.grid = g}/>
                                 </Tab>
                                 <Tab text="Tab B" icon="car-estate">
                                     Content B
@@ -101,9 +103,6 @@ export class MainPage extends QuillComponent {
                                     Content C
                                 </Tab>
                             </Tabs>
-                            <Grid cells={model.data}
-                                  editor={this.cellEditor}
-                                  ref={g => this.grid = g}/>
                             <div class="buttons">
                                 <WithTooltip tooltip={tooltip}>
                                     <a class="button is-primary">Primary</a>
