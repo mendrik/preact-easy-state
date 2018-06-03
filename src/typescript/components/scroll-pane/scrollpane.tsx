@@ -7,6 +7,7 @@ import {cls, scrollBarWidth} from '../../util/utils'
 import {observable} from '@nx-js/observer-util'
 import {CustomEvent as OnCustomEvent} from '../../decorators/custom-event'
 import {View} from '../../decorators/view'
+import {Debounce} from '../../decorators/debounce'
 
 export class Model {
     hover = false
@@ -62,6 +63,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
 
     @DomChanged((el) => el.firstElementChild, () => matchMedia('not all and (pointer:coarse)').matches)
     @GlobalEvent('resize', window, () => matchMedia('not all and (pointer:coarse)').matches)
+    @Debounce(300)
     calculateThumb = () => {
         const el = this.base
         const inner = this.inner
