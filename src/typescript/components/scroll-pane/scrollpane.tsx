@@ -63,7 +63,6 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
 
     @DomChanged((el) => el.firstElementChild, () => matchMedia('(hover)').matches)
     @GlobalEvent('resize', window, () => matchMedia('(hover)').matches)
-    @Debounce(300)
     calculateThumb = () => {
         const el = this.base
         const inner = this.inner
