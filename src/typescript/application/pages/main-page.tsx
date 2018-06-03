@@ -52,10 +52,10 @@ export class MainPage extends QuillComponent {
 
     grid: Grid
 
-    @Get('/tree.json')
+    @Get('./tree.json')
     fetchTree: () => Promise<any>
 
-    @Get('/data.csv', {processor: (res: Response) => res.text()})
+    @Get('./data.csv', {processor: (res: Response) => res.text()})
     fetchData: () => Promise<any>
 
     async componentDidMount() {
