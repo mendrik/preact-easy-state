@@ -7,7 +7,7 @@ import {Tree} from '../../components/tree/tree'
 import {Get} from '../../decorators/fetch'
 import {Tabs} from '../../components/tabs/tabs'
 import {Tab} from '../../components/tabs/tab'
-import {Grid} from '../../components/grid/grid'
+import {Cell, Grid} from '../../components/grid/grid'
 import {NodeDrop, TreeNodeModel} from '../../components/tree/tree-node'
 import {CustomEvent} from '../../decorators/custom-event'
 import {DatePicker} from '../../components/date-picker/date-picker'
@@ -26,6 +26,7 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
+import {onKey} from '../../decorators/on-key'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -49,6 +50,8 @@ function toCellData(data: any) {
 @View
 export class MainPage extends QuillComponent {
 
+    grid: Grid
+
     @Get('/tree.json')
     fetchTree: () => Promise<any>
 
@@ -63,6 +66,17 @@ export class MainPage extends QuillComponent {
 
     @CustomEvent('nodeDrop')
     nodeDrop = (drop: NodeDrop) => console.log(drop)
+
+    stopCellEditing = () => {
+        this.grid.stopEditing()
+    }
+
+    cellEditor = (cell: Cell) => <input
+        type="text"
+        autofocus={true}
+        class="input is-small"
+        onBlur={this.stopCellEditing}
+        onChange={this.stopCellEditing}/> // use proper cell editor
 
     render() {
         const tooltip = <Tooltip>My little tooltip<br/>goes here!</Tooltip>
@@ -87,7 +101,9 @@ export class MainPage extends QuillComponent {
                                     Content C
                                 </Tab>
                             </Tabs>
-                            <Grid cells={model.data} editable={true}/>
+                            <Grid cells={model.data}
+                                  editor={this.cellEditor}
+                                  ref={g => this.grid = g}/>
                             <div class="buttons">
                                 <WithTooltip tooltip={tooltip}>
                                     <a class="button is-primary">Primary</a>

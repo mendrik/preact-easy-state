@@ -11,20 +11,22 @@
     [role='cell'],
     [role='cell-even'] {
         min-width: 40px;
-        padding: 1px 5px;
         border-right: 1px solid white;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        height: 1.5rem;
-        line-height: 1.5rem;
+        height: 2.25em;
+        line-height: 1.5;
+        padding: calc(.375em - 1.5px) 5px;
+        max-width: 100%;
     }
 
     [role='cell-even'] {
         background-color: #fafafa;
     }
 
-    &.editable [role='cell'] {
+    &.editable [role='cell'],
+    &.editable [role='cell-even'] {
         cursor: pointer;
     }
 
