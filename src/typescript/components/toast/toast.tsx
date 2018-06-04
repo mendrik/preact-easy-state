@@ -12,9 +12,16 @@ import {QuillComponent} from '../../util/quill-component'
 import {MediaQuery} from '../../decorators/media-query'
 import {localized} from '../../util/localization'
 
+export enum ToastTheme {
+    INFO,
+    WARNING,
+    DANGER
+}
+
 export interface ToastProps {
     title: string
     message: string
+    theme?: ToastTheme
 }
 
 export interface ToastState {
@@ -22,11 +29,13 @@ export interface ToastState {
 }
 
 export class ToastManagerImpl {
-    toasts: Toast[] = []
+    toasts: ToastProps[] = []
 
-    showToast = (toast: Toast) => this.toasts.push(toast)
+    showToast = (toast: ToastProps) => {
+        this.toasts.push(toast)
+    }
 
-    removeToast = (toast: Toast) => this.toasts.splice(this.toasts.indexOf(toast), 1)
+    removeToast = (toast: ToastProps) => this.toasts.splice(this.toasts.indexOf(toast), 1)
 }
 
 const ToastManager = observable(new ToastManagerImpl())
@@ -34,7 +43,11 @@ const ToastManager = observable(new ToastManagerImpl())
 @View
 class Toast extends QuillComponent<ToastProps, ToastState> {
 
-    animationEnd = () => ToastManager.removeToast(this)
+    static defaultProps = {
+        theme: ToastTheme.INFO
+    }
+
+    animationEnd = () => ToastManager.removeToast(this.props)
 
     @MediaQuery('(max-width:320px')
     mobile({children, title, message, ...props}, {visible}) {
@@ -64,10 +77,10 @@ class Toasts extends Component {
     render() {
         return (
             <ul class="toast-manager">
-                {ToastManager.toasts}
+                {ToastManager.toasts.map(props => <Toast {...props}/>)}
             </ul>
         )
     }
 }
 
-export {ToastManager, Toast}
+export {ToastManager, Toast, Toasts}

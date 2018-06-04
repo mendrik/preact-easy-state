@@ -26,6 +26,7 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
+import {Toasts, ToastManager, Toast} from '../../components/toast/toast'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -110,13 +111,19 @@ export class MainPage extends QuillComponent {
                                 {this.modal()}
                                 <a class="button is-info" onClick={this.showProgress}>Progress</a>
                                 {this.progress()}
+                                <a className="button is-info" onClick={this.showToast}>Toast</a>
                             </div>
                         </div>
                     </HorizontalSplit>
                 </ScrollPane>
                 <footer class="footer"/>
+                <Toasts/>
             </div>
         )
+    }
+
+    showToast = () => {
+        ToastManager.showToast({title: 'toast.title', message: 'toast.message'})
     }
 
     showProgress = () => {
