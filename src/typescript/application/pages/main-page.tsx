@@ -26,7 +26,6 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
-import {onKey} from '../../decorators/on-key'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 

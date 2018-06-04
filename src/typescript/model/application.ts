@@ -32,3 +32,4 @@ class Data {
 
 const model = observable(new Data())
 export {model, Data}
+
