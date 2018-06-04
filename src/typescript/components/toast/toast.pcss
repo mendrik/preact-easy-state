@@ -1,3 +1,40 @@
-.toast-manager {
+@import '../../variables.pcss';
+@parcel-import '../../../../node_modules/animate.css/source/_base.css';
+@parcel-import '../../../../node_modules/animate.css/source/fading_entrances/fadeInRight.css';
+@parcel-import '../../../../node_modules/animate.css/source/fading_exits/fadeOut.css';
 
+.toast-manager {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    list-style: none;
+    pointer-events: none;
+
+    .toast {
+        font-size: .75rem;
+        border: var(--pixelline);
+        border-radius: 3px;
+        position: relative;
+        display: block;
+        padding: 10px;
+        background-color: whitesmoke;
+        margin-top: 10px;
+
+        h4 {
+            font-weight: bold;
+        }
+
+        p {
+            margin-top: 5px;
+        }
+
+        &.initial {
+            animation: fadeInRight .2s normal forwards;
+        }
+
+        &.showing {
+            animation: 1s fadeOut 2s normal forwards;
+        }
+
+    }
 }

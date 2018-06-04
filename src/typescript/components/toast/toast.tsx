@@ -1,16 +1,11 @@
-import {Component, h} from 'preact'
-import './toast.pcss'
+import {h, render} from 'preact'
 import {observable} from '@nx-js/observer-util'
 import {View} from '../../decorators/view'
 import {cls} from '../../util/utils'
-import 'animate.css/source/_base.css'
-import 'animate.css/source/sliding_entrances/slideInLeft.css'
-import 'animate.css/source/sliding_entrances/slideInUp.css'
-import 'animate.css/source/sliding_exits/slideOutRight.css'
-import 'animate.css/source/sliding_exits/slideOutDown.css'
 import {QuillComponent} from '../../util/quill-component'
-import {MediaQuery} from '../../decorators/media-query'
 import {localized} from '../../util/localization'
+import './toast.pcss'
+import {createContext} from 'preact-context'
 
 export enum ToastTheme {
     INFO,
@@ -22,23 +17,17 @@ export interface ToastProps {
     title: string
     message: string
     theme?: ToastTheme
+    done?: () => void
 }
 
-export interface ToastState {
-    visible: boolean
+enum State {
+    initial = 'initial',
+    showing = 'showing'
 }
 
-export class ToastManagerImpl {
-    toasts: ToastProps[] = []
-
-    showToast = (toast: ToastProps) => {
-        this.toasts.push(toast)
-    }
-
-    removeToast = (toast: ToastProps) => this.toasts.splice(this.toasts.indexOf(toast), 1)
+interface ToastState {
+    visible: State
 }
-
-const ToastManager = observable(new ToastManagerImpl())
 
 @View
 class Toast extends QuillComponent<ToastProps, ToastState> {
@@ -47,33 +36,51 @@ class Toast extends QuillComponent<ToastProps, ToastState> {
         theme: ToastTheme.INFO
     }
 
-    animationEnd = () => ToastManager.removeToast(this.props)
-
-    @MediaQuery('(max-width:320px')
-    mobile({children, title, message, ...props}, {visible}) {
-        return (
-        <li class={cls('toast mobile animate', {slideInUp: visible, slideOutDown: !visible})}
-            onAnimationEnd={this.animationEnd}>
-            <h4>{localized(title)}</h4>
-            <p>{localized(message)}</p>
-            {children}
-        </li>)
+    animationEnd = () => {
+        if (this.state.visible === State.initial) {
+            this.setState({visible: State.showing})
+        } else {
+            this.props.done()
+        }
     }
 
-    @MediaQuery('(min-width:321px')
-    desktop({children, title, message, ...props}, {visible}) {
+    componentDidMount() {
+        this.setState({visible: State.initial})
+    }
+
+    render({children, title, message, ...props}, {visible}) {
         return (
-        <li class={cls('toast desktop animate', {slideInLeft: visible, slideOutRight: !visible})}
-            onAnimationEnd={this.animationEnd}>
-            <h4>{localized(title)}</h4>
-            <p>{localized(message)}</p>
-            {children}
-        </li>)
+            <li class={cls('toast desktop animate', visible)}
+                onAnimationEnd={this.animationEnd}>
+                <h4>{localized(title)}</h4>
+                <p>{localized(message)}</p>
+            </li>
+        )
     }
 }
 
+export class ToastManagerImpl {
+    toasts: ToastProps[] = []
+
+    constructor() {
+        setTimeout(() => render(<Toasts/>, document.body), 10)
+    }
+
+    showToast = (props: ToastProps) => {
+        const toast = {...props, done: () => ToastManager.removeToast(toast)}
+        ToastManager.toasts.push(toast)
+    }
+
+    removeToast = (toast: ToastProps) => {
+        console.log(this.toasts.indexOf(toast))
+        ToastManager.toasts.splice(this.toasts.indexOf(toast), 1)
+    }
+}
+
+const ToastManager = observable(new ToastManagerImpl())
+
 @View
-class Toasts extends Component {
+class Toasts extends QuillComponent {
     render() {
         return (
             <ul class="toast-manager">
@@ -83,4 +90,5 @@ class Toasts extends Component {
     }
 }
 
-export {ToastManager, Toast, Toasts}
+export {ToastManager}
+

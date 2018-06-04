@@ -26,7 +26,7 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
-import {Toasts, ToastManager, Toast} from '../../components/toast/toast'
+import {ToastManager} from '../../components/toast/toast'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -117,7 +117,6 @@ export class MainPage extends QuillComponent {
                     </HorizontalSplit>
                 </ScrollPane>
                 <footer class="footer"/>
-                <Toasts/>
             </div>
         )
     }
