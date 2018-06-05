@@ -1,4 +1,4 @@
-import {cloneElement, Component, h, render} from 'preact'
+import {Component, h} from 'preact'
 import {observable} from '@nx-js/observer-util'
 import {View} from '../../decorators/view'
 import {cls} from '../../util/utils'
@@ -12,16 +12,19 @@ export enum ToastTheme {
     DANGER
 }
 
-export interface ToastProps {
+export interface Toast {
     title: string
     message: string
     extra?: JSX.Element
     theme?: ToastTheme
-    onAnimationEnd?: (ev: AnimationEvent) => void
+}
+
+export interface ToastWithEnd {
+    onAnimationEnd: (ev: AnimationEvent) => void
 }
 
 @View
-export class Toast extends Component<ToastProps> {
+export class ToastComp extends Component<Toast & ToastWithEnd> {
 
     static defaultProps = {
         theme: ToastTheme.INFO
@@ -34,39 +37,6 @@ export class Toast extends Component<ToastProps> {
                 <p>{localized(message)}</p>
                 {extra}
             </li>
-        )
-    }
-}
-
-export class Model {
-    toasts?: ToastProps[] = []
-}
-
-@View
-export class Toasts extends QuillComponent<Model> {
-
-    model: Model
-
-    constructor(props) {
-        super(props)
-        this.model = observable(new Model())
-    }
-
-    showToast = (toast: ToastProps) => {
-        this.model.toasts.push(toast)
-    }
-
-    animationEnd = (toast: ToastProps) => () => {
-        const toasts = this.model.toasts
-        toasts.splice(toasts.indexOf(toast), 1)
-    }
-
-    render() {
-        return (
-            <ul class="toast-manager">
-                {this.model.toasts.map(props =>
-                    <Toast {...props} onAnimationEnd={this.animationEnd(props)}/>)}
-            </ul>
         )
     }
 }

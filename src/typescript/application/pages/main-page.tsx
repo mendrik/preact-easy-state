@@ -1,4 +1,4 @@
-import {h, render} from 'preact'
+import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
@@ -26,7 +26,7 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
-import {Toast, ToastManager, Toasts} from '../../components/toast/toast'
+import {Toasts} from '../../components/toast/toasts'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
