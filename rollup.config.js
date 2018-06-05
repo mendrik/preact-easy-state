@@ -47,6 +47,7 @@ export default {
     ],
     external: [
         'preact',
-        'preact-compat'
+        'preact-compat',
+        'preact-context'
     ]
 }

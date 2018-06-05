@@ -67,13 +67,8 @@ export class ToastManagerImpl {
     }
 
     showToast = (props: ToastProps) => {
-        const toast = {...props, done: () => ToastManager.removeToast(toast)}
-        ToastManager.toasts.push(toast)
-    }
-
-    removeToast = (toast: ToastProps) => {
-        console.log(this.toasts.indexOf(toast))
-        ToastManager.toasts.splice(this.toasts.indexOf(toast), 1)
+        props.done = () => ToastManager.toasts = ToastManager.toasts.filter(f => f !== props)
+        ToastManager.toasts.push(props)
     }
 }
 
