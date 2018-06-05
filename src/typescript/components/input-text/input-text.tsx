@@ -1,7 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
-import {cls, optional} from '../../util/utils'
+import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'

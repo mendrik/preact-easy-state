@@ -1,11 +1,10 @@
-import {h, render} from 'preact'
+import {cloneElement, Component, h, render} from 'preact'
 import {observable} from '@nx-js/observer-util'
 import {View} from '../../decorators/view'
 import {cls} from '../../util/utils'
 import {QuillComponent} from '../../util/quill-component'
 import {localized} from '../../util/localization'
 import './toast.pcss'
-import {createContext} from 'preact-context'
 
 export enum ToastTheme {
     INFO,
@@ -16,74 +15,58 @@ export enum ToastTheme {
 export interface ToastProps {
     title: string
     message: string
+    extra?: JSX.Element
     theme?: ToastTheme
-    done?: () => void
-}
-
-enum State {
-    initial = 'initial',
-    showing = 'showing'
-}
-
-interface ToastState {
-    visible: State
+    onAnimationEnd?: (ev: AnimationEvent) => void
 }
 
 @View
-class Toast extends QuillComponent<ToastProps, ToastState> {
+export class Toast extends Component<ToastProps> {
 
     static defaultProps = {
         theme: ToastTheme.INFO
     }
 
-    animationEnd = () => {
-        if (this.state.visible === State.initial) {
-            this.setState({visible: State.showing})
-        } else {
-            this.props.done()
-        }
-    }
-
-    componentDidMount() {
-        this.setState({visible: State.initial})
-    }
-
-    render({children, title, message, ...props}, {visible}) {
+    render({children, onAnimationEnd, extra, title, message, ...props}) {
         return (
-            <li class={cls('toast desktop animate', visible)}
-                onAnimationEnd={this.animationEnd}>
+            <li class={cls('toast')} onAnimationEnd={onAnimationEnd}>
                 <h4>{localized(title)}</h4>
                 <p>{localized(message)}</p>
+                {extra}
             </li>
         )
     }
 }
 
-export class ToastManagerImpl {
-    toasts: ToastProps[] = []
-
-    constructor() {
-        setTimeout(() => render(<Toasts/>, document.body), 10)
-    }
-
-    showToast = (props: ToastProps) => {
-        props.done = () => ToastManager.toasts = ToastManager.toasts.filter(f => f !== props)
-        ToastManager.toasts.push(props)
-    }
+export class Model {
+    toasts?: ToastProps[] = []
 }
 
-const ToastManager = observable(new ToastManagerImpl())
-
 @View
-class Toasts extends QuillComponent {
+export class Toasts extends QuillComponent<Model> {
+
+    model: Model
+
+    constructor(props) {
+        super(props)
+        this.model = observable(new Model())
+    }
+
+    showToast = (toast: ToastProps) => {
+        this.model.toasts.push(toast)
+    }
+
+    animationEnd = (toast: ToastProps) => () => {
+        const toasts = this.model.toasts
+        toasts.splice(toasts.indexOf(toast), 1)
+    }
+
     render() {
         return (
             <ul class="toast-manager">
-                {ToastManager.toasts.map(props => <Toast {...props}/>)}
+                {this.model.toasts.map(props =>
+                    <Toast {...props} onAnimationEnd={this.animationEnd(props)}/>)}
             </ul>
         )
     }
 }
-
-export {ToastManager}
-

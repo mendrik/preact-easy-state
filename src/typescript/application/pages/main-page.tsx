@@ -1,4 +1,4 @@
-import {h} from 'preact'
+import {h, render} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {HorizontalSplit} from '../../components/horizontal-split/horizontal-split'
 import {ScrollPane} from '../../components/scroll-pane/scrollpane'
@@ -26,7 +26,7 @@ import {AutoSuggest} from '../../components/auto-suggest/auto-suggest'
 import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
-import {ToastManager} from '../../components/toast/toast'
+import {Toast, ToastManager, Toasts} from '../../components/toast/toast'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -51,6 +51,7 @@ function toCellData(data: any) {
 export class MainPage extends QuillComponent {
 
     grid: Grid
+    toasts: Toasts
 
     @Get('tree.json')
     fetchTree: () => Promise<any>
@@ -117,12 +118,13 @@ export class MainPage extends QuillComponent {
                     </HorizontalSplit>
                 </ScrollPane>
                 <footer class="footer"/>
+                <Toasts ref={t => this.toasts = t}/>
             </div>
         )
     }
 
     showToast = () => {
-        ToastManager.showToast({title: 'toast.title', message: 'toast.message'})
+        this.toasts.showToast({title: 'toast.title', message: 'toast.message'})
     }
 
     showProgress = () => {

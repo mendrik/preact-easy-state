@@ -1,7 +1,23 @@
 @import '../../variables.pcss';
-@import 'animate.css/source/_base.css';
-@import 'animate.css/source/fading_entrances/fadeInRight.css';
-@import 'animate.css/source/fading_exits/fadeOut.css';
+
+@keyframes toast {
+    0% {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    80% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+    }
+}
 
 .toast-manager {
     position: fixed;
@@ -19,6 +35,7 @@
         padding: 10px;
         background-color: whitesmoke;
         margin-top: 10px;
+        animation: toast 2s normal forwards;
 
         h4 {
             font-weight: bold;
@@ -27,14 +44,5 @@
         p {
             margin-top: 5px;
         }
-
-        &.initial {
-            animation: fadeInRight .2s normal forwards;
-        }
-
-        &.showing {
-            animation: 1s fadeOut 2s normal forwards;
-        }
-
     }
 }

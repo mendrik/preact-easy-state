@@ -4,6 +4,7 @@ import {ensure, resolve} from '../util/ensure'
 import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
+
 const router = new Navigo(window.location.href)
 const currentRouteSymbol = Symbol('__route__')
 const init = new WeakMap<any, boolean>()

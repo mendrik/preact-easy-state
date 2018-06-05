@@ -7,8 +7,8 @@ import {Icon} from '../icon/icon'
 import {DocumentClick} from '../../decorators/document-click'
 import {ExtendedRequest, fetchJson} from '../../decorators/fetch'
 import {Debounce} from '../../decorators/debounce'
-import './auto-suggest.pcss'
 import {Key, onKey} from '../../decorators/on-key'
+import './auto-suggest.pcss'
 
 export interface AutoSuggestProps<T> extends FormProps<T> {
     dataSourceUrl?: string

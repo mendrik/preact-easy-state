@@ -1,4 +1,4 @@
-import {QuillComponent, QuillComponentClass} from './quill-component'
+import {QuillComponentClass} from './quill-component'
 
 export const isObject = (obj: any): boolean =>
     (obj !== null && typeof(obj) === 'object' && Object.prototype.toString.call(obj) === '[object Object]')
