@@ -15,7 +15,7 @@
     }
     100% {
         opacity: 0;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(100%, 0, 0);
     }
 }
 
@@ -24,7 +24,12 @@
     right: 10px;
     bottom: 10px;
     list-style: none;
-    pointer-events: none;
+
+    @media all and (max-width:460px) {
+        bottom: 5px;
+        left: 5px;
+        right: 5px;
+    }
 
     .toast {
         font-size: .75rem;
@@ -35,7 +40,7 @@
         padding: 10px;
         background-color: whitesmoke;
         margin-top: 10px;
-        animation: toast 2s normal forwards;
+        animation: toast 8s normal forwards;
 
         h4 {
             font-weight: bold;
