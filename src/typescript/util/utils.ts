@@ -28,12 +28,12 @@ export const range = (start: number, end: number) =>
 export const cls = (...parts): string => parts.reduce((p, c) => {
     if (c === null || typeof c === 'undefined') {
         return [...p]
-    } else if (typeof c === 'string') {
-        return [...p, c]
     } else if (Array.isArray(c)) {
         return [...p, ...c]
     } else if (Object.prototype.toString.call(c) === '[object Object]') {
         return [...p, ...Object.keys(c).filter(k => c[k])]
+    } else {
+        return [...p, c]
     }
 }, []).join(' ')
 

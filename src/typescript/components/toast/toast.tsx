@@ -1,8 +1,6 @@
 import {Component, h} from 'preact'
-import {observable} from '@nx-js/observer-util'
 import {View} from '../../decorators/view'
 import {cls} from '../../util/utils'
-import {QuillComponent} from '../../util/quill-component'
 import {localized} from '../../util/localization'
 import './toast.pcss'
 
@@ -12,30 +10,21 @@ export enum ToastTheme {
     DANGER
 }
 
-export interface Toast {
-    title: string
-    message: string
-    extra?: JSX.Element
+export interface ToastProps {
+    title?: string
+    message?: string
     theme?: ToastTheme
 }
 
-export interface ToastWithEnd {
-    onAnimationEnd: (ev: AnimationEvent) => void
-}
-
 @View
-export class ToastComp extends Component<Toast & ToastWithEnd> {
+export class Toast extends Component<ToastProps> {
 
-    static defaultProps = {
-        theme: ToastTheme.INFO
-    }
-
-    render({children, onAnimationEnd, extra, title, message, ...props}) {
+    render({children, title, message, theme = ToastTheme.INFO, ...props}) {
         return (
-            <li class={cls('toast')} onAnimationEnd={onAnimationEnd}>
-                <h4>{localized(title)}</h4>
-                <p>{localized(message)}</p>
-                {extra}
+            <li class={cls('toast', theme)}>
+                {title ? <h4>{localized(title)}</h4> : null}
+                {message ? <p>{localized(message)}</p> : null}
+                {children}
             </li>
         )
     }
