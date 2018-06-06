@@ -1,4 +1,4 @@
-import {cloneElement, h} from 'preact'
+import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import './toast.pcss'
 import {View} from '../../decorators/view'
