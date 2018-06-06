@@ -49,11 +49,14 @@ function toCellData(data: any) {
     })
 }
 
-@View
-export class MainPage extends QuillComponent {
+export interface IPage {
+}
 
-    grid: Grid
-    toasts: Toasts
+@View
+export class MainPage extends QuillComponent implements IPage {
+
+    private grid: Grid
+    private toasts: Toasts
 
     @Get('tree.json')
     fetchTree: () => Promise<any>
