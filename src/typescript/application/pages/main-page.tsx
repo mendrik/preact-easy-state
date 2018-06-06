@@ -29,7 +29,6 @@ import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
 import {InputSlider} from '../../components/input-slider/input-slider'
-import {observable} from '@nx-js/observer-util'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -214,8 +213,6 @@ export class MainPage extends QuillComponent {
                 <InputSlider min={0}
                              max={100}
                              steps={10}
-                             minLabel="0%"
-                             maxLabel="100%"
                              value={model.slider}
                              changes={(v) => model.slider = v}/>
             </FieldGroup>

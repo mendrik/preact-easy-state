@@ -3,16 +3,15 @@ import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
 import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
-import {cls} from '../../util/utils'
+import {cls, range} from '../../util/utils'
 import './input-slider.pcss'
 
 export interface InputSliderProps extends FormProps<number> {
-    minLabel: string
-    maxLabel: string
     min: number
     max: number
     steps: number
     softSlide?: boolean
+    showScale?: boolean
 }
 
 export interface InputSliderState {
@@ -25,7 +24,8 @@ export interface InputSliderState {
 export class InputSlider extends QuillComponent<InputSliderProps, InputSliderState> {
 
     static defaultProps = {
-        softSlide: false
+        softSlide: false,
+        showScale: true
     }
 
     private dimensions: ClientRect
@@ -97,13 +97,20 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
 
     endTransition = () => this.setState({drag: false, rounding: false})
 
-    render(props, {drag, rounding, tooltipValue}) {
+    legend = () => {
+        const {min, max, steps} = this.props
+        const scale = (max - min) / steps
+        return range(0, steps).map(i => <li>{i * scale + min}</li>)
+    }
+
+    render({showScale, min, max, value, changes, steps, ...props}, {drag, rounding, tooltipValue}) {
         return (
         <div class={cls('control slider-input', {drag, rounding})} onTransitionEnd={this.endTransition}>
             <div class="bar"/>
             <div class="handle">
                 {drag ? <div class="tooltip mounted">{tooltipValue}</div> : null}
             </div>
+            {showScale ? <ul class="legend">{this.legend()}</ul> : null}
         </div>)
     }
 }

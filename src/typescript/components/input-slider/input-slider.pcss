@@ -3,10 +3,8 @@
 
 .control.slider-input {
     min-height: var(--touch-height);
-    display: flex;
-    align-items: center;
     position: relative;
-    margin: 0 10px;
+    margin: 0 7px;
     user-select: none;
     --steps: 10;
     --position: 0%;
@@ -24,6 +22,14 @@
     }
 
     .bar {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        right: 0;
+        background-size: calc(100% + 1px);
+        height: 4px;
+        width: 100%;
+        border-radius: 5px;
 
         /* noinspection CssInvalidFunction */
         background: white repeating-linear-gradient(
@@ -33,10 +39,6 @@
             white calc(100% / var(--steps) - 1px),
             white calc(100% / var(--steps))
         );
-        background-size: calc(100% + 1px);
-        height: 4px;
-        width: 100%;
-        border-radius: 5px;
     }
 
     .handle {
@@ -45,11 +47,12 @@
         height: 40px;
         left: var(--position);
         margin-left: -20px;
-        top: 0;
+        top: -8px;
         display: flex;
         align-items: center;
         justify-content: center;
         touch-action: pan-y;
+        z-index: 1;
 
         &:after {
             cursor: pointer;
@@ -70,6 +73,23 @@
 
         .tooltip.mounted {
             opacity: 1;
+        }
+    }
+
+    .legend {
+        list-style: none;
+        display: flex;
+        position: absolute;
+        align-items: center;
+        width: calc(100% + 100% / var(--steps));
+        top: 20px;
+        left: calc(-50% / var(--steps));
+        font-size: 10px;
+        color: gray;
+
+        > li {
+            text-align: center;
+            flex: 1;
         }
     }
 }
