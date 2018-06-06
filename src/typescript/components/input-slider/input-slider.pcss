@@ -1,4 +1,5 @@
 @import '../../variables.pcss';
+@parcel-import '../../mixins.pcss';
 
 .control.slider-input {
     min-height: var(--touch-height);
@@ -6,7 +7,7 @@
     align-items: center;
     position: relative;
     margin: 0 10px;
-
+    user-select: none;
     --steps: 10;
     --position: 0%;
 
@@ -61,8 +62,14 @@
             background: var(--component-gray);
         }
 
-        &:hover:after {
-            background-color: dimgray;
+        @mixin hover-supported {
+            &:hover:after {
+                background-color: dimgray;
+            }
+        }
+
+        .tooltip.mounted {
+            opacity: 1;
         }
     }
 }

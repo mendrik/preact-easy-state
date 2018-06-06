@@ -2,9 +2,9 @@ import {h} from 'preact'
 import {View} from '../../decorators/view'
 import {QuillComponent} from '../../util/quill-component'
 import {FormProps} from '../forms/types'
-import './input-slider.pcss'
 import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
 import {cls} from '../../util/utils'
+import './input-slider.pcss'
 
 export interface InputSliderProps extends FormProps<number> {
     minLabel: string
@@ -12,15 +12,21 @@ export interface InputSliderProps extends FormProps<number> {
     min: number
     max: number
     steps: number
+    softSlide?: boolean
 }
 
 export interface InputSliderState {
     drag: boolean
     rounding: boolean
+    tooltipValue: number
 }
 
 @View
 export class InputSlider extends QuillComponent<InputSliderProps, InputSliderState> {
+
+    static defaultProps = {
+        softSlide: false
+    }
 
     private dimensions: ClientRect
 
@@ -39,22 +45,32 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
 
     boxedPercent = (diffX: number) => {
         const {width} = this.dimensions
-        const {value, min, max} = this.props
-        const start = value - min
-        const scale = max - min
-        const fraction = (diffX - (start !== 0 ? scale / start : 0)) / width + start / scale
-        return Math.min(1, Math.max(0, fraction)) * 100
+        const {value, min, max, softSlide} = this.props
+        if (softSlide) {
+            const start = value - min
+            const scale = max - min
+            const fraction = (diffX - (start !== 0 ? scale / start : 0)) / width + start / scale
+            return Math.min(1, Math.max(0, fraction)) * 100
+        } else {
+            const tempValue = this.boxedValue(diffX)
+            this.setState({tooltipValue: tempValue})
+            return this.valueToPercent(tempValue)
+        }
     }
 
     round = (diffX: number) => {
-        this.setState({drag: false, rounding: true})
+        this.setState({drag: false, rounding: this.props.softSlide})
+        const boxed = this.boxedValue(diffX)
+        this.props.changes(boxed)
+        this.base.style.setProperty('--position', `${this.valueToPercent(boxed)}%`)
+    }
+
+    private boxedValue(diffX: number) {
         const {width} = this.dimensions
         const {min, max, steps, value} = this.props
         const rounded = Math.round(diffX / width * steps) / steps
         const normalized = rounded * (max - min) + value
-        const boxed = Math.min(Math.max(normalized, min), max)
-        this.props.changes(boxed)
-        this.base.style.setProperty('--position', `${this.valueToPercent(boxed)}%`)
+        return Math.min(Math.max(normalized, min), max)
     }
 
     setDimensions = () => {
@@ -67,7 +83,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         switch (phase) {
             case Phase.start:
                 this.setDimensions()
-                this.setState({drag: true, rounding: false})
+                this.setState({drag: true, rounding: false, tooltipValue: this.props.value})
                 break
             case Phase.move:
                 this.base.style.setProperty(
@@ -81,11 +97,13 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
 
     endTransition = () => this.setState({drag: false, rounding: false})
 
-    render(props, {drag, rounding}) {
+    render(props, {drag, rounding, tooltipValue}) {
         return (
         <div class={cls('control slider-input', {drag, rounding})} onTransitionEnd={this.endTransition}>
             <div class="bar"/>
-            <div class="handle"/>
+            <div class="handle">
+                {drag ? <div class="tooltip mounted">{tooltipValue}</div> : null}
+            </div>
         </div>)
     }
 }
