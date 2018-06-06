@@ -28,6 +28,7 @@ import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
+import {InputSlider} from '../../components/input-slider/input-slider'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -207,6 +208,9 @@ export class MainPage extends QuillComponent {
                                 changes={r => model.radio = r}
                                 value={RadioValue.VALUE3}>Value3</InputRadio>
                 </RadioGroup>
+            </FieldGroup>
+            <FieldGroup label="Test slider">
+                <InputSlider min={0} max={100} step={5} minLabel="0%" maxLabel="100%"/>
             </FieldGroup>
         </Form>
     )
