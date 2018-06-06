@@ -1,6 +1,5 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
-import {observable} from '@nx-js/observer-util'
 import 'shim-keyboard-event-key'
 import {TreeNode, TreeNodeModel} from './tree-node'
 import './tree.pcss'
@@ -13,10 +12,6 @@ export interface TreeProps<T> {
 
 @View
 export class Tree<T> extends QuillComponent<TreeProps<T>> {
-
-    constructor(props) {
-        super(observable(props))
-    }
 
     render({treeNodes, editable, ...props}) {
         const children = treeNodes.map(model => (

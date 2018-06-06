@@ -1,7 +1,6 @@
 import {QuillComponent} from '../../util/quill-component'
 import {LocalStorage, Store} from '../../decorators/local-storage'
 import {box, cls} from '../../util/utils'
-import {observable} from '@nx-js/observer-util'
 import {h} from 'preact'
 import {View} from '../../decorators/view'
 import {localized} from '../../util/localization'
@@ -53,10 +52,6 @@ export interface TreeNodeProps<T> {
 export class TreeNode<T> extends QuillComponent<TreeNodeProps<T>> {
 
     base: HTMLLIElement
-
-    constructor(props) {
-        super(observable(props.model))
-    }
 
     iconKey = () => {
         const {children, open, icon} = this.props.model

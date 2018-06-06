@@ -2,7 +2,6 @@ import {Component, h} from 'preact'
 import {cls} from '../../util/utils'
 import {DocumentClick} from '../../decorators/document-click'
 import {View} from '../../decorators/view'
-import {observable} from '@nx-js/observer-util'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
 
@@ -16,24 +15,24 @@ export interface DropDownProps extends JSX.HTMLAttributes {
     text: string
 }
 
-export class Model {
-    open = false
+export interface DropDownState {
+    open: boolean
 }
 
 @View
-export class DropDown extends Component<DropDownProps> {
-
-    model: Model
+export class DropDown extends Component<DropDownProps, DropDownState> {
 
     constructor(props) {
         super(props)
-        this.model = observable(new Model())
+        this.state = {
+            open: false
+        }
     }
 
-    toggle = () => this.model.open = !this.model.open
+    toggle = () => this.setState({open: !this.state.open})
 
-    @DocumentClick((d: DropDown) => d.model.open)
-    close = () => this.model.open = false
+    @DocumentClick((d: DropDown) => d.state.open)
+    close = () => this.setState({open: false})
 
     maybeClose = (ev: MouseEvent) => {
         const target = ev.target as HTMLElement
@@ -42,9 +41,9 @@ export class DropDown extends Component<DropDownProps> {
         }
     }
 
-    render({children, text, ...props}) {
+    render({children, text, ...props}, {open}) {
         return (
-            <div class={cls('control dropdown', {'is-active': this.model.open})}>
+            <div class={cls('control dropdown', {'is-active': open})}>
                 <div class="dropdown-trigger">
                     <button class="button is-small is-fullwidth" onClick={this.toggle}>
                         <span>{localized(text)}</span>
