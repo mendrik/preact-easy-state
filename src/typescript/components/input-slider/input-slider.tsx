@@ -25,17 +25,40 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
     private dimensions: ClientRect
 
     componentDidMount() {
+        this.setDimensions()
         this.base.style.setProperty('--steps', `${this.props.steps}`)
+        this.base.style.setProperty('--position', `${this.valueToPercent(this.props.value)}%`)
     }
 
-    nearest = (diffX: number) => {
+    valueToPercent = (value) => {
+        const {min, max, steps} = this.props
+        const boxed = Math.max(min, Math.min(max, value))
+        const fraction = (boxed - min) / (max - min)
+        return Math.round(fraction * steps) / steps * 100
+    }
+
+    boxedPercent = (diffX: number) => {
         const {width} = this.dimensions
-        return Math.min(Math.max(0, diffX / width * 100), 100)
+        const {value, min, max} = this.props
+        const start = value - min
+        const scale = max - min
+        const fraction = (diffX - width / start) / width + start / scale
+        return Math.min(1, Math.max(0, fraction)) * 100
     }
 
     round = (diffX: number) => {
         this.setState({drag: false, rounding: true})
-        this.base.style.setProperty('--position', `${0}%`)
+        const {width} = this.dimensions
+        const {min, max, steps, value} = this.props
+        const rounded = Math.round(diffX / width * steps) / steps
+        const normalized = rounded * (max - min) + value
+        const boxed = Math.min(Math.max(normalized, min), max)
+        this.props.changes(boxed)
+        this.base.style.setProperty('--position', `${this.valueToPercent(boxed)}%`)
+    }
+
+    setDimensions = () => {
+        this.dimensions = this.base.getBoundingClientRect()
     }
 
     @PanX(() => '.handle')
@@ -43,12 +66,12 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         const {phase, diffX} = ev.detail
         switch (phase) {
             case Phase.start:
-                this.dimensions = this.base.getBoundingClientRect()
-                this.setState({drag: true})
+                this.setDimensions()
+                this.setState({drag: true, rounding: false})
                 break
             case Phase.move:
                 this.base.style.setProperty(
-                    '--position', `${this.nearest(diffX)}%`
+                    '--position', `${this.boxedPercent(diffX)}%`
                 )
                 break
             case Phase.end:
@@ -56,7 +79,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         }
     }
 
-    endTransition = () => this.setState({rounding: false})
+    endTransition = () => this.setState({drag: false, rounding: false})
 
     render(props, {drag, rounding}) {
         return (

@@ -216,8 +216,8 @@ export class MainPage extends QuillComponent {
                              steps={10}
                              minLabel="0%"
                              maxLabel="100%"
-                             value={50}
-                             changes={() => 0}/>
+                             value={model.slider}
+                             changes={(v) => model.slider = v}/>
             </FieldGroup>
         </Form>
     )

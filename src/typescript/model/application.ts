@@ -21,6 +21,7 @@ class Data {
     radio = RadioValue.VALUE1
     float = 10.5
     bool = false
+    slider = 50
     date = new Date()
     datetime = new Date()
     tree: CustomNode[] = []
