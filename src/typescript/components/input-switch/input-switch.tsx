@@ -5,6 +5,7 @@ import {FormProps} from '../forms/types'
 import './input-switch.pcss'
 import {cls} from '../../util/utils'
 import {localized} from '../../util/localization'
+import {Key, onKey} from '../../decorators/on-key'
 
 export interface InputSwitchProps extends FormProps<boolean> {
     onLabel?: string
@@ -32,12 +33,9 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
         this.setState({loaded: true})
     }
 
-    onKeyDown = (ev: KeyboardEvent) => {
-        const {key} = ev
-        if (' ' === key) {
-            ev.preventDefault()
-            this.props.changes(!this.props.value)
-        }
+    @Key(' ')
+    onSpace = () => {
+        this.props.changes(!this.props.value)
     }
 
     render({children, changes, value, onLabel, offLabel, ...props}, {loaded = false}) {
@@ -45,7 +43,7 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
             <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.cssReady}>
                 <label class="switch" ref={l => this.label = l}
                        tabIndex={0}
-                       onKeyDown={this.onKeyDown}>
+                       onKeyDown={onKey(this)}>
                     <input type="checkbox"
                            onClick={() => changes(!value)}
                            checked={value}/>

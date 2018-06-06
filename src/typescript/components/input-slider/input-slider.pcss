@@ -17,16 +17,11 @@
         }
     }
 
-    &.drag .handle:after {
-        background-color: dimgray;
-    }
-
     .bar {
         position: absolute;
         top: 10px;
         left: 0;
         right: 0;
-        background-size: calc(100% + 1px);
         height: 4px;
         width: 100%;
         border-radius: 5px;
@@ -39,6 +34,7 @@
             white calc(100% / var(--steps) - 1px),
             white calc(100% / var(--steps))
         );
+        background-size: calc(100% + 1px);
     }
 
     .handle {
@@ -53,6 +49,7 @@
         justify-content: center;
         touch-action: pan-y;
         z-index: 1;
+        outline: none;
 
         &:after {
             cursor: pointer;
@@ -73,6 +70,14 @@
 
         .tooltip.mounted {
             opacity: 1;
+        }
+
+        &:focus:after,
+        &:active:after {
+            @mixin default-focus;
+            background-color: whitesmoke !important;
+            width: 15px;
+            height: 15px;
         }
     }
 

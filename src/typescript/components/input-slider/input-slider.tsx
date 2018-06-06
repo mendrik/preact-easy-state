@@ -5,6 +5,7 @@ import {FormProps} from '../forms/types'
 import {PanX, PanXEventInit, Phase} from '../../decorators/pan-x'
 import {cls, range} from '../../util/utils'
 import './input-slider.pcss'
+import {Key, onKey} from '../../decorators/on-key'
 
 export interface InputSliderProps extends FormProps<number> {
     min: number
@@ -28,7 +29,8 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         showScale: true
     }
 
-    private dimensions: ClientRect
+    dimensions: ClientRect
+    handle: HTMLLabelElement
 
     componentDidMount() {
         this.setDimensions()
@@ -82,6 +84,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         const {phase, diffX} = ev.detail
         switch (phase) {
             case Phase.start:
+                this.handle.focus()
                 this.setDimensions()
                 this.setState({drag: true, rounding: false, tooltipValue: this.props.value})
                 break
@@ -92,6 +95,9 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
                 break
             case Phase.end:
                 this.round(diffX)
+                if (Math.abs(diffX) > 5) {
+                    this.handle.blur()
+                }
         }
     }
 
@@ -103,13 +109,34 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         return range(0, steps).map(i => <li>{i * scale + min}</li>)
     }
 
+    moveStep = (dir: number) => {
+        const {changes, value, min, max, steps} = this.props
+        const newValue = Math.min(Math.max(min, value + dir * (max - min) / steps), max)
+        changes(newValue)
+        this.base.style.setProperty(
+            '--position', `${this.valueToPercent(newValue)}%`
+        )
+    }
+
+    @Key('ArrowLeft')
+    arrowLeft() {
+        this.moveStep(-1)
+    }
+
+    @Key('ArrowRight')
+    arrowRight() {
+        this.moveStep(1)
+    }
+
     render({showScale, min, max, value, changes, steps, ...props}, {drag, rounding, tooltipValue}) {
         return (
-        <div class={cls('control slider-input', {drag, rounding})} onTransitionEnd={this.endTransition}>
+        <div class={cls('control slider-input', {drag, rounding})}
+             onTransitionEnd={this.endTransition}>
             <div class="bar"/>
-            <div class="handle">
+            <label class="handle" tabIndex={0} onKeyDown={onKey(this)} ref={h => this.handle = h}>
+                <input type="hidden"/>
                 {drag ? <div class="tooltip mounted">{tooltipValue}</div> : null}
-            </div>
+            </label>
             {showScale ? <ul class="legend">{this.legend()}</ul> : null}
         </div>)
     }
