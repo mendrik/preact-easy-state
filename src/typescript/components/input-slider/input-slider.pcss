@@ -1,4 +1,68 @@
 @import '../../variables.pcss';
 
 .control.slider-input {
+    min-height: var(--touch-height);
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0 10px;
+
+    --steps: 10;
+    --position: 0%;
+
+    &.rounding .handle {
+        transition: left .5s ease-out;
+
+        &:after {
+            background-color: dimgray;
+        }
+    }
+
+    .bar {
+
+        /* noinspection CssInvalidFunction */
+        background: white repeating-linear-gradient(
+            to right,
+            var(--component-gray) 0,
+            var(--component-gray) calc(100% / var(--steps) - 1px),
+            white calc(100% / var(--steps) - 1px),
+            white calc(100% / var(--steps))
+        );
+        background-size: calc(100% + 1px);
+        height: 4px;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    &.drag .handle:after {
+        background-color: dimgray;
+    }
+
+    .handle {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin-left: -20px;
+        left: var(--position);
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: pan-y;
+
+        &:after {
+            cursor: pointer;
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: var(--component-gray);
+        }
+
+        &:hover:after {
+            background-color: dimgray;
+        }
+    }
 }

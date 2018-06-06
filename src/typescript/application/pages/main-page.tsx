@@ -213,7 +213,7 @@ export class MainPage extends QuillComponent {
             <FieldGroup label="Test slider">
                 <InputSlider min={0}
                              max={100}
-                             step={5}
+                             steps={10}
                              minLabel="0%"
                              maxLabel="100%"
                              value={50}
