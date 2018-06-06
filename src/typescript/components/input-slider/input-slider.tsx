@@ -104,18 +104,10 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
     endTransition = () => this.setState({drag: false, rounding: false})
 
     click = (ev: MouseEvent) => {
+        this.setDimensions()
         const {min, max, value} = this.props
         const offset = value / (max - min) * this.dimensions.width
         this.round(ev.clientX - this.dimensions.left - offset)
-/*
-        const {changes, value, min, max, steps} = this.props
-        const newValue = Math.min(Math.max(min, value + dir * (max - min) / steps), max)
-        changes(newValue)
-        this.base.style.setProperty(
-            '--position', `${this.valueToPercent(newValue)}%`
-        )
-*/
-
     }
 
     legend = () => {
