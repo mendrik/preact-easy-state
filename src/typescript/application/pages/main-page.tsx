@@ -49,11 +49,8 @@ function toCellData(data: any) {
     })
 }
 
-export interface IPage {
-}
-
 @View
-export class MainPage extends QuillComponent implements IPage {
+export class MainPage extends QuillComponent {
 
     private grid: Grid
     private toasts: Toasts

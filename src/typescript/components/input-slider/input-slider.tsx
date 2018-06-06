@@ -48,7 +48,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
     boxedPercent = (diffX: number) => {
         const {width} = this.dimensions
         const {value, min, max, softSlide} = this.props
-        const tempValue = this.boxedValue(diffX)
+        const tempValue = this.boxedValue(diffX, true)
         this.setState({tooltipValue: tempValue})
         if (softSlide) {
             const start = value - min
@@ -60,18 +60,18 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         }
     }
 
-    round = (diffX: number) => {
+    round = (diffX: number, withValue = true) => {
         this.setState({drag: false, rounding: this.props.softSlide})
-        const boxed = this.boxedValue(diffX)
+        const boxed = this.boxedValue(diffX, withValue)
         this.props.changes(boxed)
         this.base.style.setProperty('--position', `${this.valueToPercent(boxed)}%`)
     }
 
-    private boxedValue(diffX: number) {
+    private boxedValue(diffX: number, withValue) {
         const {width} = this.dimensions
         const {min, max, steps, value} = this.props
         const rounded = Math.round(diffX / width * steps) / steps
-        const normalized = rounded * (max - min) + value
+        const normalized = rounded * (max - min) + (withValue ? value : 0)
         return Math.min(Math.max(normalized, min), max)
     }
 
@@ -103,6 +103,19 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
 
     endTransition = () => this.setState({drag: false, rounding: false})
 
+    click = (ev: MouseEvent) => {
+        this.round(ev.clientX - this.dimensions.left, false)
+/*
+        const {changes, value, min, max, steps} = this.props
+        const newValue = Math.min(Math.max(min, value + dir * (max - min) / steps), max)
+        changes(newValue)
+        this.base.style.setProperty(
+            '--position', `${this.valueToPercent(newValue)}%`
+        )
+*/
+
+    }
+
     legend = () => {
         const {min, max, steps} = this.props
         const scale = (max - min) / steps
@@ -132,7 +145,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         return (
         <div class={cls('control slider-input', {drag, rounding})}
              onTransitionEnd={this.endTransition}>
-            <div class="bar"/>
+            <div class="bar" onClick={this.click}/>
             <label class="handle" tabIndex={0} onKeyDown={onKey(this)} ref={h => this.handle = h}>
                 <input type="hidden"/>
                 {drag ? <div class="tooltip mounted">{tooltipValue}</div> : null}
