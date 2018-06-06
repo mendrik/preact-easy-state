@@ -27,7 +27,7 @@ import {InputCheckbox} from '../../components/input-checkbox/input-checkbox'
 import {InputRadio} from '../../components/input-radio/input-radio'
 import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
-import {Toast} from '../../components/toast/toast'
+import {Toast, ToastTheme} from '../../components/toast/toast'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -125,7 +125,10 @@ export class MainPage extends QuillComponent {
     }
 
     showToast = () => {
-        this.toasts.showToast(<Toast title="toast.title" message="toast.message">Hello</Toast>)
+        const theme = ToastTheme.WARNING
+        this.toasts.showToast(<Toast title="toast.title"
+                                     message="toast.message"
+                                     theme={theme}>Hello</Toast>)
     }
 
     showProgress = () => {

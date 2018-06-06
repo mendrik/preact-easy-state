@@ -19,6 +19,25 @@
     }
 }
 
+@keyframes mobile-toast {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    80% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
 .toast-manager {
     position: fixed;
     right: 10px;
@@ -41,6 +60,22 @@
         background-color: whitesmoke;
         margin-top: 10px;
         animation: toast 8s normal forwards;
+
+        &.warning {
+            a.delete {
+                background-color: #ffdd57;
+            }
+        }
+
+        &.danger {
+            a.delete {
+                background-color: #ff3860;
+            }
+        }
+
+        @media all and (max-width:460px) {
+            animation: mobile-toast 8s normal forwards;
+        }
 
         h4 {
             font-weight: bold;
