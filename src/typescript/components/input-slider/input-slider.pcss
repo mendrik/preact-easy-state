@@ -91,10 +91,21 @@
         left: calc(-50% / var(--steps));
         font-size: 10px;
         color: gray;
+        overflow: hidden;
 
         > li {
             text-align: center;
             flex: 1;
+
+            &:first-child {
+                transform: translateX(50%);
+                text-align: left;
+            }
+
+            &:last-child {
+                transform: translateX(-50%);
+                text-align: right;
+            }
         }
     }
 }
