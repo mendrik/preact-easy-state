@@ -42,7 +42,7 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
         const {value, min, max} = this.props
         const start = value - min
         const scale = max - min
-        const fraction = (diffX - width / start) / width + start / scale
+        const fraction = (diffX - (start !== 0 ? scale / start : 0)) / width + start / scale
         return Math.min(1, Math.max(0, fraction)) * 100
     }
 
