@@ -46,14 +46,14 @@ export class InputSlider extends QuillComponent<InputSliderProps, InputSliderSta
     boxedPercent = (diffX: number) => {
         const {width} = this.dimensions
         const {value, min, max, softSlide} = this.props
+        const tempValue = this.boxedValue(diffX)
+        this.setState({tooltipValue: tempValue})
         if (softSlide) {
             const start = value - min
             const scale = max - min
             const fraction = (diffX - (start !== 0 ? scale / start : 0)) / width + start / scale
             return Math.min(1, Math.max(0, fraction)) * 100
         } else {
-            const tempValue = this.boxedValue(diffX)
-            this.setState({tooltipValue: tempValue})
             return this.valueToPercent(tempValue)
         }
     }
