@@ -21,6 +21,8 @@ export interface ScrollPaneState {
     preScroll: boolean
 }
 
+const NOT_MOBILE = matchMedia('(hover)').matches
+
 @View
 export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState> {
 
@@ -60,8 +62,8 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
         }
     }
 
-    @DomChanged((el) => el.firstElementChild, () => matchMedia('(hover)').matches)
-    @GlobalEvent('resize', window, () => matchMedia('(hover)').matches)
+    @DomChanged((el) => el.firstElementChild, () => NOT_MOBILE)
+    @GlobalEvent('resize', window, () => NOT_MOBILE)
     calculateThumb = () => {
         const el = this.base
         const inner = this.inner
@@ -98,7 +100,7 @@ export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState>
             <div {...props}>
                 <div class={cls('inner-scroll-pane', {hidden: preScroll})}
                      ref={r => this.inner = r}
-                     onScroll={this.calculateThumb}>{children}</div>
+                     onScroll={NOT_MOBILE ? this.calculateThumb : null}>{children}</div>
                 <div class="track"><div class="thumb"/></div>
             </div>
         )

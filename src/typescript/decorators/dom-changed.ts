@@ -5,7 +5,7 @@ import {debounce} from 'throttle-debounce'
 export const NO_DOM_CHANGE = 'no-dom-change'
 
 export const DomChanged = (getElement?: (el: Element) => Element, condition?: () => boolean) => (proto: QuillComponentClass, method: string) => {
-    if (!condition || condition()) {
+    if (typeof condition === 'undefined' || condition() === true) {
         addToMountQueue(proto, (instance: QuillComponent, node: HTMLElement) => {
             const el = getElement ? getElement(node) : node
             const observer = new MutationObserver(debounce(200, (mr: MutationRecord[]) => {
