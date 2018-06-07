@@ -1,4 +1,5 @@
 @import '../variables.pcss';
+@parcel-import '../mixins.pcss';
 
 html,
 body {
@@ -9,7 +10,7 @@ body {
     height: 100vh;
     font-family: var(--default-font);
 
-    @media not all and (hover:hover) {
+    @mixin touch {
         position: fixed;
         height: var(--app-height);
     }
@@ -20,7 +21,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    @media not all and (hover:hover) {
+    @mixin touch {
         height: var(--app-height);
         min-height: 100%;
     }

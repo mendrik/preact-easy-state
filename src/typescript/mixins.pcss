@@ -24,3 +24,15 @@
     border-color: #3273dc;
     box-shadow: 0 0 0 .125em rgba(50, 115, 220, .25);
 }
+
+@define-mixin mobile {
+    @media all and (max-width:460px) {
+        @mixin-content;
+    }
+}
+
+@define-mixin touch {
+    @media not all and (hover:hover) {
+        @mixin-content;
+    }
+}

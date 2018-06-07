@@ -1,4 +1,5 @@
 @import '../../variables.pcss';
+@parcel-import '../../mixins.pcss';
 
 @keyframes toast {
     0% {
@@ -44,7 +45,7 @@
     bottom: 10px;
     list-style: none;
 
-    @media all and (max-width:460px) {
+    @mixin mobile {
         bottom: 5px;
         left: 5px;
         right: 5px;
@@ -73,7 +74,7 @@
             }
         }
 
-        @media all and (max-width:460px) {
+        @mixin mobile {
             animation: mobile-toast 8s normal forwards;
         }
 
