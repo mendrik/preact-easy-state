@@ -29,6 +29,7 @@ import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
 import {InputSlider} from '../../components/input-slider/input-slider'
+import {Hint} from '../../components/forms/hint'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -181,7 +182,7 @@ export class MainPage extends QuillComponent {
                            name="text"
                            placeHolder="Normal text"
                            changes={(value) => model.text = value}
-                           value={model.text}/>
+                           value={model.text}><Hint text="input.hint.required"/></InputText>
                 <DatePicker changes={field('date')}
                             format="dd.MM.yyyy"
                             value={model.date}/>

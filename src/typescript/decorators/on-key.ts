@@ -19,3 +19,10 @@ export const onKey = (component: QuillComponent<any, any>, target?: EventTarget)
         handler[ev.key](ev.key)
     }
 }
+
+export const onKeySpy = (component: QuillComponent<any, any>, target?: EventTarget) => (ev: KeyboardEvent) => {
+    const handler = keyHandlers.get(component)
+    if (handler && handler[ev.key] && (!target || target === ev.target)) {
+        handler[ev.key](ev)
+    }
+}

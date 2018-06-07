@@ -1,5 +1,6 @@
 {
     "navigation.title": "Preact test with decorators",
     "toast.title": "Toast title",
-    "toast.message": "Random toast notification with a bit longer text and spans into one or more lines"
+    "toast.message": "Random toast notification with a bit longer text and spans into one or more lines",
+    "input.hint.required": "This field is required"
 }
