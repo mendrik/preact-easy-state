@@ -30,6 +30,8 @@ import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
 import {InputSlider} from '../../components/input-slider/input-slider'
 import {WithHint} from '../../components/forms/withHint'
+import {Steps} from '../../components/steps/steps'
+import {Step} from '../../components/steps/step'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -93,6 +95,9 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
+                            <Steps>
+                                <Step></Step>
+                            </Steps>
                             {this.testForm()}
                             <Tabs class="is-boxed is-small" id="demo-tabs">
                                 <Tab text="Tab A" icon="car-side">
