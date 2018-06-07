@@ -1,17 +1,23 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
+import {cls} from '../../util/utils'
 
 export interface FieldGroupProps extends JSX.HTMLAttributes {
     label: string
+    alignBottom?: boolean
 }
 
 @View
 export class FieldGroup extends QuillComponent<FieldGroupProps> {
 
-    render({children, label, ...props}) {
+    static defaultProps = {
+        alignBottom: false
+    }
+
+    render({children, alignBottom, label, ...props}) {
         return (
-            <div class="field is-horizontal">
+            <div class={cls('field is-horizontal', {'align-bottom' : alignBottom})}>
                 <div class="field-label is-small">
                     <label class="label">{label}</label>
                 </div>

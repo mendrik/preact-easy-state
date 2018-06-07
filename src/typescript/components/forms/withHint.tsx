@@ -6,7 +6,7 @@ export interface HintProps {
     text?: string
 }
 
-export class Hint extends Component<HintProps> {
+export class WithHint extends Component<HintProps> {
 
     render({children, text, ...props}, {errors}) {
         return (

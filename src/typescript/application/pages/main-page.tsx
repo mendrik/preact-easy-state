@@ -29,7 +29,7 @@ import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
 import {InputSlider} from '../../components/input-slider/input-slider'
-import {Hint} from '../../components/forms/hint'
+import {WithHint} from '../../components/forms/withHint'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -171,18 +171,20 @@ export class MainPage extends QuillComponent {
                              suffix=" / kpl"
                              integer={false}/>
             </FieldGroup>
-            <FieldGroup label="Dropdown test">
+            <FieldGroup label="Dropdown test" alignBottom={true}>
                 <DropDown text="Dropdown button">
                     <DropDownItem onClick={() => 0}>Bla</DropDownItem>
                     <DropDownItem onClick={() => 0}>Blub</DropDownItem>
                     <DropDownDivider/>
                     <DropDownItem onClick={() => 0}>Test</DropDownItem>
                 </DropDown>
-                <InputText iconLeft="account"
-                           name="text"
-                           placeHolder="Normal text"
-                           changes={(value) => model.text = value}
-                           value={model.text}><Hint text="input.hint.required"/></InputText>
+                <WithHint text="input.hint.required">
+                    <InputText iconLeft="account"
+                               name="text"
+                               placeHolder="Normal text"
+                               changes={(value) => model.text = value}
+                               value={model.text}/>
+                </WithHint>
                 <DatePicker changes={field('date')}
                             format="dd.MM.yyyy"
                             value={model.date}/>
