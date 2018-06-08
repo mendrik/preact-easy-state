@@ -32,7 +32,7 @@ export class Steps extends Component<StepsProps, StepsState> {
                 <div class="step-bar">
                     {children}
                 </div>
-                {currentContent}
+                <div class="step-content">{currentContent}</div>
             </div>
         )
     }
