@@ -10,7 +10,7 @@ export class Application extends QuillComponent {
 
     @Route('/')
     mainPage(): any {
-        return import('./pages/main-page')
+        return import('./pages/main-page').then(c => c)
     }
 
 }
