@@ -1,19 +1,25 @@
 import {Component, h} from 'preact'
 import {View} from '../../decorators/view'
 import './step.pcss'
+import {Icon} from '../icon/icon'
 
-export interface StepProps extends JSX.HTMLAttributes {
-    component: string
+export interface StepProps {
+    component: Promise<any>
     title: string
-    icon: string
+    icon?: string
 }
 
 @View
 export class Step extends Component<StepProps> {
 
-    render({}) {
+    render({children, title, icon, component, ...props}) {
         return (
             <div class="step">
+                <div class="step-title">
+                    {icon ? <Icon name={icon}/> : null}
+                    <span>{title}</span>
+                </div>
+                {children}
             </div>
         )
     }

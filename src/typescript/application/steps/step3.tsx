@@ -3,9 +3,9 @@ import {QuillComponent} from '../../util/quill-component'
 import {h} from 'preact'
 
 @View
-export class Step2 extends QuillComponent {
+export class Step3 extends QuillComponent {
 
     render() {
-        return <div>Step 2</div>
+        return <div>Step 3</div>
     }
 }

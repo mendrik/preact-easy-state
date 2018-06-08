@@ -3,4 +3,21 @@
 @parcel-import '../../animations.pcss';
 
 .step {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    z-index: 1;
+    padding: 0 5px;
+
+    .step-title {
+        font-family: var(--label-font);
+        font-weight: 600;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .icon {
+            margin-right: 5px;
+        }
+    }
 }

@@ -95,10 +95,8 @@ export class MainPage extends QuillComponent {
                             <Tree treeNodes={model.tree} editable={true}/>
                         </div>
                         <div class="panel page">
-                            <Steps activeIndex={2} disableNext={true}>
-                                <Step title="Step 1" icon="" component="../steps/step1.tsx"/>
-                                <Step title="Step 2" icon="" component="../steps/step2.tsx"/>
-                                <Step title="Step 3" icon="" component="../steps/step3.tsx"/>
+                            <Steps activeIndex={0} disableNext={true}>
+                                <Step title="Step 1" icon="checkbox-blank-circle-outline" component={import('../steps/step1')}/>
                             </Steps>
                             {this.testForm()}
                             <Tabs class="is-boxed is-small" id="demo-tabs">
