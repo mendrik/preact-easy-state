@@ -27,12 +27,6 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
         offLabel: 'off'
     }
 
-    cssReady = () => {
-        const labelWidth = this.base.querySelector('.label-off').getBoundingClientRect().width
-        this.base.style.setProperty('--width', `${labelWidth}px`)
-        this.setState({loaded: true})
-    }
-
     @Key(' ')
     onSpace = () => {
         this.props.changes(!this.props.value)
@@ -40,7 +34,7 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
 
     render({children, changes, value, onLabel, offLabel, ...props}, {loaded = false}) {
         return (
-            <div class={cls('control boolean-input', {loaded})} onAnimationEnd={this.cssReady}>
+            <div class={cls('control boolean-input', {loaded})}>
                 <label class="switch" ref={l => this.label = l}
                        tabIndex={0}
                        onKeyDown={onKey(this)}>
