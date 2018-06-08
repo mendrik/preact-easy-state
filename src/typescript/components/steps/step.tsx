@@ -16,7 +16,7 @@ export class Step extends Component<StepProps> {
         return (
             <div class="step">
                 <div class="step-title">
-                    {icon ? <Icon name={icon}/> : null}
+                    {icon ? <Icon big={true} name={icon}/> : null}
                     <span>{title}</span>
                 </div>
                 {children}
