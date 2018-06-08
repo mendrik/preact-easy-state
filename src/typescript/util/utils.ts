@@ -86,3 +86,8 @@ export const withClass = <T extends {class: string}>(props: any, className: stri
 
 export const optional = <T>(property: string, value: T, condition: any) =>
     condition ? {[property]: value} : {}
+
+export const componentFromImport = async (dynamicImport: Promise<any>) => {
+    const ComponentExport = await dynamicImport
+    return ComponentExport.default || Object.values(ComponentExport).find(v => typeof v === 'function')
+}

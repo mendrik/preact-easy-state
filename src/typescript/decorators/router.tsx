@@ -4,6 +4,7 @@ import {ensure, resolve} from '../util/ensure'
 import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
+import {componentFromImport} from '../util/utils'
 
 const router = new Navigo(window.location.href)
 const currentRouteSymbol = Symbol('__route__')
@@ -30,12 +31,9 @@ export const Route = (path: string) => (proto: QuillComponentClass, method: stri
             instance.shouldComponentUpdate = () => false
             resolve(routes, instance).forEach(route => {
                 const handler = async (params = {}, query) => {
-                    const ComponentExport = await instance[route.method]()
-                    if (ComponentExport) {
-                        const Component = ComponentExport.default || Object.values(ComponentExport).find(v => typeof v === 'function')
-                        instance[currentRouteSymbol] = <Component {...params} query={query}/>
-                        instance.forceUpdate()
-                    }
+                    const Component = await componentFromImport(instance[route.method]())
+                    instance[currentRouteSymbol] = <Component {...params} query={query}/>
+                    instance.forceUpdate()
                 }
                 router.on(route.path, handler)
                 addToCleanupQueue(instance, () => router.off(route.path, handler))

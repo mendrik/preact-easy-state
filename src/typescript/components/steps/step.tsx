@@ -4,7 +4,7 @@ import './step.pcss'
 import {Icon} from '../icon/icon'
 
 export interface StepProps {
-    component: Promise<any>
+    component?: Promise<any>
     title: string
     icon?: string
 }
