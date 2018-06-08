@@ -4,6 +4,7 @@ import {DocumentClick} from '../../decorators/document-click'
 import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
+import {observable} from '@nx-js/observer-util'
 
 export interface DropDownItem {
     text: string
@@ -24,9 +25,9 @@ export class DropDown extends Component<DropDownProps, DropDownState> {
 
     constructor(props) {
         super(props)
-        this.state = {
+        this.state = observable({
             open: false
-        }
+        })
     }
 
     toggle = () => this.setState({open: !this.state.open})
