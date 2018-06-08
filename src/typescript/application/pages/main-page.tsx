@@ -29,9 +29,9 @@ import {RadioGroup} from '../../components/input-radio/radio-group'
 import {Toasts} from '../../components/toast/toasts'
 import {Toast, ToastTheme} from '../../components/toast/toast'
 import {InputSlider} from '../../components/input-slider/input-slider'
-import {WithHint} from '../../components/forms/withHint'
 import {Steps} from '../../components/steps/steps'
 import {Step} from '../../components/steps/step'
+import {WithHint} from '../../components/forms/withHint'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
