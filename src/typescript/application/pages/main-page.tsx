@@ -55,8 +55,8 @@ function toCellData(data: any) {
 @View
 export class MainPage extends QuillComponent {
 
-    private grid: Grid
-    private toasts: Toasts
+    grid: Grid
+    toasts: Toasts
 
     @Get('tree.json')
     fetchTree: () => Promise<any>

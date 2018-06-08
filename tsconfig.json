@@ -1,7 +1,7 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "esnext",
         "moduleResolution": "node",
         "target": "es5",
         "experimentalDecorators": true,
@@ -11,6 +11,7 @@
         "outDir": "./dist",
         "lib": [
             "dom",
+            "scripthost",
             "esnext"
         ],
         "jsx": "react",
