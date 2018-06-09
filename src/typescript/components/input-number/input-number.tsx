@@ -159,7 +159,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
         }
     }
 
-    render({children, changes, integer, name, placeHolder, ...props}, {value}) {
+    render({children, changes, integer, name, placeHolder, disabled, ...props}, {value}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
@@ -171,6 +171,7 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                         placeholder={localized(placeHolder)}
                         class={cls('input is-small', {error: errors})}
                         value={this.format(value)}
+                        disabled={disabled}
                         onBlur={this.confirm}
                         onCopy={this.copy}
                         onKeyUp={this.onChange}

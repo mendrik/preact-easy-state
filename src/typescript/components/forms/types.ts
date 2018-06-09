@@ -3,4 +3,5 @@ export interface FormProps<T> {
     placeHolder?: string
     value?: T
     changes: (value: T) => void
+    disabled?: boolean
 }
