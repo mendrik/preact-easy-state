@@ -4,11 +4,9 @@
 
 .switch {
     @mixin input-box;
-    display: inline-grid;
-    grid-auto-columns: max-content;
-    max-inline-size: calc(50% + 12px);
-    overflow: hidden;
+    display: inline-block;
     outline: none;
+    overflow: hidden;
 
     &:focus {
         @mixin default-focus;
@@ -18,15 +16,13 @@
         display: none;
 
         &:checked + .slider {
-            transform: translateX(calc(-50% + 8px));
+            transform: translateX(calc(-100% + 22px));
         }
     }
 
     .slider {
         transition: .2s all ease-out;
-        display: grid;
-        grid-template-columns: 1fr 20px 1fr;
-        grid-gap: 5px;
+        display: inline-flex;
         height: 20px;
         line-height: 20px;
         font-size: .75rem;
@@ -35,7 +31,27 @@
     .toggle {
         border: var(--pixelline);
         margin: 1px;
+        width: 20px;
         border-radius: 5px;
     }
 
+    .label-off {
+        position: relative;
+        white-space: nowrap;
+        padding-right: 5px;
+
+        > span {
+            display: block;
+        }
+
+        &:after {
+            content: attr(data-on);
+            position: absolute;
+            padding-left: 5px;
+            display: block;
+            width: 100%;
+            top: 0;
+            left: calc(100% + 22px);
+        }
+    }
 }

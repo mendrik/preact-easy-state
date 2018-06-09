@@ -42,9 +42,11 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
                            onClick={() => changes(!value)}
                            checked={value}/>
                     <div class="slider" ref={r => this.slider = r}>
-                        <div class="label-off">{localized(offLabel)}</div>
+                        <div class="label-off" data-on={localized(onLabel)}>
+                            {localized(offLabel)}
+                            <span>{localized(onLabel)}</span>
+                        </div>
                         <div class="toggle"/>
-                        <div class="label-on">{localized(onLabel)}</div>
                     </div>
                 </label>
                 {children}
