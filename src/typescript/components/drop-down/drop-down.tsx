@@ -48,7 +48,7 @@ export class DropDown extends Component<DropDownProps, DropDownState> {
         return (
             <div class={cls('control dropdown', {'is-active': open})}>
                 <div class="dropdown-trigger">
-                    <button class="button is-small is-fullwidth" onClick={this.toggle} disabled>
+                    <button class="button is-small is-fullwidth" onClick={this.toggle} disabled={disabled}>
                         <span>{localized(text)}</span>
                         <Icon name="chevron-down"/>
                     </button>

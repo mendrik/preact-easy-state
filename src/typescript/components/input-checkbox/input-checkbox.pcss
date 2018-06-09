@@ -9,6 +9,18 @@
     padding-top: .375em;
     animation: wait-for 1ms forwards;
 
+    &.disabled {
+        pointer-events: none;
+
+        .tick-box {
+            @mixin disabled;
+        }
+
+        .label {
+            color: #7a7a7a;
+        }
+    }
+
     &.loaded .tick-box .icon {
         transition: all .2s ease-out;
     }

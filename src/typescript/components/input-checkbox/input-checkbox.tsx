@@ -31,12 +31,12 @@ export class InputCheckbox extends QuillComponent<InputCheckboxProps, InputCheck
         }
     }
 
-    render({children, changes, value, ...props}, {loaded}) {
+    render({children, changes, value, disabled, ...props}, {loaded}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
                 return (
-                    <div class={cls('control checkbox-input', {loaded})} onAnimationEnd={this.loaded}>
+                    <div class={cls('control checkbox-input', {loaded, disabled})} onAnimationEnd={this.loaded}>
                         <label tabIndex={0} onKeyDown={this.onKeyDown}>
                             <input type="checkbox"
                                    onClick={this.handleChange}
