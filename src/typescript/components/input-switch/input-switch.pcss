@@ -2,21 +2,11 @@
 @parcel-import '../../animations.pcss';
 @parcel-import '../../mixins.pcss';
 
-.boolean-input {
-    --width: auto;
-    animation: wait-for 1ms forwards;
-
-    &.loaded .slider {
-        transition: .2s all ease-out;
-    }
-}
-
 .switch {
     @mixin input-box;
-    overflow: hidden;
-    max-width: calc(var(--width) + 28px);
-    min-width: calc(var(--width) + 28px);
+    display: inline-block;
     outline: none;
+    overflow: hidden;
 
     &:focus {
         @mixin default-focus;
@@ -26,14 +16,13 @@
         display: none;
 
         &:checked + .slider {
-            transform: translateX(calc(-50% + 10px));
+            transform: translateX(calc(-100% + 22px));
         }
     }
 
     .slider {
-        position: absolute;
-        display: grid;
-        grid-template-columns: 1fr 20px 1fr;
+        transition: .2s all ease-out;
+        display: inline-flex;
         height: 20px;
         line-height: 20px;
         font-size: .75rem;
@@ -42,20 +31,27 @@
     .toggle {
         border: var(--pixelline);
         margin: 1px;
+        width: 20px;
         border-radius: 5px;
     }
 
-    .label-on,
     .label-off {
-        width: var(--width);
-    }
-
-    .label-on {
-        padding-left: 5px;
-    }
-
-    .label-off {
+        position: relative;
+        white-space: nowrap;
         padding-right: 5px;
-    }
 
+        > span {
+            display: block;
+        }
+
+        &:after {
+            content: attr(data-on);
+            position: absolute;
+            padding-left: 5px;
+            display: block;
+            width: 100%;
+            top: 0;
+            left: calc(100% + 22px);
+        }
+    }
 }
