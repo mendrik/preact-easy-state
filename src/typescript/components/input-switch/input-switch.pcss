@@ -8,6 +8,11 @@
     outline: none;
     overflow: hidden;
 
+    &.disabled {
+        position: relative;
+        @mixin disabled;
+    }
+
     &:focus {
         @mixin default-focus;
     }

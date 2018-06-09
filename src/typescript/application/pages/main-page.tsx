@@ -168,18 +168,21 @@ export class MainPage extends QuillComponent {
             </FieldGroup>
             <FieldGroup label="Test">
                 <InputSwitch changes={(b) => model.bool = b}
+                             disabled
                              value={model.bool}/>
                 <InputNumber changes={(value) => model.integer = value}
+                             disabled
                              name="integer"
                              value={model.integer}/>
                 <InputNumber changes={(number) => console.log(number)}
                              value={model.float}
+                             disabled
                              prefix="€ "
                              suffix=" / kpl"
                              integer={false}/>
             </FieldGroup>
             <FieldGroup label="Dropdown test" alignBottom={true}>
-                <DropDown text="Dropdown button">
+                <DropDown text="Dropdown button" disabled>
                     <DropDownItem onClick={() => 0}>Bla</DropDownItem>
                     <DropDownItem onClick={() => 0}>Blub</DropDownItem>
                     <DropDownDivider/>
@@ -188,11 +191,13 @@ export class MainPage extends QuillComponent {
                 <WithHint text="input.hint.required">
                     <InputText iconLeft="account"
                                name="text"
+                               disabled
                                placeHolder="Normal text"
                                changes={(value) => model.text = value}
                                value={model.text}/>
                 </WithHint>
                 <DatePicker changes={field('date')}
+                            disabled
                             format="dd.MM.yyyy"
                             value={model.date}/>
             </FieldGroup>

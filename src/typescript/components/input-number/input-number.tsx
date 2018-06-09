@@ -176,8 +176,8 @@ export class InputNumber extends QuillComponent<InputNumberProps, InputNumberSta
                         onCopy={this.copy}
                         onKeyUp={this.onChange}
                         onKeyDown={this.validateKey}/>
-                    {integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
-                    {integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
+                    {!disabled && integer ? <Icon name="chevron-up" right={true} onClick={this.change(1)}/> : null}
+                    {!disabled && integer ? <Icon name="chevron-down" right={true} onClick={this.change(-1)}/> : null}
                     {children}
                     {errors}
                 </div>)

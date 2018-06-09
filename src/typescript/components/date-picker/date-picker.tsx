@@ -145,7 +145,7 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
         this.model.timeChanged = true
     }
 
-    render({children, name, withMonths, withTime, changes, value, format, ...props}) {
+    render({children, name, withMonths, withTime, changes, value, format, disabled, ...props}) {
         return (
             <div class={cls('control has-icons-right date-picker dropdown', {
                 'is-active': this.model.dropDownVisible,
@@ -156,12 +156,13 @@ export class DatePicker extends QuillComponent<DatePickerProps> {
                     type="text"
                     class={cls('input is-small date', {changed: this.model.dateChanged})}
                     name={name}
+                    disabled={disabled}
                     placeholder={format}
                     onChange={this.dateChanged}
                     onAnimationEnd={this.dateHighlightEnded}
                     formatChars={dateInput}
                     value={formatDate(value, format)}/>
-                <Icon name="calendar-range" right={true} class="dropdown-trigger" onClick={this.iconClick}/>
+                {!disabled ? <Icon name="calendar-range" right={true} class="dropdown-trigger" onClick={this.iconClick}/> : null}
                 {this.model.dropDownVisible ? (
                     <div class="dropdown-menu"
                          id="dropdown-menu"

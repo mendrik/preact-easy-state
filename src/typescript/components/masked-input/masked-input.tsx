@@ -8,6 +8,7 @@ InputMask.prototype.forceUpdate = Component.prototype.forceUpdate
 
 export interface MaskedInputProps extends JSX.HTMLAttributes {
     mask: string
+    disabled?: boolean
     maskChar?: string
     formatChars?: {[s: string]: string}
     alwaysShowMask?: boolean
@@ -16,10 +17,11 @@ export interface MaskedInputProps extends JSX.HTMLAttributes {
 export class MaskedInput extends Component<MaskedInputProps> {
     input: HTMLInputElement
 
-    render({mask, formatChars, onChange, maskChar = '_', ...props}) {
+    render({mask, formatChars, onChange, maskChar = '_', disabled, ...props}) {
         return <InputMask {...withClass(props, 'masked')}
                           alwaysShowMask={false}
                           mask={mask}
+                          disabled={disabled}
                           maskChar={maskChar}
                           onBlur={onChange}
                           formatChars={formatChars}/>

@@ -5,6 +5,7 @@ import {View} from '../../decorators/view'
 import {Icon} from '../icon/icon'
 import {localized} from '../../util/localization'
 import {observable} from '@nx-js/observer-util'
+import './drop-down.pcss'
 
 export interface DropDownItem {
     text: string
@@ -14,6 +15,7 @@ export interface DropDownItem {
 
 export interface DropDownProps extends JSX.HTMLAttributes {
     text: string
+    disabled?: boolean
 }
 
 export interface DropDownState {
@@ -42,11 +44,11 @@ export class DropDown extends Component<DropDownProps, DropDownState> {
         }
     }
 
-    render({children, text, ...props}, {open}) {
+    render({children, text, disabled, ...props}, {open}) {
         return (
             <div class={cls('control dropdown', {'is-active': open})}>
                 <div class="dropdown-trigger">
-                    <button class="button is-small is-fullwidth" onClick={this.toggle}>
+                    <button class="button is-small is-fullwidth" onClick={this.toggle} disabled>
                         <span>{localized(text)}</span>
                         <Icon name="chevron-down"/>
                     </button>
