@@ -8,7 +8,7 @@ import {observable} from '@nx-js/observer-util'
 import {CustomEvent as OnCustomEvent} from '../../decorators/custom-event'
 import {View} from '../../decorators/view'
 
-export class Model {
+export class ScrollPaneModel {
     hover = false
 }
 
@@ -26,12 +26,12 @@ const NOT_MOBILE = matchMedia('(hover)').matches
 @View
 export class ScrollPane extends QuillComponent<ScrollPaneProps, ScrollPaneState> {
 
-    model: Model
+    model: ScrollPaneModel
     inner: HTMLDivElement
 
     constructor(props) {
         super(props)
-        this.model = observable(new Model())
+        this.model = observable(new ScrollPaneModel())
         this.state = {
             preScroll: !!props.scrollToSelector
         }

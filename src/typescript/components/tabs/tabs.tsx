@@ -7,7 +7,7 @@ import {withClass} from '../../util/utils'
 import {View} from '../../decorators/view'
 
 @LocalStorage
-export class Model {
+export class TabsModel {
 
     @Store((model) => `${model.id}`)
     activeTab = 0
@@ -27,11 +27,11 @@ export interface TabsProps extends JSX.HTMLAttributes {
 @View
 export class Tabs extends QuillComponent<TabsProps> {
 
-    model: Model
+    model: TabsModel
 
     constructor(props: TabsProps) {
         super(props)
-        this.model = observable(new Model(props.id))
+        this.model = observable(new TabsModel(props.id))
     }
 
     tabClicked(index: number) {

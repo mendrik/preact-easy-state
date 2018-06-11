@@ -8,7 +8,7 @@ import {cls} from '../../util/utils'
 import {View} from '../../decorators/view'
 
 @LocalStorage
-export class Model {
+export class HorizontalSplitModel {
     @Store('horizontal-split.width') width: number
     dragging: boolean
 }
@@ -16,7 +16,7 @@ export class Model {
 @View
 export class HorizontalSplit extends QuillComponent {
 
-    model = observable(new Model())
+    model = observable(new HorizontalSplitModel())
 
     @PanX(() => '.handle')
     onPanX(ev: CustomEvent<PanXEventInit>) {
