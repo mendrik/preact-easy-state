@@ -2,8 +2,22 @@ import {extendVNode} from './nvode-extension'
 
 let localeStore = {}
 
-export const initTranslations = (locales: {[s: string]: string}) => {
-    localeStore = locales
+export type Map = {[s: string]: Map | string}
+export type FlatMap = {[s: string]: string}
+
+const flatten = (map: Map, keys = []): FlatMap => {
+    return Object.keys(map).reduce((prev: {}, key: string) => {
+        const currentValue = map[key]
+        const currentKeys = [...keys, key]
+        return typeof currentValue === 'string' ?
+            prev[currentKeys.join('.')] = currentValue && prev :
+            {...prev, ...flatten(currentValue as Map, currentKeys)}
+    }, {})
+}
+
+export const initTranslations = (locales: Map) => {
+    localeStore = flatten(locales)
+    console.log(localeStore)
     extendVNode(vnode => {
         const props = vnode.attributes
         if (props && props['data-locale']) {
