@@ -35,8 +35,6 @@
         "date-fns": "2.0.0-alpha.9",
         "format-number": "3.0.0",
         "navigo": "7.1.2",
-        "preact-compat": "3.18.0",
-        "preact-context": "1.0.2",
         "react-input-mask": "2.0.1",
         "shim-keyboard-event-key": "1.0.2",
         "throttle-debounce": "1.0.1"
@@ -71,6 +69,8 @@
         "postcss-nested": "3.0.0",
         "postcss-parcel-import": "0.0.2",
         "preact": "8.2.9",
+        "preact-compat": "3.18.0",
+        "preact-context": "1.0.2",
         "rimraf": "2.6.2",
         "rollup-plugin-alias": "1.4.0",
         "rollup-plugin-commonjs": "9.1.3",

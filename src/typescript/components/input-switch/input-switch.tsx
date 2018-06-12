@@ -19,9 +19,6 @@ export interface InputSwitchState {
 @View
 export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchState> {
 
-    label: HTMLLabelElement
-    slider: HTMLDivElement
-
     static defaultProps = {
         onLabel: 'on',
         offLabel: 'off'
@@ -35,13 +32,13 @@ export class InputSwitch extends QuillComponent<InputSwitchProps, InputSwitchSta
     render({children, changes, value, onLabel, offLabel, disabled, ...props}, {loaded = false}) {
         return (
             <div class={cls('control boolean-input', {loaded})}>
-                <label class={cls('switch', {disabled})} ref={l => this.label = l}
+                <label class={cls('switch', {disabled})}
                        tabIndex={disabled ? null : 0}
                        onKeyDown={onKey(this)}>
                     <input type="checkbox"
                            onClick={() => changes(!value)}
                            checked={value}/>
-                    <div class="slider" ref={r => this.slider = r}>
+                    <div class="slider">
                         <div class="label-off" data-on={localized(onLabel)}>
                             {localized(offLabel)}
                             <span>{localized(onLabel)}</span>

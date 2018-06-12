@@ -5,7 +5,6 @@ import {validate, ValidationError} from 'class-validator'
 import {Context, createContext} from 'preact-context'
 import {observe, unobserve} from '@nx-js/observer-util'
 import './form.pcss'
-import {Key, onKey, onKeySpy} from '../../decorators/on-key'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T
@@ -30,8 +29,6 @@ export const showErrors = (state: FormState, name: string) => {
 
 @View
 export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
-
-    lastActive: HTMLInputElement
 
     constructor(props) {
         super(props)
