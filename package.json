@@ -17,8 +17,8 @@
         "bundle": "npm-run-all rollup",
         "css:compile": "postcss src/typescript/**/*.pcss --dir cjs --base  src/typescript",
         "css:compile:watch": "postcss src/typescript/**/*.pcss -w --dir cjs --base  src/typescript",
-        "ts:compile": "tsc -d --outDir cjs --module esnext",
-        "ts:compile:watch": "tsc -w -d --outDir cjs --module esnext",
+        "ts:compile": "tsc -d --outDir cjs --module esnext --noEmitHelpers true --importHelpers true",
+        "ts:compile:watch": "tsc -w -d --outDir cjs --module esnext --noEmitHelpers true --importHelpers true",
         "compile": "npm-run-all clean ts:compile css:compile",
         "compile:watch": "npm-run-all -p ts:compile:watch css:compile:watch",
         "test": "mocha --require ts-node/register --require src/typescript/util/mocha-setup.ts src/typescript/**/*.spec.*"

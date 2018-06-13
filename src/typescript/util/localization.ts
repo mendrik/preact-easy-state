@@ -17,7 +17,6 @@ const flatten = (map: Map, keys = []): FlatMap => {
 
 export const initTranslations = (locales: Map) => {
     localeStore = flatten(locales)
-    console.log(localeStore)
     extendVNode(vnode => {
         const props = vnode.attributes
         if (props && props['data-locale']) {
