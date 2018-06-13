@@ -32,6 +32,7 @@ import {InputSlider} from '../../components/input-slider/input-slider'
 import {Steps} from '../../components/steps/steps'
 import {Step} from '../../components/steps/step'
 import {WithHint} from '../../components/forms/withHint'
+import {localized} from '../../util/localization'
 
 const field = (field: keyof Data) => (val) => model[field] = val
 
@@ -88,7 +89,7 @@ export class MainPage extends QuillComponent {
         const tooltip = <Tooltip>My little tooltip<br/>goes here!</Tooltip>
         return (
             <div class="application">
-                <nav class="header" data-locale="navigation.title"/>
+                <nav class="header">{localized('navigation.title')}</nav>
                 <ScrollPane class="app-content" trackWidth={6}>
                     <HorizontalSplit>
                         <div class="panel">

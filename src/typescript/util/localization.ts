@@ -1,32 +1,27 @@
-import {extendVNode} from './nvode-extension'
-
-let localeStore = {}
-
-export type Map = {[s: string]: Map | string}
+export type SimpleMap = {[s: string]: SimpleMap | string}
 export type FlatMap = {[s: string]: string}
 
-const flatten = (map: Map, keys = []): FlatMap => {
+const flatten = (map: SimpleMap, keys = []): FlatMap => {
     return Object.keys(map).reduce((prev: {}, key: string) => {
         const currentValue = map[key]
         const currentKeys = [...keys, key]
-        return typeof currentValue === 'string' ?
-            prev[currentKeys.join('.')] = currentValue && prev :
-            {...prev, ...flatten(currentValue as Map, currentKeys)}
+        if (typeof currentValue === 'string') {
+            prev[currentKeys.join('.')] = currentValue
+        } else {
+            prev = {...prev, ...flatten(currentValue, currentKeys)}
+        }
+        return prev
     }, {})
 }
 
-export const initTranslations = (locales: Map) => {
-    localeStore = flatten(locales)
-    extendVNode(vnode => {
-        const props = vnode.attributes
-        if (props && props['data-locale']) {
-            const key = props['data-locale']
-            if (key) {
-                vnode.children = [(localeStore[key] || key)]
-            }
-        }
-    })
+export const initTranslations = (localeMap: SimpleMap) => {
+    const flatMap = flatten(localeMap)
+    Object.keys(flatMap).forEach(key =>
+        sessionStorage.setItem(key, flatMap[key])
+    )
 }
 
-export const localized = (key: string): string|undefined =>
-    key ? (localeStore[key] ? localeStore[key] : key) : undefined
+export const localized = (key: string): string|undefined => {
+    return key ? (sessionStorage.getItem(key) ? sessionStorage.getItem(key) : key) : null
+}
+
