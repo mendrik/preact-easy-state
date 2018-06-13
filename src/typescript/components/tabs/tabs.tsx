@@ -40,14 +40,16 @@ export class Tabs extends QuillComponent<TabsProps> {
 
     render({children, id, ...props}) {
         return (
-            <div {...withClass(props, 'tabs')}>
-                <ul>
-                    {children.map((child, index) => cloneElement(child, {
-                        click: () => this.tabClicked(index),
-                        active: this.model.activeTab === index
-                    }))}
-                </ul>
-                <div>
+            <div class="tabs-container">
+                <div {...withClass(props, 'tabs')}>
+                    <ul>
+                        {children.map((child, index) => cloneElement(child, {
+                            click: () => this.tabClicked(index),
+                            active: this.model.activeTab === index
+                        }))}
+                    </ul>
+                </div>
+                <div class="tab-body">
                     {children[this.model.activeTab].children}
                 </div>
             </div>
