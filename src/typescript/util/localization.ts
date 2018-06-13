@@ -1,3 +1,5 @@
+import {locales} from '../model/locales'
+
 export type SimpleMap = {[s: string]: SimpleMap | string}
 export type FlatMap = {[s: string]: string}
 
@@ -17,11 +19,11 @@ const flatten = (map: SimpleMap, keys = []): FlatMap => {
 export const initTranslations = (localeMap: SimpleMap) => {
     const flatMap = flatten(localeMap)
     Object.keys(flatMap).forEach(key =>
-        sessionStorage.setItem(key, flatMap[key])
+        locales.set(key, flatMap[key])
     )
 }
 
 export const localized = (key: string): string|undefined => {
-    return key ? (sessionStorage.getItem(key) ? sessionStorage.getItem(key) : key) : null
+    return key ? (locales.has(key) ? locales.get(key) : key) : null
 }
 

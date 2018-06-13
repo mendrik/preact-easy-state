@@ -2,6 +2,7 @@ import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
 import {cls} from '../../util/utils'
+import {localized} from '../../util/localization'
 
 export interface FieldGroupProps extends JSX.HTMLAttributes {
     label: string
@@ -19,7 +20,7 @@ export class FieldGroup extends QuillComponent<FieldGroupProps> {
         return (
             <div class={cls('field is-horizontal', {'align-bottom' : alignBottom})}>
                 <div class="field-label is-small">
-                    <label class="label">{label}</label>
+                    <label class="label">{localized(label)}</label>
                 </div>
                 <div class="field-body">
                     {children.map(control => <div class="field">{control}</div>)}

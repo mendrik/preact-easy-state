@@ -11,12 +11,15 @@ export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
     iconRight?: string
     error?: string
+    type?: string
 }
 
 @View
 export class InputText extends QuillComponent<InputTextProps> {
 
-    getType = () => 'text'
+    static defaultProps = {
+        type: 'text'
+    }
 
     onChange = (ev: Event) => {
         this.props.changes((ev.target as HTMLInputElement).value)
@@ -26,13 +29,13 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     rightIcon = () => <Icon name={this.props.iconRight} right={true}/>
 
-    render({children, name, changes, mask, disabled, placeHolder, value, iconLeft, iconRight, ...props}) {
+    render({children, name, changes, type, mask, disabled, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
                 return (
                     <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
-                        <input type={this.getType()}
+                        <input type={type}
                                class={cls('input is-small', {error: errors})}
                                placeholder={localized(placeHolder)}
                                name={name}
