@@ -100,6 +100,12 @@ export class MainPage extends QuillComponent {
                                 <Step title="Step 1"
                                       icon="checkbox-blank-circle-outline"
                                       component={import('../steps/step1')}/>
+                                <Step title="Step 2"
+                                      icon="checkbox-blank-circle-outline"
+                                      component={import('../steps/step2')}/>
+                                <Step title="Step 3"
+                                      icon="checkbox-blank-circle-outline"
+                                      component={import('../steps/step3')}/>
                             </Steps>
                             {this.testForm()}
                             <Tabs class="is-boxed is-small" id="demo-tabs">

@@ -1,6 +1,6 @@
 let docBase
 const base = document.getElementsByTagName('base')
-if (base) {
+if (base !== null && base.length) {
     docBase = base[0].href
 }
 
