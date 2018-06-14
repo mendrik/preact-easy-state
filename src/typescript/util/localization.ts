@@ -26,4 +26,3 @@ export const initTranslations = (localeMap: SimpleMap) => {
 export const localized = (key: string): string|undefined => {
     return key ? (locales.has(key) ? locales.get(key) : key) : null
 }
-
