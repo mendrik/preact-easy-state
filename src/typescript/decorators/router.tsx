@@ -1,3 +1,9 @@
+let docBase
+const base = document.getElementsByTagName('base')
+if (base) {
+    docBase = base[0].href
+}
+
 import {addToCleanupQueue, addToMountQueue} from '../util/construct'
 import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 import {ensure, resolve} from '../util/ensure'
@@ -5,7 +11,6 @@ import {Component, h} from 'preact'
 import Navigo from 'navigo'
 import {View} from './view'
 import {componentFromImport} from '../util/utils'
-const docBase = document.documentElement.getAttribute('base')
 const router = new Navigo(docBase || window.location.href)
 const currentRouteSymbol = Symbol('__route__')
 const init = new WeakMap<any, boolean>()
