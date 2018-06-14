@@ -15,8 +15,8 @@ import {initTranslations} from './util/localization'
         const doc = document.documentElement
         doc.style.setProperty('--app-height', `${window.innerHeight}px`)
     }
-    window.addEventListener('resize', appHeight)
     appHeight()
     initTranslations(locales)
     render(<Application/>, document.body)
+    window.addEventListener('resize', appHeight)
 })()
