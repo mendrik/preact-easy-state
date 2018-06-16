@@ -20,7 +20,7 @@ export class Steps extends Component<StepsProps, StepsState> {
     async componentWillReceiveProps(nextProps: Readonly<StepsProps>, nextContext: any) {
         const {children, activeIndex} = this.props
         const props = (children[activeIndex] as VNode).attributes as StepProps
-        const Component = await componentFromImport(props.component)
+        const Component = componentFromImport(await props.component)
         this.setState({
             currentContent: <Component {...props}>Bla</Component>
         })

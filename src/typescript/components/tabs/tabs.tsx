@@ -2,9 +2,9 @@ import {cloneElement, h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {observable} from '@nx-js/observer-util'
 import {LocalStorage, Store} from '../../decorators/local-storage'
-import './tabs.pcss'
 import {withClass} from '../../util/utils'
 import {View} from '../../decorators/view'
+import './tabs.pcss'
 
 @LocalStorage
 export class TabsModel {
