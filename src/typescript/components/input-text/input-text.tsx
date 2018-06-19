@@ -12,6 +12,8 @@ export interface InputTextProps extends FormProps<string> {
     iconRight?: string
     error?: string
     type?: string
+    autofocus?: boolean
+    big?: boolean
 }
 
 @View
@@ -29,14 +31,16 @@ export class InputText extends QuillComponent<InputTextProps> {
 
     rightIcon = () => <Icon name={this.props.iconRight} right={true}/>
 
-    render({children, name, changes, type, mask, disabled, placeHolder, value, iconLeft, iconRight, ...props}) {
+    render({children, name, changes, type, mask, autofocus, disabled,
+               big, placeHolder, value, iconLeft, iconRight, ...props}) {
         return (
             <ValidationContext.Consumer>{validation => {
                 const errors = showErrors(validation, name)
                 return (
                     <div class={cls('control input-text', {mask, 'has-icons-left': iconLeft, 'has-icons-right': iconRight})}>
                         <input type={type}
-                               class={cls('input is-small', {error: errors})}
+                               autofocus={autofocus}
+                               class={cls('input', {error: errors, 'is-small': !big})}
                                placeholder={localized(placeHolder)}
                                name={name}
                                disabled={disabled}
