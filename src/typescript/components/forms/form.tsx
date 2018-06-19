@@ -8,7 +8,7 @@ import './form.pcss'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T
-    lazyValidation?: boolean
+    validate?: boolean
 }
 
 export interface FormState {
@@ -31,6 +31,10 @@ export const showErrors = (state: FormState, name: string) => {
 @View
 export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
 
+    static defaultProps = {
+        validate: true
+    }
+
     constructor(props) {
         super(props)
         this.state = {
@@ -46,16 +50,22 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
         return errors
     }
 
-    componentWillMount() {
-        if (!this.props.lazyValidation) {
+    componentWillReceiveProps(nextProps: Readonly<HtmlFormProps<T>>, nextContext: any): void {
+        this.setValidate(nextProps.validate)
+    }
+
+    setValidate(validate: boolean) {
+        if (validate) {
             observe(this.validator)
         }
     }
 
+    componentWillMount() {
+        this.setValidate(this.props.validate)
+    }
+
     componentWillUnmount() {
-        if (!this.props.lazyValidation) {
-            unobserve(this.validator)
-        }
+        unobserve(this.validator)
     }
 
     render({children, lazyValidation, validate, model, ...props}, {errors}) {
