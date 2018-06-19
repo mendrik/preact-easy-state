@@ -10,7 +10,6 @@ import {showErrors, ValidationContext} from '../forms/form'
 export interface InputTextProps extends FormProps<string> {
     iconLeft?: string
     iconRight?: string
-    error?: string
     type?: string
     autofocus?: boolean
     big?: boolean

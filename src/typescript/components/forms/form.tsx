@@ -8,6 +8,7 @@ import './form.pcss'
 
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T
+    lazyValidation?: boolean
 }
 
 export interface FormState {
@@ -46,14 +47,18 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
     }
 
     componentWillMount() {
-        observe(this.validator)
+        if (!this.props.lazyValidation) {
+            observe(this.validator)
+        }
     }
 
     componentWillUnmount() {
-        unobserve(this.validator)
+        if (!this.props.lazyValidation) {
+            unobserve(this.validator)
+        }
     }
 
-    render({children, validate, model, ...props}, {errors}) {
+    render({children, lazyValidation, validate, model, ...props}, {errors}) {
         return (
             <ValidationContext.Provider value={{errors}}>
                 <div class="form-group">
