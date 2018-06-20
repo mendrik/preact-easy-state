@@ -165,21 +165,24 @@ export class MainPage extends QuillComponent {
     renderer = (item: any) => <span>{item.name}</span>
 
     testForm = () => (
-        <Form model={model}>
+        <Form model={model} name="demo">
             <FieldGroup label="Search">
                 <AutoSuggest changes={(v) => model.autoSuggest = v}
                              dataSourceUrl="https://restcountries.eu/rest/v2/name/"
                              valueRenderer={(item: any) => item ? item.name : ''}
                              value={model.autoSuggest}
+                             name="demo.autoSuggest"
                              renderer={this.renderer}/>
             </FieldGroup>
             <FieldGroup label="Test">
                 <InputSwitch changes={(b) => model.bool = b}
+                             name="demo.bool"
                              value={model.bool}/>
                 <InputNumber changes={(value) => model.integer = value}
-                             name="integer"
+                             name="demo.integer"
                              value={model.integer}/>
                 <InputNumber changes={(number) => console.log(number)}
+                             name="demo.float"
                              value={model.float}
                              prefix="€ "
                              suffix=" / kpl"
@@ -194,18 +197,20 @@ export class MainPage extends QuillComponent {
                 </DropDown>
                 <WithHint text="input.hint.required">
                     <InputText iconLeft="account"
-                               name="text"
+                               name="demo.text"
                                placeHolder="Normal text"
                                changes={(value) => model.text = value}
                                value={model.text}/>
                 </WithHint>
                 <DatePicker changes={field('date')}
                             format="dd.MM.yyyy"
+                            name="demo.date"
                             value={model.date}/>
             </FieldGroup>
             <FieldGroup label="Test time">
                 <DatePicker withTime={true}
                             withMonths={true}
+                            name="demo.datetime"
                             changes={field('datetime')}
                             format="dd.MM.yyyy HH:mm"
                             value={model.datetime}/>
@@ -215,13 +220,13 @@ export class MainPage extends QuillComponent {
             </FieldGroup>
             <FieldGroup label="Test radios">
                 <RadioGroup selectedValue={model.radio}>
-                    <InputRadio name="bool"
+                    <InputRadio name="radio"
                                 changes={r => model.radio = r}
                                 value={RadioValue.VALUE1}>Value1</InputRadio>
-                    <InputRadio name="bool"
+                    <InputRadio name="radio"
                                 changes={r => model.radio = r}
                                 value={RadioValue.VALUE2}>Value2</InputRadio>
-                    <InputRadio name="bool"
+                    <InputRadio name="radio"
                                 changes={r => model.radio = r}
                                 value={RadioValue.VALUE3}>Value3</InputRadio>
                 </RadioGroup>

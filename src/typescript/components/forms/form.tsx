@@ -9,6 +9,7 @@ import './form.pcss'
 export interface HtmlFormProps<T> extends JSX.HTMLAttributes {
     model: T
     validate?: boolean
+    name: string
 }
 
 export interface FormState {
@@ -43,9 +44,10 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
     }
 
     validator = async () => {
-        const errors = await validate(this.props.model)
+        const {model, name} = this.props
+        const errors = await validate(model)
         if (errors) {
-            this.setState({errors})
+            this.setState({errors: errors.map(e => ({...e, property: name + '.' + e.property}))})
         }
         return errors
     }
@@ -68,7 +70,7 @@ export class Form<T> extends QuillComponent<HtmlFormProps<T>, FormState> {
         unobserve(this.validator)
     }
 
-    render({children, lazyValidation, validate, model, ...props}, {errors}) {
+    render({children, lazyValidation, validate, name, model, ...props}, {errors}) {
         return (
             <ValidationContext.Provider value={{errors}}>
                 <div class="form-group">
