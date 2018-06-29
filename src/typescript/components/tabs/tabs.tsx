@@ -22,6 +22,7 @@ export class TabsModel {
 
 export interface TabsProps extends JSX.HTMLAttributes {
     id: string
+    changes?: (tabIndex: number) => void
 }
 
 @View
@@ -34,11 +35,14 @@ export class Tabs extends QuillComponent<TabsProps> {
         this.model = observable(new TabsModel(props.id))
     }
 
-    tabClicked(index: number) {
+    tabClicked = (index: number) => {
         this.model.activeTab = index
+        if (this.props.changes) {
+            this.props.changes(index)
+        }
     }
 
-    render({children, id, ...props}) {
+    render({children, id, changes, ...props}) {
         return (
             <div class="tabs-container">
                 <div {...withClass(props, 'tabs')}>
