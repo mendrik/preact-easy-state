@@ -6,9 +6,11 @@ import {View} from '../../decorators/view'
 import 'animate.css/source/_base.css'
 import 'animate.css/source/fading_entrances/fadeInDown.css'
 import 'animate.css/source/fading_exits/fadeOutUp.css'
+import {localized} from '../../util/localization'
 
-export interface ModalProps  {
+export interface ModalProps {
     onClose: () => void
+    title?: string
 }
 
 export interface ModalState {
@@ -39,7 +41,7 @@ export class Modal extends QuillComponent<ModalProps, ModalState> {
         }
     }
 
-    render({children, onClose, ...props}, {visible}) {
+    render({children, title, onClose, ...props}, {visible}) {
         return (
             <div class={cls('modal is-active')}
                  onKeyDown={this.keyDown}
@@ -47,13 +49,14 @@ export class Modal extends QuillComponent<ModalProps, ModalState> {
                 <div class="modal-background" onClick={this.close}/>
                 <div class={cls('modal-content animated', {fadeInDown: visible, fadeOutUp: !visible})}
                      onAnimationEnd={this.animationEnd}>
+                    <button class="modal-close has-text-white"
+                            aria-label="close"
+                            onClick={this.close}/>
                     <div class="box">
+                        {title ? <h4>{localized(title)}</h4> : null}
                         {children}
                     </div>
                 </div>
-                <button class="modal-close has-background-dark has-text-white"
-                        aria-label="close"
-                        onClick={this.close}/>
             </div>
         )
     }
