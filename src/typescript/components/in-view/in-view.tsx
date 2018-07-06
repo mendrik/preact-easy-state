@@ -1,7 +1,7 @@
 import {h} from 'preact'
 import {QuillComponent} from '../../util/quill-component'
 import {View} from '../../decorators/view'
-import {findParent, intersectDiff, withClass} from '../../util/utils'
+import {findParent, intersectDiff, shrink, withClass} from '../../util/utils'
 import './in-view.pcss'
 
 export interface InViewProps extends JSX.HTMLAttributes {
@@ -31,6 +31,7 @@ export class InView extends QuillComponent<InViewProps> {
 
     calculatePosition = () => {
         const scroll = findParent(this.base, (el: HTMLElement) =>
+            el === document.body ||
             /scroll|auto/i.test(getComputedStyle(el).getPropertyValue('overflow-y'))
         )
         if (scroll) {

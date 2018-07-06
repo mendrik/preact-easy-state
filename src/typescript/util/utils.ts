@@ -70,6 +70,17 @@ export const intersectDiff = (outer: ClientRect, inner: ClientRect): Overlap => 
     }
 }
 
+export const shrink = (rect: ClientRect, gap: number): ClientRect => {
+    return {
+        top: rect.top + gap,
+        left: rect.left + gap,
+        right: rect.right - gap,
+        bottom: rect.bottom - gap,
+        width: rect.width - (gap << 1),
+        height: rect.height - (gap << 1)
+    }
+}
+
 export const findParent = (start: HTMLElement, predicate: (start: HTMLElement) => boolean) => {
     let parent = start
     while (parent = parent.parentElement) {
