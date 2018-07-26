@@ -2,7 +2,7 @@ import {addToCleanupQueue, addToMountQueue} from '../util/construct'
 import {QuillComponent, QuillComponentClass} from '../util/quill-component'
 import {ensure, resolve} from '../util/ensure'
 import {Component, h} from 'preact'
-import Navigo from 'navigo'
+import * as Navigo from 'navigo'
 import {componentFromImport} from '../util/utils'
 
 let docBase
