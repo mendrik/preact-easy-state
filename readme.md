@@ -1,6 +1,6 @@
 ## [Demo](http://mendrik.github.io/preact-easy-state)
 
-Resize the browser window or rotate your phone to see full layout effect
+Most components can be used with keyboard too!
 
 ### Project template with UI library
 
