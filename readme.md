@@ -1,3 +1,5 @@
+## [Demo](http://mendrik.github.io/preact-easy-state)
+
 ### Project template with UI library
 
 ### Prerequisites
