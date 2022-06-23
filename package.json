@@ -55,7 +55,7 @@
         "cssnano": "4.0.4",
         "del-cli": "1.1.0",
         "isomorphic-fetch": "2.2.1",
-        "jsdom": "11.11.0",
+        "jsdom": "16.5.0",
         "mocha": "5.2.0",
         "mq-polyfill": "1.1.8",
         "node-storage-shim": "1.0.1",
